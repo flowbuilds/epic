@@ -48,7 +48,7 @@ function epicMapMarkers(ref) {
 					if(!items[j].hasOwnProperty("filter")) {
 						items[j].filter = []
 					}
-					items[j].filter.push({"el": marker.element});
+					items[j].filter.push({"el": marker._element});
 					// bounding
 					if(map.options.hasOwnProperty("bounds")) {
 						map.options.bounds.extend(data.geo);
