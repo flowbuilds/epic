@@ -15,10 +15,26 @@ function epicFiltersActive(group) {
 	ref.item.every(item => {
 		if(!item.hasOwnProperty("active")) {return true}
 		if(item.active === false) {
-			item.el.style.display = "none"
+			item.el.style.display = "none";
+			if(item.hasOwnProperty("filter")) {
+				item.filter.forEach(el => {
+					if(el.hasOwnProperty("el")) {
+						el = el.el
+					}
+					el.style.display = "none"
+				})
+			}
 		}
 		else if(item.active === true) {
-			item.el.style.removeProperty("display")
+			item.el.style.removeProperty("display");
+			it(item.hasOwnProperty("filter")) {
+				item.filter.forEach(el => {
+					if(el.hasOwnProperty("el")) {
+						el = el.el
+					}
+					el.style.removeProperty("display")
+				})
+			}
 		}
 		//
 		return true
