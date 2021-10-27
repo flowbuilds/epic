@@ -43,6 +43,12 @@ function epicMapMarkers(ref) {
 					.setLngLat(data.geo)
 					.addTo(map.map);
 					ref[group].map[i].options.markers.live.push(marker);
+					// TEMPORARY
+					let items = epicRef.filters[group].item;
+					if(!items[j].hasOwnProperty("filter") {
+						items[j].filter = []
+					}
+					items[j].push({"el": marker.element});
 					// bounding
 					if(map.options.hasOwnProperty("bounds")) {
 						map.options.bounds.extend(data.geo);
