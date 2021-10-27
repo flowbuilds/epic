@@ -60,7 +60,10 @@ function epicFiltersReset(group) {
 		}
 		let type = input.options.type;
 		if(type === "checkbox") {
-			input.el.checked = false
+			//input.el.checked = false
+			if(input.el.checked === true) {
+				input.el.click()
+			}
 		}
 		//
 		return true
