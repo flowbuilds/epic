@@ -41,6 +41,33 @@ function epicFiltersActive(group) {
 	})
 }
 
+function epicFiltersReset(group) {
+	if(group === undefined) {group = "*"}
+	else if(typeof group !== "string") {
+		epicError("epicFiltersReset()", false, "group", group, "string");
+		return
+	}
+	if(!epicRef.filters.hasOwnProperty(group)) {
+		// error: no matching epicRef.filters[group]
+		return
+	}
+	if(!epicRef.filters[group].hasOwnProperty("input")) {return}
+	epicRef.filters[group].input.every(input => {
+		// reset each input
+		if(!input.options.hasOwnProperty("type")) {
+			// error: no input.options.type
+			return true
+		}
+		let type = input.options.type;
+		if(type === "checkbox") {
+			input.el.checked = false
+		}
+		//
+		return true
+	});
+	epicFilter()
+}
+
 function epicFiltersItems(group) {
 	if(group === undefined) {
 		group = "*"
