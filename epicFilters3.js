@@ -27,7 +27,7 @@ function epicFiltersActive(group) {
 		}
 		else if(item.active === true) {
 			item.el.style.removeProperty("display");
-			it(item.hasOwnProperty("filter")) {
+			if(item.hasOwnProperty("filter")) {
 				item.filter.forEach(el => {
 					if(el.hasOwnProperty("el")) {
 						el = el.el
