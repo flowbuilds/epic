@@ -45,7 +45,7 @@ function epicMapMarkers(ref) {
 					ref[group].map[i].options.markers.live.push(marker);
 					// TEMPORARY
 					let items = epicRef.filters[group].item;
-					if(!items[j].hasOwnProperty("filter") {
+					if(!items[j].hasOwnProperty("filter")) {
 						items[j].filter = []
 					}
 					items[j].push({"el": marker.element});
