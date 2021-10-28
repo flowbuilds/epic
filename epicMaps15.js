@@ -85,7 +85,7 @@ function epicMapMarkers(ref) {
 					.addTo(map.map);
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker._element;
-					if(markers[j].options.hasOwnProperty("filter") && markers[j].options.filter == true) {
+					if(markers[j].options["marker-options"].hasOwnProperty("filter") && markers[j].options["marker-options"].filter == true) {
 						if(markers[j].options["marker-ref"].options.hasOwnProperty("filter-group")) {
 							markers[j].options["marker-ref"].options["filter-group"].push(markers[j])
 						}
