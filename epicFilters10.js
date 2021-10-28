@@ -187,6 +187,7 @@ function epicFiltersItems(group) {
 			// compare
 			ref.activeFilters[name].every(fltr => {
 				if(fltr.type === "range") {
+					console.log("RANGE");
 					// fltr.val = ["-", #] OR [#, "+"] OR [#, #]
 					if(!Array.isArray(fltr.val)) {
 						// error: incompatible fltr.val
@@ -219,6 +220,7 @@ function epicFiltersItems(group) {
 							}
 						}
 					});
+					console.log(range);
 					if(typeof range.s === "number" && typeof range.e === "number") {
 						if(data[name] >= range.s && data[name] <= range.e) {
 							res[name].push(true)
