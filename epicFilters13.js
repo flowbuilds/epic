@@ -53,11 +53,11 @@ function epicFiltersReset(group) {
 	}
 	if(!epicRef.filters[group].hasOwnProperty("input")) {return}
 	epicRef.filters[group].input.every(input => {
-		if(!input.hasAttribute("type")) {
+		if(!input.el.hasAttribute("type")) {
 			// error: no input.options.type
 			return true
 		}
-		let type = input.getAttribute("type");
+		let type = input.el.getAttribute("type");
 		if(type === "checkbox") {
 			//input.el.checked = false
 			if(input.el.checked === true) {
