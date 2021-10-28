@@ -33,7 +33,7 @@ function epicMapMarkers(ref) {
 			//
 			//
 			//
-			map.options.markersRef.every(marker => {
+			map.options.markersRef.every((marker, i) => {
 				if(marker.hasOwnProperty("el") && marker.hasOwnProperty("options")) {
 					console.log("REF");
 					if(!marker.options.hasOwnProperty("marker-options")) {
@@ -48,7 +48,8 @@ function epicMapMarkers(ref) {
 						"el": undefined,
 						"options": {
 							"marker": undefined,
-							"marker-options": marker.options["marker-options"]
+							"marker-options": marker.options["marker-options"];
+							"marker-ref": map.options.markersRef[i]
 						}
 					})
 				}
@@ -63,7 +64,10 @@ function epicMapMarkers(ref) {
 						"el": undefined,
 						"options": {
 							"marker": undefined,
-							"marker-options": options
+							"marker-options": options;
+							"marker-ref": {
+								"el": map.options.markersRef[i]
+							}
 						}
 					})
 				}
