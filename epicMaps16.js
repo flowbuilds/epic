@@ -90,21 +90,17 @@ function epicMapMarkers(ref) {
 							markers[j].options["marker-ref"].options["filter-group"].push(markers[j])
 						}
 					}
-					//
-					map.options.markersRef.every((mref, k) => {
-						console.log("markerRef")
-					});
 					// bounding
-					/*if(map.options.hasOwnProperty("bounds")) {
-						map.options.bounds.extend(data.geo);
-						if(j === ref[group].map[i].options.markers.data.length - 1) {
+					if(map.options.hasOwnProperty("bounds")) {
+						map.options.bounds.extend(options.geo);
+						if(j === markers.length - 1) {
 							let pad = 0;
 							if(map.options.hasOwnProperty("padding")) {
 								pad = map.options.padding
 							}
 							map.map.fitBounds(map.options.bounds, {padding: pad})
 						}
-					}*/
+					}
 				}
 				markers.every((marker, j) => {
 					let options = marker.options["marker-options"];
