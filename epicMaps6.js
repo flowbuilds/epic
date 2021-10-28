@@ -21,34 +21,72 @@ function epicMapMarkers(ref) {
 				// error: incompatible platform
 				return true
 			}
-			let markers = map.options.markers;
-			if(typeof markers !== "object") {
-				// error: incompatible marker data
+			if(!Array.isArray(map.options.markers)) {
+				// error: incompatible markers
 				return true
 			}
-			if(!markers.hasOwnProperty("live")) {
-				ref[group].map[i].options.markers.live = []
-			}
-			if(Array.isArray(markers)) {
-				markers = {"data": markers}
-			}
+			let markers = [];
+			map.options.markers.every(marker => {
+				if(marker.hasOwnProperty("el") && marker.hasOwnProperty("options")) {
+					if(!marker.options.hasOwnProperty("marker-options")) {
+						// error: missing marker-options option
+						return true
+					}
+					if(!marker.options["marker-options"]hasOwnProperty("geo")) {
+						// error: missing geo option
+						return true
+					}
+					markers.push(marker)
+				}
+				else if(marker.hasAttribute("epic-marker-options")) {
+					let options = epicAttributes(marker.getAttribute("epic-marker-options"));
+					if(!options.hasOwnProperty("geo")) {
+						// error: missing geo option
+						return true
+					}
+					markers.push({"el": marker, "options": {"marker-options": options)}})
+				}
+				else {
+					// error: incompatible marker
+				}
+				return true
+			});
+			if(markers.length === 0) {return true}
+			ref[group].map[i].options.markersRef = map.options.markers;
+			ref[group].map[i].options.markers = markers;
+			map = ref[group].map[i];
+			markers = map.options.markers;
+			// markers = [{"el": el, "options": {"marker-options": {}}}]
 			if(map.options.platform.toLowerCase() === "mapbox") {
 				let mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken});
-				function addToMap(data, j) {
-					let marker = document.createElement("div");
-					if(data.hasOwnProperty("class")) {
-						marker.classList.add(data.class)
+				function addToMap(options, j) {
+					let newMarker = document.createElement("div");
+					if(options.hasOwnProperty("class")) {
+						newMarker.classList.add(options.class)
 					}
-					marker = new mapboxgl.Marker(marker)
-					.setLngLat(data.geo)
+					newMarker = new mapboxgl.Marker(newMarker)
+					.setLngLat(options.geo)
 					.addTo(map.map);
-					ref[group].map[i].options.markers.live.push(marker);
+					markers[j].options.marker = newMarker;
+					markers[j].el = newMarker.element;
+					console.log(markers);
+					console.log(map.options.markersRef);
+					map.options.markersRef.every((mref, k) => {
+						console.log("markerRef")
+					})
 					// TEMPORARY
-					let items = epicRef.filters[group].item;
+					//
+					//
+					//
+					//
+					//
+					/*let items = epicRef.filters[group].item;
 					if(!items[j].hasOwnProperty("filter")) {
 						items[j].filter = []
 					}
-					items[j].filter.push({"el": marker._element});
+					items[j].filter.push({"el": marker._element});*/
+					//
+					//
 					// bounding
 					if(map.options.hasOwnProperty("bounds")) {
 						map.options.bounds.extend(data.geo);
@@ -61,6 +99,34 @@ function epicMapMarkers(ref) {
 						}
 					}
 				}
+				markers.every((marker, j) => {
+					let options = marker.options["marker-options"];
+					if(Array.isArray(options.geo)) {
+						addToMap(options, j)
+					}
+					else if(typeof options.geo === "string") {
+						mapboxClient.geocoding.forwardGeocode({
+							query: options.geo,
+							autocomplete: false,
+							limit: 1
+						})
+						.send()
+						.then(resp => {
+							if(!resp || !resp.body || !resp.body.features || !resp.body.features.length) {
+								console.error("Invalid Mapbox geocode response:")
+								console.error(resp)
+							}
+							options.geo = resp.body.features[0].center;
+							addToMap(options, j)
+						})
+					}
+					else {
+						// error: incompatible geo option
+					}
+					return true
+				})
+				//
+				//
 				markers.data.every((data, j) => {
 					if(data.hasOwnProperty("marker-data")) {
 						data = data["marker-data"]
@@ -158,5 +224,3 @@ function epicMapInit() {
 }
 
 epicMapInit();
-console.log("epicMaps.js");
-console.log(epicRef);
