@@ -85,6 +85,12 @@ function epicMapMarkers(ref) {
 					.addTo(map.map);
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker._element;
+					if(markers[j].options.hasOwnProperty("filter") && markers[j].options.filter == true) {
+						if(markers[j].options["marker-ref"].options.hasOwnProperty("filter-group")) {
+							markers[j].options["marker-ref"].options["filter-group"].push(markers[j])
+						}
+					}
+					//
 					map.options.markersRef.every((mref, k) => {
 						console.log("markerRef")
 					});
@@ -126,40 +132,6 @@ function epicMapMarkers(ref) {
 					}
 					return true
 				})
-				//
-				//
-				/*markers.data.every((data, j) => {
-					if(data.hasOwnProperty("marker-data")) {
-						data = data["marker-data"]
-					}
-					else if(data.hasOwnProperty("options") && data.options.hasOwnProperty("marker-data")) {
-						data = data.options["marker-data"]
-					}
-					// data.geo & data.filter
-					if(!data.hasOwnProperty("geo")) {
-						// error: missing geo
-						return true
-					}
-					if(Array.isArray(data.geo)) {addToMap(data, j)}
-					else if(typeof data.geo === "string") {
-						mapboxClient.geocoding.forwardGeocode({
-							query: data.geo,
-							autocomplete: false,
-							limit: 1
-						})
-						.send()
-						.then(resp => {
-							if(!resp || !resp.body || !resp.body.features || !resp.body.features.length) {
-								console.error("Invalid Mapbox geocode response:")
-								console.error(resp)
-							}
-							data.geo = resp.body.features[0].center;
-							addToMap(data, j)
-						})
-					}
-					//
-					return true
-				})*/
 			}
 			else if(maps.options.platform.toLowerCase() === "googlemaps") {
 				// error: Google Maps not supported
