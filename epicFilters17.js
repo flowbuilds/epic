@@ -16,23 +16,27 @@ function epicFiltersActive(group) {
 		if(!item.hasOwnProperty("active")) {return true}
 		if(item.active === false) {
 			item.el.style.display = "none";
-			if(item.hasOwnProperty("filter-group")) {
-				item["filter-group"].forEach(el => {
+			if(item.options.hasOwnProperty("filter-group")) {
+				item.options["filter-group"].every(el => {
+					if(el === undefined) {return true}
 					if(el.hasOwnProperty("el")) {
 						el = el.el
 					}
-					el.style.display = "none"
+					el.style.display = "none";
+					return true
 				})
 			}
 		}
 		else if(item.active === true) {
 			item.el.style.removeProperty("display");
-			if(item.hasOwnProperty("filter-group")) {
-				item["filter-group"].forEach(el => {
+			if(item.options.hasOwnProperty("filter-group")) {
+				item.options["filter-group"].every(el => {
+					if(el === undefined) {return true}
 					if(el.hasOwnProperty("el")) {
 						el = el.el
 					}
-					el.style.removeProperty("display")
+					el.style.removeProperty("display");
+					return true
 				})
 			}
 		}
