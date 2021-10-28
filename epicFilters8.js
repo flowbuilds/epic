@@ -166,7 +166,7 @@ function epicFiltersItems(group) {
 		// error: missing activeFilters
 		return
 	}
-	ref.item.every(item => {
+	ref.item.every((item, i) => {
 		if(!item.options.hasOwnProperty("data")) {
 			// error: missing data option
 			return true
