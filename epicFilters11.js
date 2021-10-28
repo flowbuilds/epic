@@ -221,6 +221,7 @@ function epicFiltersItems(group) {
 						}
 					});
 					console.log(range);
+					console.log(data[name]);
 					if(typeof range.s === "number" && typeof range.e === "number") {
 						if(data[name] >= range.s && data[name] <= range.e) {
 							res[name].push(true)
