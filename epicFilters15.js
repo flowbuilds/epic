@@ -93,7 +93,7 @@ function epicFiltersItems(group) {
 			// error: missing data option
 			return true
 		}
-		if(typeof item.options.data !== "object") {
+		if(typeof item.options["filter-data"] !== "object") {
 			// error: incompatible data option
 			return true
 		}
