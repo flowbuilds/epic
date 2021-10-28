@@ -44,7 +44,7 @@ function epicMapMarkers(ref) {
 						// error: missing geo option
 						return true
 					}
-					markers.push({"el": marker, "options": {"marker-options": options)}})
+					markers.push({"el": marker, "options": {"marker-options": options}})
 				}
 				else {
 					// error: incompatible marker
