@@ -29,13 +29,8 @@ function epicMapMarkers(ref) {
 			delete ref[group].map[i].options.markers;
 			ref[group].map[i].options.markers = [];
 			let markers = ref[group].map[i].options.markers;
-			//
-			//
-			//
-			//
 			map.options.markersRef.every((marker, i) => {
 				if(marker.hasOwnProperty("el") && marker.hasOwnProperty("options")) {
-					console.log("REF");
 					if(!marker.options.hasOwnProperty("marker-options")) {
 						// error: missing marker-options option
 						return true
@@ -54,7 +49,6 @@ function epicMapMarkers(ref) {
 					})
 				}
 				else if(marker.hasAttribute("epic-marker-options")) {
-					console.log("GET");
 					let options = epicAttributes(marker.getAttribute("epic-marker-options"));
 					if(!options.hasOwnProperty("geo")) {
 						// error: missing geo option
@@ -90,8 +84,7 @@ function epicMapMarkers(ref) {
 					.setLngLat(options.geo)
 					.addTo(map.map);
 					markers[j].options.marker = newMarker;
-					markers[j].el = newMarker.element;
-					console.log("newMarker");
+					markers[j].el = newMarker._element;
 					map.options.markersRef.every((mref, k) => {
 						console.log("markerRef")
 					});
