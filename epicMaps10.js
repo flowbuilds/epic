@@ -26,8 +26,14 @@ function epicMapMarkers(ref) {
 				return true
 			}
 			ref[group].map[i].options.markersRef = map.options.markers;
+			delete ref[group].map[i].options.markers;
 			ref[group].map[i].options.markers = [];
-			ref[group].map[i].options.markersRef.every(marker => {
+			let markers = ref[group].map[i].options.markers;
+			//
+			//
+			//
+			//
+			map.options.markersRef.every(marker => {
 				if(marker.hasOwnProperty("el") && marker.hasOwnProperty("options")) {
 					console.log("REF");
 					if(!marker.options.hasOwnProperty("marker-options")) {
@@ -38,7 +44,13 @@ function epicMapMarkers(ref) {
 						// error: missing geo option
 						return true
 					}
-					ref[group].map[i].options.markers.push(marker)
+					markers.push({
+						"el": undefined,
+						"options": {
+							"marker": undefined,
+							"marker-options": marker.options["marker-options"]
+						}
+					})
 				}
 				else if(marker.hasAttribute("epic-marker-options")) {
 					console.log("GET");
@@ -47,7 +59,13 @@ function epicMapMarkers(ref) {
 						// error: missing geo option
 						return true
 					}
-					markers.push({"el": marker.el, "options": {"marker-options": options}})
+					markers.push({
+						"el": undefined,
+						"options": {
+							"marker": undefined,
+							"marker-options": options
+						}
+					})
 				}
 				else {
 					// error: incompatible marker
@@ -55,7 +73,6 @@ function epicMapMarkers(ref) {
 				return true
 			});
 			map = ref[group].map[i];
-			let markers = map.options.markers;
 			if(markers.length === 0) {return true}
 			// markers = [{"el": el, "options": {"marker-options": {}}}]
 			if(map.options.platform.toLowerCase() === "mapbox") {
@@ -114,7 +131,7 @@ function epicMapMarkers(ref) {
 				})
 				//
 				//
-				markers.data.every((data, j) => {
+				/*markers.data.every((data, j) => {
 					if(data.hasOwnProperty("marker-data")) {
 						data = data["marker-data"]
 					}
@@ -145,7 +162,7 @@ function epicMapMarkers(ref) {
 					}
 					//
 					return true
-				})
+				})*/
 			}
 			else if(maps.options.platform.toLowerCase() === "googlemaps") {
 				// error: Google Maps not supported
