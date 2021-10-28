@@ -259,7 +259,7 @@ function epicFiltersItems(group) {
 		for(name in res) {
 			res[name].every((val, i) => {
 				if(val === true) {
-					return true
+					return false
 				}
 				else if(i === res[name].length - 1) {
 					pass = false;
