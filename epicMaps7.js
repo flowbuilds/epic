@@ -32,7 +32,7 @@ function epicMapMarkers(ref) {
 						// error: missing marker-options option
 						return true
 					}
-					if(!marker.options["marker-options"]hasOwnProperty("geo")) {
+					if(!marker.options["marker-options"].hasOwnProperty("geo")) {
 						// error: missing geo option
 						return true
 					}
