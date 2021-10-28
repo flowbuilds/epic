@@ -182,8 +182,10 @@ function epicConverter(str, el, fn) {
 		epicError("epicConverter()", false, "str", str, "string");
 		return str
 	}
+	// empty
+	if(str === "") {str = undefined}
 	// booleans / null / undefined / number
-	if(str === "true") {str = true}
+	else if(str === "true") {str = true}
 	else if(str === "false") {str = false}
 	else if(str === "null") {str = null}
 	else if(str === "undefined") {str = undefined}
@@ -222,6 +224,9 @@ function epicAttributes(value, el) {
 	else if(typeof value !== "string") {
 		epicError("epicAttributes()", false, "value", value, "string")
 		return obj
+	}
+	if(value.indexOf("&") === -1 && value.indexOf("=") === -1) {
+		return epicConverter(value, el)
 	}
 	value = value.split("&");
 	value.forEach(snip => {
