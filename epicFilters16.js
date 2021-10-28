@@ -16,8 +16,8 @@ function epicFiltersActive(group) {
 		if(!item.hasOwnProperty("active")) {return true}
 		if(item.active === false) {
 			item.el.style.display = "none";
-			if(item.hasOwnProperty("filter")) {
-				item.filter.forEach(el => {
+			if(item.hasOwnProperty("filter-group")) {
+				item["filter-group"].forEach(el => {
 					if(el.hasOwnProperty("el")) {
 						el = el.el
 					}
@@ -27,8 +27,8 @@ function epicFiltersActive(group) {
 		}
 		else if(item.active === true) {
 			item.el.style.removeProperty("display");
-			if(item.hasOwnProperty("filter")) {
-				item.filter.forEach(el => {
+			if(item.hasOwnProperty("filter-group")) {
+				item["filter-group"].forEach(el => {
 					if(el.hasOwnProperty("el")) {
 						el = el.el
 					}
