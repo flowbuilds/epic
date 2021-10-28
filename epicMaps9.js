@@ -25,9 +25,11 @@ function epicMapMarkers(ref) {
 				// error: incompatible markers
 				return true
 			}
-			let markers = [];
-			map.options.markers.every(marker => {
+			ref[group].map[i].options.markersRef = map.options.markers;
+			ref[group].map[i].options.markers = [];
+			ref[group].map[i].options.markersRef.every(marker => {
 				if(marker.hasOwnProperty("el") && marker.hasOwnProperty("options")) {
+					console.log("REF");
 					if(!marker.options.hasOwnProperty("marker-options")) {
 						// error: missing marker-options option
 						return true
@@ -36,26 +38,25 @@ function epicMapMarkers(ref) {
 						// error: missing geo option
 						return true
 					}
-					markers.push(marker)
+					ref[group].map[i].options.markers.push(marker)
 				}
 				else if(marker.hasAttribute("epic-marker-options")) {
+					console.log("GET");
 					let options = epicAttributes(marker.getAttribute("epic-marker-options"));
 					if(!options.hasOwnProperty("geo")) {
 						// error: missing geo option
 						return true
 					}
-					markers.push({"el": marker, "options": {"marker-options": options}})
+					markers.push({"el": marker.el, "options": {"marker-options": options}})
 				}
 				else {
 					// error: incompatible marker
 				}
 				return true
 			});
-			if(markers.length === 0) {return true}
-			ref[group].map[i].options.markersRef = map.options.markers;
-			ref[group].map[i].options.markers = markers;
 			map = ref[group].map[i];
-			markers = map.options.markers;
+			let markers = map.options.markers;
+			if(markers.length === 0) {return true}
 			// markers = [{"el": el, "options": {"marker-options": {}}}]
 			if(map.options.platform.toLowerCase() === "mapbox") {
 				let mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken});
@@ -69,26 +70,12 @@ function epicMapMarkers(ref) {
 					.addTo(map.map);
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker.element;
-					console.log(markers);
-					console.log(map.options.markersRef);
+					console.log("newMarker");
 					map.options.markersRef.every((mref, k) => {
 						console.log("markerRef")
-					})
-					// TEMPORARY
-					//
-					//
-					//
-					//
-					//
-					/*let items = epicRef.filters[group].item;
-					if(!items[j].hasOwnProperty("filter")) {
-						items[j].filter = []
-					}
-					items[j].filter.push({"el": marker._element});*/
-					//
-					//
+					});
 					// bounding
-					if(map.options.hasOwnProperty("bounds")) {
+					/*if(map.options.hasOwnProperty("bounds")) {
 						map.options.bounds.extend(data.geo);
 						if(j === ref[group].map[i].options.markers.data.length - 1) {
 							let pad = 0;
@@ -97,7 +84,7 @@ function epicMapMarkers(ref) {
 							}
 							map.map.fitBounds(map.options.bounds, {padding: pad})
 						}
-					}
+					}*/
 				}
 				markers.every((marker, j) => {
 					let options = marker.options["marker-options"];
