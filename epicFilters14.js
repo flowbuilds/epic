@@ -59,7 +59,6 @@ function epicFiltersReset(group) {
 		}
 		let type = input.el.getAttribute("type");
 		if(type === "checkbox") {
-			//input.el.checked = false
 			if(input.el.checked === true) {
 				input.el.click()
 			}
@@ -90,7 +89,7 @@ function epicFiltersItems(group) {
 		return
 	}
 	ref.item.every((item, i) => {
-		if(!item.options.hasOwnProperty("data")) {
+		if(!item.options.hasOwnProperty("filter-data")) {
 			// error: missing data option
 			return true
 		}
@@ -98,7 +97,7 @@ function epicFiltersItems(group) {
 			// error: incompatible data option
 			return true
 		}
-		let data = item.options.data, res = {}, pass = true;
+		let data = item.options["filter-data"], res = {}, pass = true;
 		for(name in ref.activeFilters) {
 			if(!data.hasOwnProperty(name)) {
 				// error: no matching data[name]
@@ -110,7 +109,6 @@ function epicFiltersItems(group) {
 			// compare
 			ref.activeFilters[name].every(fltr => {
 				if(fltr.type === "range") {
-					console.log("RANGE");
 					// fltr.val = ["-", #] OR [#, "+"] OR [#, #]
 					if(!Array.isArray(fltr.val)) {
 						// error: incompatible fltr.val
@@ -143,8 +141,6 @@ function epicFiltersItems(group) {
 							}
 						}
 					});
-					console.log(range);
-					console.log(data[name]);
 					if(typeof range.s === "number" && typeof range.e === "number") {
 						if(data[name] >= range.s && data[name] <= range.e) {
 							res[name].push(true)
@@ -270,5 +266,3 @@ function epicFiltersInit() {
 }
 
 epicFiltersInit();
-console.log("epicFilters.js");
-console.log(epicRef);
