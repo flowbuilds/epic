@@ -113,13 +113,22 @@ function epicFiltersItems(group) {
 			// compare
 			ref.activeFilters[name].every(fltr => {
 				if(fltr.type === "includes") {
+					let dataVal;
+					if(typeof data[name] === "number") {
+						dataVal = data[name].toString()
+					}
 					if(typeof data[name] === "string") {
-						if(data[name].includes(fltr.val)) {
-							res[name].push(true)
-						}
-						else {
-							res[name].push(false)
-						}
+						dataVal = data[name]
+					}
+					if(dataVal === undefined) {
+						// error: incompatible data[name]
+						return true
+					}
+					if(dataVal.includes(fltr.val)) {
+						res[name].push(true)
+					}
+					else {
+						res[name].push(false)
 					}
 				}
 				else if(fltr.type === "range") {
