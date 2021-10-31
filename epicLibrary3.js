@@ -306,7 +306,7 @@ function epicRefBuilder(system, attributes, elements) {
 	elements.forEach(el => {
 		let groups = ["*"], id = el.getAttribute("epic-" + system), ref = {"el": el};
 		attributes.forEach(attr => {
-			let value = "";
+			let value;
 			if(el.hasAttribute("epic-" + system + "-" + attr)) {
 				value = el.getAttribute("epic-" + system + "-" + attr)
 			}
