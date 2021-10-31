@@ -112,7 +112,17 @@ function epicFiltersItems(group) {
 			}
 			// compare
 			ref.activeFilters[name].every(fltr => {
-				if(fltr.type === "range") {
+				if(fltr.type === "includes") {
+					if(typeof data[name] === "string") {
+						if(data[name].includes(fltr.val)) {
+							res[name].push(true)
+						}
+						else {
+							res[name].push(false)
+						}
+					}
+				}
+				else if(fltr.type === "range") {
 					// fltr.val = ["-", #] OR [#, "+"] OR [#, #]
 					if(!Array.isArray(fltr.val)) {
 						// error: incompatible fltr.val
@@ -264,7 +274,6 @@ function epicFiltersFormsInit() {
 			if(form.options.hasOwnProperty("submit")) {
 				if(form.options.submit == false) {
 					$(form.el).submit(() => {return false})
-					//form.el.onsubmit = () => {return false}
 				}
 			}
 			return true
