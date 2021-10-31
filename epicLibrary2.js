@@ -353,6 +353,17 @@ function epicActions() {
 	})
 }
 
+if(!String.prototype.includes) {
+	String.prototype.includes = (search, start) => {
+		'use strict';
+		if(search instanceof RegExp) {
+			throw TypeError("string.includes(): First argument must not be a RegExp")
+		}
+		if(start === undefined) {start = 0}
+		return this.indexOf(search, start) !== -1
+	}
+}
+
 var epicRef = {}
 window.addEventListener("DOMContentLoaded", () => {
 	epicActions();
