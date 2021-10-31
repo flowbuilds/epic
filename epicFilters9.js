@@ -280,7 +280,7 @@ function epicFiltersCountersInit() {
 	for(group in epicRef.filters) {
 		if(!epicRef.filters[group].hasOwnProperty("counter")) {continue}
 		epicRef.filters[group].counter.every(counter => {
-			if(!counter.hasOwnProperty("textContent")) {return true}
+			//if(!counter.hasOwnProperty("textContent")) {return true}
 			if(!epicRef.filters[group].hasOwnProperty("item")) {
 				counter.textContent = 0;
 				return true
