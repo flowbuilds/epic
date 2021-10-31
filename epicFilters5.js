@@ -263,7 +263,8 @@ function epicFiltersFormsInit() {
 		epicRef.filters[group].form.every(form => {
 			if(form.options.hasOwnProperty("submit")) {
 				if(form.options.submit == false) {
-					form.el.onsubmit = () => {return false}
+					$(form.el).submit(() => {return false})
+					//form.el.onsubmit = () => {return false}
 				}
 			}
 			return true
