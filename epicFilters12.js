@@ -73,6 +73,36 @@ function epicFiltersReset(group) {
 	epicFilter()
 }
 
+function epicFiltersCounters(group) {
+	if(!epicRef.hasOwnProperty("filters")) {
+		// error: missing filters ref
+		return
+	}
+	if(group === undefined) {group = "*"}
+	else if(typeof group !== "string") {
+		// error: incompatible group
+		return
+	}
+	if(!epicRef.filters.hasOwnProperty(group)) {
+		// error: no matching group
+		return
+	}
+	let ref = epicRef.filters[group];
+	if(!ref.hasOwnProperty("counter")) {return}
+	if(!ref.hasOwnProperty("item")) {
+		ref.counter.every(counter => {
+			counter.el.textContent = 0
+		});
+		return
+	}
+	if(!ref.hasOwnProperty("activeItems")) {
+		ref.activeItems = ref.item.length;
+	}
+	ref.counter.every(counter => {
+		counter.el.textContent = ref.activeItems
+	})
+}
+
 function epicFiltersItems(group) {
 	if(group === undefined) {group = "*"}
 	else if(typeof group !== "string") {
@@ -92,6 +122,7 @@ function epicFiltersItems(group) {
 		// error: missing activeFilters
 		return
 	}
+	ref.activeItems = 0;
 	ref.item.every((item, i) => {
 		if(!item.options.hasOwnProperty("filter-data")) {
 			// error: missing data option
@@ -213,8 +244,8 @@ function epicFiltersItems(group) {
 				return true
 			})
 		}
-		console.log(pass);
-		epicRef.filters[group].item[i].active = pass
+		epicRef.filters[group].item[i].active = pass;
+		if(pass == true) {ref.activeItems++}
 		return true
 	})
 }
@@ -280,8 +311,6 @@ function epicFiltersCountersInit() {
 	for(group in epicRef.filters) {
 		if(!epicRef.filters[group].hasOwnProperty("counter")) {continue}
 		epicRef.filters[group].counter.every(counter => {
-			console.log("COUNTER");
-			//if(!counter.el.hasOwnProperty("textContent")) {return true}
 			if(!epicRef.filters[group].hasOwnProperty("item")) {
 				counter.el.textContent = 0;
 				return true
@@ -313,6 +342,7 @@ function epicFiltersFormsInit() {
 function epicFilter(group) {
 	epicFiltersInputs(group);
 	epicFiltersItems(group);
+	epicFiltersCounters(group);
 	epicFiltersActive(group)
 }
 
