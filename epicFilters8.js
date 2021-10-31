@@ -272,6 +272,25 @@ function epicFiltersInputs(group) {
 	})
 }
 
+function epicFiltersCountersInit() {
+	if(!epicRef.hasOwnProperty("filters")) {
+		console.error("EPIC error: epicFiltersCountersInit(): missing 'filters' reference object in 'epicRef'");
+		return
+	}
+	for(group in epicRef.filters) {
+		if(!epicRef.filters[group].hasOwnProperty("counter")) {continue}
+		epicRef.filters[group].counter.every(counter => {
+			if(!counter.hasOwnProperty("textContent")) {return true}
+			if(!epicRef.filters[group].hasOwnProperty("item")) {
+				counter.textContent = 0;
+				return true
+			}
+			counter.textContent = epicRef.filters[group].item.length;
+			return true
+		})
+	}
+}
+
 function epicFiltersFormsInit() {
 	if(!epicRef.hasOwnProperty("filters")) {
 		console.error("EPIC error: epicFiltersFormsInit(): missing 'filters' reference object in 'epicRef'");
@@ -300,6 +319,7 @@ function epicFiltersInit() {
 	epicRefBuilder("filters");
 	if(epicRef.hasOwnProperty("filters")) {
 		epicFiltersFormsInit();
+		epicFiltersCountersInit();
 	}
 	else {
 		console.error("EPIC error: epicFilters.js failed to initalise")
