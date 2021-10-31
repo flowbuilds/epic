@@ -281,7 +281,7 @@ function epicFiltersCountersInit() {
 		if(!epicRef.filters[group].hasOwnProperty("counter")) {continue}
 		epicRef.filters[group].counter.every(counter => {
 			console.log("COUNTER");
-			if(!counter.el.hasOwnProperty("textContent")) {return true}
+			//if(!counter.el.hasOwnProperty("textContent")) {return true}
 			if(!epicRef.filters[group].hasOwnProperty("item")) {
 				counter.el.textContent = 0;
 				return true
