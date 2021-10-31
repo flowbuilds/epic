@@ -253,28 +253,22 @@ function epicFiltersInputs(group) {
 	})
 }
 
-function epicFiltersForms(group) {
-	if(group === undefined) {group ="*"}
-	else if(typeof group !== "string") {
-		// error: incompatible group
+function epicFiltersFormsInit() {
+	if(!epicRef.hasOwnProperty("filters")) {
+		console.error("EPIC error: epicFiltersFormsInit(): missing 'filters' reference object in 'epicRef'");
 		return
 	}
-	if(!epicRef.filters.hasOwnProperty(group)) {
-		// error: no matching group
-		return
-	}
-	if(!epicRef.filters[group].hasOwnProperty("form")) {
-		// error: missing form(s)
-		return
-	}
-	epicRef.filters[group].form.every(form => {
-		if(form.options.hasOwnProperty("submit")) {
-			if(form.options.submit == false) {
-				form.el.submit(() => {return false})
+	for(group in epicRef.filters) {
+		if(!epicRef.filters[group].hasOwnProperty("form")) {continue}
+		epicRef.filters[group].form.every(form => {
+			if(form.options.hasOwnProperty("submit")) {
+				if(form.options.submit == false) {
+					form.el.submit(() => {return false})
+				}
 			}
-		}
-		return true
-	})
+			return true
+		})
+	}
 }
 
 function epicFilter(group) {
@@ -286,7 +280,7 @@ function epicFilter(group) {
 function epicFiltersInit() {
 	epicRefBuilder("filters");
 	if(epicRef.hasOwnProperty("filters")) {
-		epicFiltersForms(group);
+		epicFiltersFormsInit();
 	}
 	else {
 		console.error("EPIC error: epicFilters.js failed to initalise")
