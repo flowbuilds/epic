@@ -1,5 +1,12 @@
 mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
 
+function epicMapsPanTo() {
+	if(!epicRef.hasOwnProperty("maps")) {
+		// error: missing maps ref
+		return
+	}
+}
+
 function epicMapMarkers(ref) {
 	if(ref === undefined) {
 		epicError("epicMapMarkers()", true, "ref");
@@ -76,13 +83,30 @@ function epicMapMarkers(ref) {
 			if(map.options.platform.toLowerCase() === "mapbox") {
 				let mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken});
 				function addToMap(options, j) {
-					let newMarker = document.createElement("div");
+					let newMarker = document.createElement("div"), popup;
 					if(options.hasOwnProperty("class")) {
 						newMarker.classList.add(options.class)
 					}
-					newMarker = new mapboxgl.Marker(newMarker)
-					.setLngLat(options.geo)
-					.addTo(map.map);
+					if(options.hasOwnProperty("popup") && typeof options.popup === "object") {
+						if(Array.isArray(options.popup)) {popup = options.popup[0]}
+						else {popup = options.popup}
+						let options = {}
+						if(popup.hasAttribute("epic-popup-options")) {
+							options = epicAttributes(popup.getAttribute("epic-popup-options"), el)
+						}
+						popup = new mapboxgl.Popup(options).setDOMContent(popup)
+					}
+					if(popup !== undefined) {
+						newMarker = new mapboxgl.Marker(newMarker)
+						.setLngLat(options.geo)
+						.setPopup(popup)
+						.addTo(map.map)
+					}
+					else {
+						newMarker = new mapboxgl.Marker(newMarker)
+						.setLngLat(options.geo)
+						.addTo(map.map)
+					}
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker._element;
 					if(markers[j].options["marker-options"].hasOwnProperty("filter") && markers[j].options["marker-options"].filter == true) {
