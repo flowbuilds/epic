@@ -90,11 +90,11 @@ function epicMapMarkers(ref) {
 					if(options.hasOwnProperty("popup") && typeof options.popup === "object") {
 						if(Array.isArray(options.popup)) {popup = options.popup[0]}
 						else {popup = options.popup}
-						let options = {}
+						let popupOptions = {}
 						if(popup.hasAttribute("epic-popup-options")) {
-							options = epicAttributes(popup.getAttribute("epic-popup-options"), el)
+							popupOptions = epicAttributes(popup.getAttribute("epic-popup-options"), el)
 						}
-						popup = new mapboxgl.Popup(options).setDOMContent(popup)
+						popup = new mapboxgl.Popup(popupOptions).setDOMContent(popup)
 					}
 					if(popup !== undefined) {
 						newMarker = new mapboxgl.Marker(newMarker)
