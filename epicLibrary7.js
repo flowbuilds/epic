@@ -140,7 +140,7 @@ function epicFunction(fn, el, call) {
 		if(qs === false) {return [x]}
 		else {return epicArray(x.querySelectorAll(selectors))}
 	}
-	function attr(attr, el) {
+	function attr(attr, attrEl) {
 		if(attr === undefined) {
 			epicError("attr()", true, "attr");
 			return {}
@@ -149,23 +149,23 @@ function epicFunction(fn, el, call) {
 			epicError("attr()", false, "attr", attr, "string");
 			return {}
 		}
-		if(el === undefined) {
+		if(attrEl === undefined) {
 			epicError("attr()", true, "el");
 			return {}
 		}
-		else if(typeof el !== "object") {
+		else if(typeof attrEl !== "object") {
 			epicError("attr()", false, "el", el, "object(element)");
 			return {}
 		}
-		if(Array.isArray(el)) {
-			el = el[0]
+		if(Array.isArray(attrEl)) {
+			attrEl = attrEl[0]
 		}
-		if(el.hasAttribute(attr)) {
-			return epicAttributes(el.getAttribute(attr, el))
+		if(attrEl.hasAttribute(attr)) {
+			return epicAttributes(attrEl.getAttribute(attr, attrEl), el)
 		}
 		else {
 			console.error("EPIC error: attr() cannot find the attribute '" + attr + "' on the 'el' provided:");
-			console.log(el);
+			console.log(attrEl);
 			return {}
 		}
 	}
