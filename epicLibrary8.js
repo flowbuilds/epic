@@ -130,10 +130,7 @@ function epicFunction(fn, el, call) {
 			else {selectors = selectors.slice(15)}
 		}
 		else if(selectors.substr(0, 11) === "nextSibling") {
-			if(el === undefined) {
-				el = document.querySelector
-			}
-			x = el.nextSibling;
+			if(el !== undefined) {x = el.nextSibling}
 			if(selectors.length === 11) {qs = false}
 			else {selectors = selectors.slice(11)}
 		}
