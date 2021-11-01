@@ -37,9 +37,6 @@ function epicError(fn, msng, name, param, type) {
 }
 
 function epicFunction(fn, el, call) {
-	console.log("epicFunction()");
-	console.log(fn);
-	console.log(el);
 	if(fn === undefined) {
 		epicError("epicFunction()", true, "fn");
 		return
@@ -111,9 +108,6 @@ function epicFunction(fn, el, call) {
 			return
 		}
 		let x = document, qs = true;
-		console.log("get()");
-		console.log(selectors);
-		console.log(el);
 		if(selectors.substr(0, 4) === "this") {
 			if(el !== undefined) {x = el}
 			if(selectors.length === 4) {qs = false}
@@ -195,9 +189,6 @@ function epicFunction(fn, el, call) {
 }
 
 function epicConverter(str, el, fn) {
-	console.log("epicConverter()");
-	console.log(str);
-	console.log(el);
 	if(str === undefined) {
 		epicError("epicConverter()", true, "str");
 		return
@@ -240,8 +231,6 @@ function epicConverter(str, el, fn) {
 }
 
 function epicAttributes(value, el) {
-	console.log("epicAttributes()");
-	console.log(el);
 	let obj = {}
 	if(value === undefined) {
 		epicError("epicAttributes()", true, "value")
@@ -330,8 +319,6 @@ function epicRefBuilder(system, attributes, elements) {
 		epicRef[system] = {"*": {}}
 	}
 	elements.forEach(el => {
-		console.log("epicRefBuilder()");
-		console.log(el);
 		let groups = ["*"], id = el.getAttribute("epic-" + system), ref = {"el": el};
 		attributes.forEach(attr => {
 			let value;
