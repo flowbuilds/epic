@@ -92,7 +92,7 @@ function epicMapMarkers(ref) {
 						else {popup = options.popup}
 						let popupOptions = {}
 						if(popup.hasAttribute("epic-popup-options")) {
-							popupOptions = epicAttributes(popup.getAttribute("epic-popup-options"), el)
+							popupOptions = epicAttributes(popup.getAttribute("epic-popup-options"), popup)
 						}
 						popup = new mapboxgl.Popup(popupOptions).setDOMContent(popup)
 					}
