@@ -107,14 +107,29 @@ function epicFunction(fn, el, call) {
 			epicError("get()", false, "selectors", selectors, "string");
 			return
 		}
-		let x = document;
+		let x = document, qs = true;
 		if(selectors.substr(0, 4) === "this") {
-			if(el !== undefined) {
-				x = el
-			}
-			selectors = selectors.slice(4)
+			if(el !== undefined) {x = el}
+			if(selectors.length === 4) {qs = false}
+			else {selectors = selectors.slice(4)}
 		}
-		return epicArray(x.querySelectorAll(selectors))
+		else if(selectors.substr(0, 6) === "parent") {
+			if(el !== undefined) {x = el.parentNode}
+			if(selectors.length === 6) {qs = false}
+			else {selectors = selectors.slice(6)}
+		}
+		else if(selectors.substr(0, 15) === "previousSibling") {
+			if(el !== undefined) {x = el.previousSibling}
+			if(selectors.length === 15) {qs = false}
+			else {selectors = selectors.slice(15)}
+		}
+		else if(selectors.substr(0, 11) === "nextSibling") {
+			if(el !== undefined) {x = el.nextSibling}
+			if(selectors.length === 11) {qs = false}
+			else {selectors = selectors.slice(11)}
+		}
+		if(qs === false) {return [x]}
+		else {return epicArray(x.querySelectorAll(selectors))}
 	}
 	function attr(attr, el) {
 		if(attr === undefined) {
