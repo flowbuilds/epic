@@ -108,6 +108,9 @@ function epicFunction(fn, el, call) {
 			return
 		}
 		let x = document, qs = true;
+		console.log("get()");
+		console.log(selectors);
+		console.log(el);
 		if(selectors.substr(0, 4) === "this") {
 			if(el !== undefined) {x = el}
 			if(selectors.length === 4) {qs = false}
