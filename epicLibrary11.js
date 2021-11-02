@@ -103,12 +103,12 @@ function epicFunction(fn, el, call) {
 			epicError("get()", true, "selectors");
 			return
 		}
+		if(Array.isArray(selectors)) {
+			selectors = "[" + selectors.join() + "]"
+		}
 		else if(typeof selectors !== "string") {
 			epicError("get()", false, "selectors", selectors, "string");
 			return
-		}
-		if(Array.isArray(selectors)) {
-			selectors = "[" + selectors.join() + "]"
 		}
 		let x = document, qs = true;
 		if(selectors.substr(0, 4) === "this") {
