@@ -36,6 +36,82 @@ function epicError(fn, msng, name, param, type) {
 	console.error(msg)
 }
 
+function epicFunction(fn, el) {
+	if(fn === undefined) {
+		// error: missing fn
+		return
+	}
+	else if(typeof fn !== "string") {
+		// error: incompatible fn
+		return
+	}
+	function ref(keys) {
+		//
+	}
+	function get(sels) {
+		//
+	}
+	function attr(attrs) {
+		//
+	}
+	let i = fn.indexOf("("), cycle = 0, pass = false;
+	fn = {
+		"name": fn.slice(0, i),
+		"params": fn.slice(i + 1).slice(0, -1)
+	}
+	console.log(fn.params);
+	if(!fn.params.includes("(")) {pass = true}
+	fn.params = fn.params.split(",");
+	while(pass !== true && cycle < 20) {
+		console.log("Cycle: " + cycle);
+		let tempParams = [], str;
+		let x = {"s": 0, "e": 0, "pass": false}
+		for(let i = 0; i < fn.params.length; i++) {
+			x.s = 0; x.e = 0;
+			if(x.pass === true) {
+				tempParams.push(fn.params[i])
+			}
+			else if(str === undefined) {
+				if(fn.params[i].includes("(")) {
+					for(let j = 0; j < fn.params[i].length; j++) {
+						if(fn.params[i][j] === "(") {x.s++}
+						else if(fn.params[i][j] === ")") {x.e++}
+					}
+					if(x.s > x.e) {
+						str = fn.params[i]
+					}
+					else {
+						tempParams.push(fn.params[i])
+					}
+				}
+				else {
+					tempParams.push(fn.params[i])
+				}
+			}
+			else {
+				str += fn.params[i];
+				if(fn.params[i].includes(")")) {
+					tempParams.push(str);
+					x.pass = true
+				}
+			}
+		}
+		console.log(str);
+		fn.params = tempParams;
+		fn.params.every((param, j) => {
+			x.s = 0; x.e = 0;
+			for(let i = 0; i < param.length; i++) {
+				if(param[i] === "(") {x.s++}
+				else if(param[i] === ")") {x.e++}
+			}
+			if(x.s !== x.e) {return false}
+			else if(j === fn.params.length - 1) {pass = true}
+			return true
+		});
+		cycle++
+	}
+}
+
 function epicFunction(fn, el, call) {
 	if(fn === undefined) {
 		epicError("epicFunction()", true, "fn");
@@ -155,7 +231,7 @@ function epicFunction(fn, el, call) {
 			attrEl = attrEl[0]
 		}
 		if(attrEl.hasAttribute(attr)) {
-			return epicAttributes(attrEl.getAttribute(attr, attrEl), el)
+			return epicAttribute(attrEl.getAttribute(attr, attrEl), el)
 		}
 		else {
 			console.error("EPIC error: attr() cannot find the attribute '" + attr + "' on the 'el' provided:");
@@ -233,7 +309,33 @@ function epicConverter(str, el, fn) {
 	return str
 }
 
-function epicAttributes(value, el) {
+function epicAttribute(val, el) {
+	let obj = {}
+	if(val === undefined) {
+		// error: missing val
+		return obj
+	}
+	else if(typeof val !== "string") {
+		// error: incompatible val
+		return obj
+	}
+	if(val.indexOf("&") === -1 && val.indexOf("=") === -1) {
+		return epicConverter(val, el)
+	}
+	val = val.split("&");
+	val.forEach(x => {
+		let i = x.indexOf("=");
+		if(i !== -1) {
+			obj[x.slice(0, i)] = epicConverter(x.slice(i + 1), el)
+		}
+		else {
+			// error: incompatible var
+		}
+	});
+	return obj
+}
+
+/*function epicAttributes(value, el) {
 	let obj = {}
 	if(value === undefined) {
 		epicError("epicAttributes()", true, "value")
@@ -258,9 +360,100 @@ function epicAttributes(value, el) {
 		}
 	});
 	return obj
+}*/
+
+function epicRefBuilder(sys, attrs, els) {
+	if(sys === undefined) {
+		// error: missing sys
+		return
+	}
+	else if(typeof sys !== "string") {
+		// error: incompatible sys
+		return
+	}
+	// formatting attributes
+	if(attrs === undefined) {attrs = ["options"]}
+	else if(typeof attrs !== "string" || !Array.isArray(attrs)) {
+		// error: incompatible attrs
+		return
+	}
+	else {
+		if(typeof attrs === "string") {
+			attrs = [attrs]
+		}
+		let tempAttrs = ["options"];
+		attrs.forEach(attr => {
+			if(typeof attr === "string") {
+				if(attr !== "options") {
+					tempAttrs.push(attr)
+				}
+			}
+			else {
+				// error: incomaptible attr
+			}
+		});
+		attrs = tempAttrs
+	}
+	// formatting elements
+	if(els === undefined) {
+		els = epicArray(document.querySelectorAll("[epic-" + sys + "]"))
+	}
+	else if(typeof els !== "object") {
+		// error: incompatible els
+		return
+	}
+	else {
+		if(!Array.isArray(els)) {els = [els]}
+		let tempEls = [];
+		els.forEach(el => {
+			if(typeof el === "object") {
+				tempEls.push(el)
+			}
+			else {
+				// error: incompatible el
+			}
+		});
+		els = tempEls
+	}
+	// reference building
+	if(!epicRef.hasOwnProperty(sys)) {
+		epicRef[sys] = {"*": {}}
+	}
+	els.forEach(el => {
+		let groups = ["*"], id = el.getAttribute("epic-" + sys), ref = {"el": el}
+		attrs.forEach(attr => {
+			let val, str = "epic-" + sys + "-" + attr;
+			if(el.hasAttribute(str)) {
+				val = el.getAttribute(str)
+			}
+			if(val !== undefined) {
+				ref[attr] = epicAttribute(val, el)
+			}
+		});
+		if(ref.hasOwnProperty("options") && ref.options.hasOwnProperty("group")) {
+			if(typeof ref.options.group === "string") {
+				groups = [ref.options.group]
+			}
+			else if(Array.isArray(ref.options.group)) {
+				groups = ref.options.group
+			}
+			else {
+				// error: incompatible group
+			}
+		}
+		groups.forEach(group => {
+			if(!epicRef[sys].hasOwnProperty(group)) {
+				epicRef[sys][group] = {}
+			}
+			if(!epicRef[sys][group].hasOwnProperty(id)) {
+				epicRef[sys][group][id] = []
+			}
+			epicRef[sys][group][id].push(ref)
+		})
+	})
 }
 
-function epicRefBuilder(system, attributes, elements) {
+/*function epicRefBuilder(system, attributes, elements) {
 	// errors & formatting
 	if(system === undefined) {
 		epicError("epicRefBuilder()", true, "system");
@@ -352,7 +545,7 @@ function epicRefBuilder(system, attributes, elements) {
 			epicRef[system][group][id].push(ref)
 		})
 	})
-}
+}*/
 
 function epicActions() {
 	epicArray(document.querySelectorAll("[epic-actions]")).forEach(el => {
