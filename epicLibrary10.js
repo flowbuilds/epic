@@ -114,6 +114,7 @@ function epicFunction(fn, el, call) {
 	fn.params.forEach((param, i) => {
 		fn.params[i] = epicConverter(param, el)
 	});
+	console.log(fn.name);
 	console.log(fn.params);
 	if(fn.name === "ref") {return ref.apply(null, fn.params)}
 	else if(fn.name === "get") {return ref.apply(null, fn.params)}
