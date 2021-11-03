@@ -114,6 +114,7 @@ function epicFunction(fn, el) {
 	fn.params.forEach((param, i) => {
 		fn.params[i] = epicConverter(param, el)
 	});
+	console.log(fn.params)
 }
 
 /*function epicFunction(fn, el, call) {
