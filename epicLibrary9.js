@@ -36,7 +36,7 @@ function epicError(fn, msng, name, param, type) {
 	console.error(msg)
 }
 
-function epicFunction(fn, el) {
+function epicFunction(fn, el, call) {
 	if(fn === undefined) {
 		// error: missing fn
 		return
@@ -46,13 +46,13 @@ function epicFunction(fn, el) {
 		return
 	}
 	function ref(keys) {
-		//
+		console.log("ref()")
 	}
 	function get(sels) {
-		//
+		console.log("get()")
 	}
 	function attr(attrs) {
-		//
+		console.log("attr()")
 	}
 	let i = fn.indexOf("("), cycle = 0, pass = false;
 	fn = {
@@ -114,7 +114,20 @@ function epicFunction(fn, el) {
 	fn.params.forEach((param, i) => {
 		fn.params[i] = epicConverter(param, el)
 	});
-	console.log(fn.params)
+	console.log(fn.params);
+	if(fn.name === "ref") {return ref.apply(null, fn.params)}
+	else if(fn.name === "get") {return ref.apply(null, fn.params)}
+	else if(fn.name === "attr") {return ref.apply(null, fn.params)}
+	else if(window.hasOwnProperty(fn.name)) {
+		if(call === undefined || call === true) {
+			return window[fn.name].apply(null, fn.params)
+		}
+		else if(call === false) {return fn}
+	}
+	else {
+		// error: no matching global function
+		return "NO MATCHING FUNCTION"
+	}
 }
 
 /*function epicFunction(fn, el, call) {
