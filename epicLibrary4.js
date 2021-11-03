@@ -89,7 +89,7 @@ function epicFunction(fn, el) {
 				}
 			}
 			else {
-				str += fn.params[i];
+				str += "," + fn.params[i];
 				if(fn.params[i].includes(")")) {
 					tempParams.push(str);
 					x.pass = true
