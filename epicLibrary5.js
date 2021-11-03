@@ -110,6 +110,7 @@ function epicFunction(fn, el) {
 		});
 		cycle++
 	}
+	console.log(fn.params)
 }
 
 /*function epicFunction(fn, el, call) {
