@@ -112,7 +112,7 @@ function epicFunction(fn, el) {
 	}
 }
 
-function epicFunction(fn, el, call) {
+/*function epicFunction(fn, el, call) {
 	if(fn === undefined) {
 		epicError("epicFunction()", true, "fn");
 		return
@@ -265,7 +265,7 @@ function epicFunction(fn, el, call) {
 	else {
 		console.error("EPIC error: epicFunction() couldn't find a function that matches '" + fn.name + "(" + fn.param + ")'")
 	}
-}
+}*/
 
 function epicConverter(str, el, fn) {
 	if(str === undefined) {
