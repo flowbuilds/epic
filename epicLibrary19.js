@@ -83,8 +83,9 @@ function epicFunction(fn, el, call) {
 		//
 		//
 		if(typeof window[fnx.name] === "function") {console.log("Window[" + fnx.name + "]")}
-		if(typeof this[fnx.name] === "function") {console.log("this[" + fnx.name + "]")}
-		if(typeof [fnx.name] === "function") {console.log("[" + fnx.name + "]")}
+		else if(typeof this[fnx.name] === "function") {console.log("this[" + fnx.name + "]")}
+		else if(typeof [fnx.name] === "function") {console.log("[" + fnx.name + "]")}
+		else {console.log("No match: [" + fnx.name + "]")}
 		if(fnx.name !== "ref" && fnx.name !== "get" && fnx.name !== "attr") {
 			if(obj === undefined && !window.hasOwnProperty(fnx.name)) {
 				// error: no matching object/function
