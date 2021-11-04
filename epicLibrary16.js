@@ -74,8 +74,7 @@ function epicFunction(fn, el, call) {
 		}
 	});
 	console.log(fn);
-	let obj = window;
-	console.log(obj);
+	let obj;
 	fn.every((fnx, i) => {
 		if(!fnx.hasOwnProperty("name") || fnx.name === undefined || fnx.name === "") {
 			// error: missing fnx.name
@@ -142,10 +141,16 @@ function epicFunction(fn, el, call) {
 		fnx = fn[i];
 		console.log(fnx.name);
 		console.log(fnx.params);
-		if(fnx.name === "ref") {return ref.apply(null, fnx.params)}
+		fn[i].params.forEach((param, j) => {
+			fn[i].params[j] = epicConverter(param, el)
+		});
+		if(obj === undefined) {
+			if(fn[i].name === "ref") {obj = ref.apply(null, fn[i].params)}
+		}
 		//
 		return true
 	});
+	return obj;
 	//
 	//
 	//
