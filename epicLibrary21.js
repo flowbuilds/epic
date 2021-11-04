@@ -85,20 +85,12 @@ function epicFunction(fn, el, call) {
 			// error: missing fnx.name
 			return false
 		}
-		//
-		//
-		if(typeof window[fnx.name] === "function") {console.log("Window[" + fnx.name + "]")}
-		else if(typeof intFn[fnx.name] === "function") {console.log("this[" + fnx.name + "]")}
-		else if(typeof [fnx.name] === "function") {console.log("[" + fnx.name + "]")}
-		else {console.log("No match: [" + fnx.name + "]")}
-		if(fnx.name !== "ref" && fnx.name !== "get" && fnx.name !== "attr") {
-			if(obj === undefined && !window.hasOwnProperty(fnx.name)) {
+		if(!intFn.hasOwnProperty(fnx.name)) {
+			let x = obj;
+			if(x === undefined) {x = window}
+			if(!x.hasOwnProperty(fnx.name)) {
 				// error: no matching object/function
-				return false
-			}
-			if(obj !== undefined && !obj.hasOwnProperty(fnx.name)) {
-				// error: no matching object/function
-				return false
+				return
 			}
 		}
 		/*if(!obj.hasOwnProperty(fnx.name)) {
@@ -107,8 +99,6 @@ function epicFunction(fn, el, call) {
 				return false
 			}
 		}*/
-		//
-		//
 		if(!fnx.hasOwnProperty("params")) {
 			console.log("obj[" + fnx.name + "]");
 			//obj = obj[fnx.name];
@@ -167,9 +157,12 @@ function epicFunction(fn, el, call) {
 		fn[i].params.forEach((param, j) => {
 			fn[i].params[j] = epicConverter(param, el)
 		});
-		if(obj === undefined) {
-			if(fn[i].name === "ref") {obj = ref.apply(null, fn[i].params)}
+		if(intFn.hasOwnProperty(fn[i].name)) {
+			obj = intFn[fn[i].name].apply(null, fn[i].params)
 		}
+		/*if(obj === undefined) {
+			if(fn[i].name === "ref") {obj = ref.apply(null, fn[i].params)}
+		}*/
 		//
 		return true
 	});
