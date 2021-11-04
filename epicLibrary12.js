@@ -64,6 +64,7 @@ function epicFunction(fn, el, call) {
 		// {"name": "map"},
 		// {"name": "panTo", "params": "geo"} 
 	// ]
+	console.log(fn);
 	fn = fn.split(".");
 	fn.forEach((fnx, i) => {
 		let j = fnx.indexOf("(");
@@ -75,7 +76,9 @@ function epicFunction(fn, el, call) {
 			}
 		}
 	});
+	console.log(fn);
 	let obj = window;
+	console.log(obj);
 	fn.every((fnx, i) => {
 		if(!fnx.hasOwnProperty("name") || fnx.name === undefined || fnx.name === "") {
 			// error: missing fnx.name
