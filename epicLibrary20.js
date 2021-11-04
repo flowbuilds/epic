@@ -60,6 +60,11 @@ function epicFunction(fn, el, call) {
 	function attr(attrs) {
 		console.log("attr()")
 	}
+	let intFn = {
+		"ref": ref,
+		"get": get,
+		"attr": attr
+	}
 	//
 	console.log(fn);
 	fn = fn.split(".");
@@ -83,7 +88,7 @@ function epicFunction(fn, el, call) {
 		//
 		//
 		if(typeof window[fnx.name] === "function") {console.log("Window[" + fnx.name + "]")}
-		else if(typeof this[fnx.name] === "function") {console.log("this[" + fnx.name + "]")}
+		else if(typeof intFn[fnx.name] === "function") {console.log("this[" + fnx.name + "]")}
 		else if(typeof [fnx.name] === "function") {console.log("[" + fnx.name + "]")}
 		else {console.log("No match: [" + fnx.name + "]")}
 		if(fnx.name !== "ref" && fnx.name !== "get" && fnx.name !== "attr") {
