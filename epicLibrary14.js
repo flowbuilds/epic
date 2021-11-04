@@ -46,7 +46,13 @@ function epicFunction(fn, el, call) {
 		return
 	}
 	function ref(keys) {
-		console.log("ref()")
+		console.log("ref()");
+		if(keys === undefined || keys === "") {
+			return epicRef
+		}
+		if(keys === "this") {
+			console.log(el)
+		}
 	}
 	function get(sels) {
 		console.log("get()")
@@ -55,15 +61,6 @@ function epicFunction(fn, el, call) {
 		console.log("attr()")
 	}
 	//
-	//
-	// fn = "ref(this).marker.map.panTo(geo)"
-	// fn = ["this", "marker", "map", "panTo(geo)"]
-	// fn = [
-		// {"name": "ref", "params": "this"},
-		// {"name": "marker"},
-		// {"name": "map"},
-		// {"name": "panTo", "params": "geo"} 
-	// ]
 	console.log(fn);
 	fn = fn.split(".");
 	fn.forEach((fnx, i) => {
@@ -84,10 +81,12 @@ function epicFunction(fn, el, call) {
 			// error: missing fnx.name
 			return false
 		}
-		/*if(!obj.hasOwnProperty(fnx.name)) {
-			// error: no matching object/function
-			return false
-		}*/
+		if(!obj.hasOwnProperty(fnx.name)) {
+			if(fnx.name !== "ref" && fnx.name !== "get" && fnx.name !== "attr") {
+				// error: no matching object/fusion
+				return false
+			}
+		}
 		if(!fnx.hasOwnProperty("params")) {
 			console.log("obj[" + fnx.name + "]");
 			//obj = obj[fnx.name];
@@ -142,6 +141,7 @@ function epicFunction(fn, el, call) {
 		}
 		fnx = fn[i];
 		console.log(fnx.params);
+		if(fnx.name === "ref") {return ref.apply(null, fnx.params)}
 		//
 		return true
 	});
