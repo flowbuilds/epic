@@ -140,6 +140,7 @@ function epicFunction(fn, el, call) {
 			cycle++
 		}
 		fnx = fn[i];
+		console.log(fnx.name);
 		console.log(fnx.params);
 		if(fnx.name === "ref") {return ref.apply(null, fnx.params)}
 		//
