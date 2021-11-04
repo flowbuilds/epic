@@ -54,7 +54,98 @@ function epicFunction(fn, el, call) {
 	function attr(attrs) {
 		console.log("attr()")
 	}
-	let i = fn.indexOf("("), cycle = 0, pass = false;
+	//
+	//
+	// fn = "ref(this).marker.map.panTo(geo)"
+	// fn = ["this", "marker", "map", "panTo(geo)"]
+	// fn = [
+		// {"name": "ref", "params": "this"},
+		// {"name": "marker"},
+		// {"name": "map"},
+		// {"name": "panTo", "params": "geo"} 
+	// ]
+	fn = fn.split(".");
+	fn.forEach((fnx, i) => {
+		let j = fnx.indexOf("(");
+		if(j === -1) {fn[i] = {"name": fnx}}
+		else {
+			fn[i] = {
+				"name": fnx.slice(0, j),
+				"params": fnx.slice(j + 1).slice(0, -1).split(",")
+			}
+		}
+	});
+	let obj = window;
+	fn.every((fnx, i) => {
+		if(!fnx.hasOwnProperty("name") || fnx.name === undefined || fnx.name === "") {
+			// error: missing fnx.name
+			return false
+		}
+		if(!obj.hasOwnProperty(fnx.name)) {
+			// error: no matching object/function
+			return false
+		}
+		if(!fnx.hasOwnProperty("params")) {
+			obj = obj[fnx.name];
+			return true
+		}
+		let cycle = 0, pass = false;
+		while(pass !== true && cycle < 20) {
+			console.log("Cycle: " + cycle);
+			let tempParams = [], str;
+			let x = {"s": 0, "e": 0, "pass": false}
+			fnx.params.every((param, j) => {
+				if(x.pass === true) {
+					tempParams.push(param);
+					return true
+				}
+				if(str !== undefined) {
+					str += "," + param;
+					if(param.includes(")")) {
+						tempParams.push(str);
+						x.pass = true
+					}
+					return true
+				}
+				if(!param.includes("(")) {
+					tempParams.push(param);
+					return true
+				}
+				x.s = 0;
+				x.e = 0;
+				for(let k = 0; k < param.length; k++) {
+					if(param[k] === "(") {x.s++}
+					else if(param[k] === ")") {x.e++}
+				}
+				if(x.s > x.e) {str = param}
+				else {tempParams.push(param)}
+				return true
+			});
+			console.log(str);
+			fn[i].params = tempParams;
+			fn[i].params.every((param, j) => {
+				x.s = 0;
+				x.e = 0;
+				for(let k = 0; k < param.length; k++) {
+					if(param[k] === "(") {x.s++}
+					else if(param[k] === ")") {x.e++}
+				}
+				if(x.s !== x.e) {return false}
+				else if(j === fn[i].params.length - 1) {pass = true}
+				return true
+			});
+			cycle++
+		}
+		fnx = fn[i];
+		console.log(fnx.params);
+		//
+		return true
+	});
+	//
+	//
+	//
+	//
+	/*let i = fn.indexOf("("), cycle = 0, pass = false;
 	fn = {
 		"name": fn.slice(0, i),
 		"params": fn.slice(i + 1).slice(0, -1)
@@ -128,7 +219,7 @@ function epicFunction(fn, el, call) {
 	else {
 		// error: no matching global function
 		return "NO MATCHING FUNCTION"
-	}
+	}*/
 }
 
 /*function epicFunction(fn, el, call) {
