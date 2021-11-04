@@ -84,12 +84,13 @@ function epicFunction(fn, el, call) {
 			// error: missing fnx.name
 			return false
 		}
-		if(!obj.hasOwnProperty(fnx.name)) {
+		/*if(!obj.hasOwnProperty(fnx.name)) {
 			// error: no matching object/function
 			return false
-		}
+		}*/
 		if(!fnx.hasOwnProperty("params")) {
-			obj = obj[fnx.name];
+			console.log("obj[" + fnx.name + "]");
+			//obj = obj[fnx.name];
 			return true
 		}
 		let cycle = 0, pass = false;
