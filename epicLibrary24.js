@@ -83,6 +83,7 @@ function epicFunction(fn, el, call) {
 	fn.every((fnx, i) => {
 		if(!fnx.hasOwnProperty("name") || fnx.name === undefined || fnx.name === "") {
 			// error: missing fnx.name
+			obj = undefined;
 			return false
 		}
 		// no .params => is an object/key
@@ -91,6 +92,7 @@ function epicFunction(fn, el, call) {
 			if(x === undefined) {x = window}
 			if(!x.hasOwnProperty(fnx.name)) {
 				// error: no matching object
+				obj = undefined;
 				return false
 			}
 			obj = x[fnx.name];
@@ -158,6 +160,7 @@ function epicFunction(fn, el, call) {
 		if(obj === undefined) {x = window}
 		if(!x.hasOwnProperty(fn[i].name)) {
 			// error: no matching function
+			obj = undefined;
 			return false
 		}
 		obj = x[fn[i].name].apply(null, fn[i].params);
