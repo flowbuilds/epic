@@ -357,7 +357,10 @@ function epicConverter(str, el, fn) {
 		str = temp
 	}
 	// function
-	else if(str.includes("(") && str.charAt(str.length - 1) === ")") {
+	/*else if(str.includes("(") && str.charAt(str.length - 1) === ")") {
+		str = epicFunction(str, el, fn)
+	}*/
+	else if(str.includes("(") && str.includes(")")) {
 		str = epicFunction(str, el, fn)
 	}
 	return str
