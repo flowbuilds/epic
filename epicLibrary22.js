@@ -85,25 +85,18 @@ function epicFunction(fn, el, call) {
 			// error: missing fnx.name
 			return false
 		}
-		if(!intFn.hasOwnProperty(fnx.name)) {
+		// no .params => is an object/key
+		if(!fnx.hasOwnProperty("params")) {
 			let x = obj;
 			if(x === undefined) {x = window}
 			if(!x.hasOwnProperty(fnx.name)) {
-				// error: no matching object/function
-				return
-			}
-		}
-		/*if(!obj.hasOwnProperty(fnx.name)) {
-			if(fnx.name !== "ref" && fnx.name !== "get" && fnx.name !== "attr") {
-				// error: no matching object/fusion
+				// error: no matching object
 				return false
 			}
-		}*/
-		if(!fnx.hasOwnProperty("params")) {
-			console.log("obj[" + fnx.name + "]");
-			//obj = obj[fnx.name];
+			obj = x[fnx.name];
 			return true
 		}
+		// has .params => is a function
 		let cycle = 0, pass = false;
 		while(pass !== true && cycle < 20) {
 			console.log("Cycle: " + cycle);
@@ -157,13 +150,17 @@ function epicFunction(fn, el, call) {
 		fn[i].params.forEach((param, j) => {
 			fn[i].params[j] = epicConverter(param, el)
 		});
-		if(intFn.hasOwnProperty(fn[i].name)) {
-			obj = intFn[fn[i].name].apply(null, fn[i].params)
+		if(obj === undefined && intFn.hasOwnProperty(fn[i].name)) {
+			obj = intFn[fn[i].name].apply(null, fn[i].params);
+			return true
 		}
-		/*if(obj === undefined) {
-			if(fn[i].name === "ref") {obj = ref.apply(null, fn[i].params)}
-		}*/
-		//
+		let x = obj;
+		if(obj === undefined) {x = window}
+		if(!x.hasOwnProperty(fn[i].name)) {
+			// error: no matching function
+			return false
+		}
+		obj = x[fn[i].name].apply(null, fn[i].params);
 		return true
 	});
 	return obj
