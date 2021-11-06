@@ -75,9 +75,11 @@ function epicFunction(fn, el, call) {
 		let x = document, qs = true;
 		if(sels.substr(0, 4) === "this") {
 			x = el;
-			sels = sels.slice(4);
 			if(sels.length === 4) {
 				qs = false
+			}
+			else {
+				sels = sels.slice(4)
 			}
 		}
 		if(qs === false) {return x}
