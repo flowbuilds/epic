@@ -52,7 +52,7 @@ function epicFunction(fn, el, call) {
 			// error: missing keys
 			return
 		}
-		if(typeof keys !== "string") {
+		if(typeof keys !== "string" && typeof keys !== "object") {
 			// error: incompatible keys
 			return
 		}
@@ -63,7 +63,25 @@ function epicFunction(fn, el, call) {
 		}
 	}
 	function get(sels) {
-		console.log("get()")
+		console.log("get(" + sels + ")");
+		if(sels === undefined) {
+			// error: missing sels
+			return
+		}
+		if(typeof sels !== "string") {
+			// error: incompatible sels
+			return
+		}
+		let x = document, qs = true;
+		if(sels.substr(0, 4) === "this") {
+			x = el;
+			sels = sels.slice(4);
+			if(sels.length === 4) {
+				qs = false
+			}
+		}
+		if(qs === false) {return x}
+		return epicArray(x.querySelectorAll(sels))
 	}
 	function attr(attrs) {
 		console.log("attr()")
@@ -527,100 +545,6 @@ function epicRefBuilder(sys, attrs, els) {
 		})
 	})
 }
-
-/*function epicRefBuilder(system, attributes, elements) {
-	// errors & formatting
-	if(system === undefined) {
-		epicError("epicRefBuilder()", true, "system");
-		return
-	}
-	else if(typeof system !== "string") {
-		epicError("epicRefBuilder()", false, "system", system, "string");
-		return
-	}
-	if(attributes !== undefined) {
-		if(typeof attributes !== "string" || !Array.isArray(attributes)) {
-			epicError("epicRefBuilder()", false, "attributes", attributes, "string or array");
-			return
-		}
-		else if(typeof attributes === "string") {
-			attributes = [attributes]
-		}
-		let temp = ["options"];
-		attributes.forEach(attr => {
-			if(typeof attr === "string") {
-				if(attr !== "options") {
-					temp.push(attr)
-				}
-			}
-			else {
-				epicError("epicRefBuilder()", false, "attributes item", attr, "string")
-			}
-		});
-		attributes = temp
-	}
-	else {
-		attributes = ["options"]
-	}
-	if(elements !== undefined) {
-		if(typeof elements !== "object") {
-			epicError("epicRefBuilder()", false, "elements", elements, "element or array");
-			return
-		}
-		else if(!Array.isArray(elements)) {
-			elements = [elements]
-		}
-		let temp = [];
-		elements.forEach(el => {
-			if(typeof el === "object") {
-				temp.push(el)
-			}
-			else {
-				epicError("epicRefBuilder()", false, "elements item", el, "object")
-			}
-		});
-		elements = temp
-	}
-	else {
-		console.log("[epic-" + system + "]");
-		elements = epicArray(document.querySelectorAll("[epic-" + system + "]"))
-	}
-	// reference building
-	if(!epicRef.hasOwnProperty(system)) {
-		epicRef[system] = {"*": {}}
-	}
-	elements.forEach(el => {
-		let groups = ["*"], id = el.getAttribute("epic-" + system), ref = {"el": el};
-		attributes.forEach(attr => {
-			let value;
-			if(el.hasAttribute("epic-" + system + "-" + attr)) {
-				value = el.getAttribute("epic-" + system + "-" + attr)
-			}
-			ref[attr] = epicAttributes(value, el)
-		});
-		if(ref.hasOwnProperty('options') && ref.options.hasOwnProperty("group")) {
-			if(typeof ref.options.group === "string") {
-				groups = [ref.options.group]
-			}
-			else if(Array.isArray(ref.options.group)) {
-				groups = ref.options.group
-			}
-			else {
-				console.log(el);
-				console.error("EPIC error: epicRefBuilder() incompatible 'group' from 'epic-" + system + "-options' attribute. 'group' is a/an '" + typeof ref.options.group + "' when it should be 'string or array")
-			}
-		}
-		groups.forEach(group => {
-			if(!epicRef[system].hasOwnProperty(group)) {
-				epicRef[system][group] = {}
-			}
-			if(!epicRef[system][group].hasOwnProperty(id)) {
-				epicRef[system][group][id] = []
-			}
-			epicRef[system][group][id].push(ref)
-		})
-	})
-}*/
 
 function epicActions() {
 	epicArray(document.querySelectorAll("[epic-actions]")).forEach(el => {
