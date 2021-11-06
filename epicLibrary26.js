@@ -519,11 +519,11 @@ function epicRefBuilder(sys, attrs, els) {
 			epicRef[sys][group][id].push(ref);
 			// epic-ref attribute
 			let num = epicRef[sys][group][id].length - 1;
-			let ref = sys + "." + group + "." + id + "[" + num + "]";
+			let str = sys + "." + group + "." + id + "[" + num + "]";
 			if(el.hasAttribute("epic-ref")) {
-				ref = el.getAttribute("epic-ref") + "&" + ref
+				str = el.getAttribute("epic-ref") + "&" + str
 			}
-			el.setAttribute("epic-ref", ref)
+			el.setAttribute("epic-ref", str)
 		})
 	})
 }
