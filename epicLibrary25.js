@@ -46,12 +46,20 @@ function epicFunction(fn, el, call) {
 		return
 	}
 	function ref(keys) {
-		console.log("ref()");
-		if(keys === undefined || keys === "") {
-			return epicRef
+		// keys === "string" or {object/element}
+		console.log("ref(" + keys + ")");
+		if(keys === undefined) {
+			// error: missing keys
+			return
 		}
-		if(keys === "this") {
-			console.log(el)
+		if(typeof keys !== "string") {
+			// error: incompatible keys
+			return
+		}
+		if(keys === "") {return epicRef}
+		if(keys.slice(0, 4) === "this") {
+			console.log(el);
+			return el
 		}
 	}
 	function get(sels) {
@@ -508,7 +516,14 @@ function epicRefBuilder(sys, attrs, els) {
 			if(!epicRef[sys][group].hasOwnProperty(id)) {
 				epicRef[sys][group][id] = []
 			}
-			epicRef[sys][group][id].push(ref)
+			epicRef[sys][group][id].push(ref);
+			// epic-ref attribute
+			let num = epicRef[sys][group][id].length - 1;
+			let ref = sys + "." + group + "." + id + "[" + num + "]";
+			if(el.hasAttribute("epic-ref")) {
+				ref = el.getAttribute("epic-ref") + "&" + ref
+			}
+			el.setAttribute("epic-ref", ref)
 		})
 	})
 }
