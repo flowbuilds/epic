@@ -45,22 +45,74 @@ function epicFunction(fn, el, call) {
 		// error: incompatible fn
 		return
 	}
-	function ref(keys) {
-		// keys === "string" or {object/element}
-		console.log("ref(" + keys + ")");
-		if(keys === undefined) {
-			// error: missing keys
+	function ref(x) {
+		if(x === undefined) {
+			// error: missing x
 			return
 		}
-		if(typeof keys !== "string" && typeof keys !== "object") {
-			// error: incompatible keys
+		if(typeof x !== "string" && typeof x !== "object") {
+			// error: incompatible x
 			return
 		}
-		if(keys === "") {return epicRef}
-		if(keys.slice(0, 4) === "this") {
-			console.log(el);
-			return el
+		if(x === "") {return epicRef}
+		if(typeof x === "string") {
+			if(x === "this") {x = el}
+			else {
+				// error: unrecognised string
+				return
+			}
 		}
+		if(!x.hasAttribute("epic-ref")) {
+			// error: missing epic-ref
+			return
+		}
+		x = x.getAttribute("epic-ref").split(".");
+		// x = "filters.*.item[0]"
+		// x = ["filters", "*", "item[0]"]
+		// x = {"el": el, "options": {}}
+		let xRef = epicRef;
+		x.every(str => {
+			let num, i = str.indexOf("[");
+			if(i !== -1 && str.charAt(str.length - 1) === "]") {
+				num = str.slice(i + 1, -1);
+				if(!isNaN(num)) {num = Number(num)}
+				console.log(num);
+				str = str.slice(0, i);
+				console.log(str)
+			}
+			if(!xRef.hasOwnProperty(str)) {
+				// error: no matching str
+				xRef = undefined;
+				return false
+			}
+			xRef = xRef[str];
+			if(num !== undefined) {
+				if(typeof xRef !== "object") {
+					// error
+					xRef = undefined;
+					return false
+				}
+				if(Array.isArray(xRef)) {
+					if(typeof num !== "num") {
+						// error
+						xRef = undefined;
+						return false
+					}
+					if(xRef.length > num) {
+						// error
+						xRef = undefined;
+						return false
+					}
+				}
+				else if(!xRef.hasOwnProperty(num)) {
+					// error
+					xRef = undefined;
+					return false
+				}
+				xRef = xRef[num]
+			}
+			return true
+		});
 	}
 	function get(sels) {
 		console.log("get(" + sels + ")");
