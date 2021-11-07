@@ -80,6 +80,8 @@ function epicFunction(fn, el, call) {
 							if(!item.hasOwnProperty("el")) {
 								return true
 							}
+							console.log(elx);
+							console.log(item.el);
 							if(item.el === elx) {
 								items.push(item)
 							}
