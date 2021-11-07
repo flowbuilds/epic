@@ -659,6 +659,7 @@ function epicActions() {
 			if(act.ev !== undefined && act.fn !== undefined) {
 				if(typeof act.fn === "object" && act.fn.hasOwnProperty("name") && act.fn.hasOwnProperty("params") && Array.isArray(act.fn.params)) {
 					el.addEventListener(act.ev, () => {
+						console.log(act);
 						window[act.fn.name].apply(act.fn.params)
 					})
 				}
