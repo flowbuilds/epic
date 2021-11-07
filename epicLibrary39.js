@@ -283,6 +283,7 @@ function epicFunction(fn, el, call) {
 	console.log(fn);
 	let obj;
 	fn.every((fnx, i) => {
+		console.log(fnx);
 		if(!fnx.hasOwnProperty("name") || fnx.name === undefined || fnx.name === "") {
 			// error: missing fnx.name
 			obj = undefined;
