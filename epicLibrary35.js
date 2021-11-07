@@ -47,9 +47,9 @@ function epicFunction(fn, el, call) {
 	}
 	//
 	//
-	/*function ref(x) {
+	function ref(els) {
 		console.log("ref()");
-		console.log(x);
+		console.log(els);
 		if(x === undefined) {
 			// error: missing x
 			return
@@ -60,25 +60,48 @@ function epicFunction(fn, el, call) {
 		}
 		if(typeof x === "string") {
 			if(x === "") {return epicRef}
-			if(x === "this") {x = el}
+			if(x === "this") {els = [el]}
 			else {
 				// error: unrecognised string
 				return
 			}
 		}
-		console.log(x);
-		let tempX = [];
-		for(sys in epicRef) {
-			for(group in epicRef[sys]) {
-				for(id in epicRef[sys][group]) {
-					epicRef[sys][group][id].every()
+		if(!Array.isArray(els)) {els = [els]}
+		console.log(els);
+		let items = [];
+		els.every(elx => {
+			for(sys in epicRef) {
+				for(group in epicRef[sys]) {
+					for(id in epicRef[sys][group]) {
+						if(!Array.isArray(epicRef[sys][group][id])) {
+							continue
+						}
+						epicRef[sys][group][id].every(item => {
+							if(!item.hasOwnProperty("el")) {
+								return true
+							}
+							if(item.el === elx) {
+								items.push(item)
+							}
+							return true
+						})
+					}
 				}
 			}
+		});
+		if(items.length === 0) {
+			// error: no matching ref items
+			return
 		}
-	}*/
+		if(items.length === 1) {
+			return items[0]
+		}
+		console.log(items);
+		return items
+	}
 	//
 	//
-	function ref(x) {
+	/*function ref(x) {
 		console.log("ref()");
 		console.log(x);
 		if(x === undefined) {
@@ -91,13 +114,14 @@ function epicFunction(fn, el, call) {
 		}
 		if(x === "") {return epicRef}
 		if(typeof x === "string") {
-			if(x === "this") {x = el}
+			if(x === "this") {x = [el]}
 			else {
 				// error: unrecognised string
 				return
 			}
 		}
 		console.log(x);
+		x.every()
 		if(!x.hasAttribute("epic-ref")) {
 			// error: missing epic-ref
 			return
@@ -153,7 +177,7 @@ function epicFunction(fn, el, call) {
 			}
 			return true
 		});
-	}
+	}*/
 	function get(sels) {
 		console.log("get(" + sels + ")");
 		if(sels === undefined) {
@@ -658,7 +682,8 @@ function epicActions() {
 			//
 			if(act.ev !== undefined && act.fn !== undefined) {
 				if(typeof act.fn === "object" && act.fn.hasOwnProperty("name") && act.fn.hasOwnProperty("params") && Array.isArray(act.fn.params)) {
-					el.addEventListener(act.ev, () => {
+					el.addEventListener(act.ev, (ev) => {
+						console.log(ev);
 						console.log(act);
 						window[act.fn.name].apply(null, act.fn.params)
 					})
