@@ -305,6 +305,7 @@ function epicFunction(fn, el, call) {
 				return false
 			}
 			obj = x[fnx.name];
+			console.log(obj);
 			return true
 		}
 		// has .params => is a function
