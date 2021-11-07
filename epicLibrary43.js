@@ -363,6 +363,7 @@ function epicFunction(fn, el, call) {
 		});
 		if(obj === undefined && intFn.hasOwnProperty(fn[i].name)) {
 			obj = intFn[fn[i].name].apply(null, fn[i].params);
+			console.log(obj);
 			return true
 		}
 		let x = obj;
