@@ -99,6 +99,7 @@ function epicFunction(fn, el, call) {
 		}
 		if(items.length === 1) {
 			console.log("ONE MATCH");
+			console.log(items);
 			return items[0]
 		}
 		console.log(items);
