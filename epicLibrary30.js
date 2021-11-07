@@ -46,6 +46,8 @@ function epicFunction(fn, el, call) {
 		return
 	}
 	function ref(x) {
+		console.log("ref()");
+		console.log(x);
 		if(x === undefined) {
 			// error: missing x
 			return
@@ -67,11 +69,13 @@ function epicFunction(fn, el, call) {
 			return
 		}
 		x = x.getAttribute("epic-ref").split(".");
+		console.log(x);
 		// x = "filters.*.item[0]"
 		// x = ["filters", "*", "item[0]"]
 		// x = {"el": el, "options": {}}
 		let xRef = epicRef;
 		x.every(str => {
+			console.log(str);
 			let num, i = str.indexOf("[");
 			if(i !== -1 && str.charAt(str.length - 1) === "]") {
 				num = str.slice(i + 1, -1);
@@ -80,12 +84,14 @@ function epicFunction(fn, el, call) {
 				str = str.slice(0, i);
 				console.log(str)
 			}
+			console.log(str);
 			if(!xRef.hasOwnProperty(str)) {
 				// error: no matching str
 				xRef = undefined;
 				return false
 			}
 			xRef = xRef[str];
+			console.log(xRef);
 			if(num !== undefined) {
 				if(typeof xRef !== "object") {
 					// error
