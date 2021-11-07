@@ -209,9 +209,66 @@ function epicFunction(fn, el, call) {
 		"get": get,
 		"attr": attr
 	}
+	function repair(arr, div) {
+		if(arr === undefined || div === undefined) {return}
+		if(!Array.isArray(arr)) {
+			// error: incompatible arr
+			return
+		}
+		if(typeof div !== "string") {
+			// error: incompatible div
+			return
+		}
+		let pass = false, cycle = 0;
+		while(cycle !== true && cycle < 20) {
+			let tempArr = [], str;
+			let x = {"s": 0, "e": 0, "pass": false}
+			arr.every((item, i) => {
+				if(x.pass === true) {
+					tempArr.push(item);
+					return true
+				}
+				if(str !== undefined) {
+					str += div + item;
+					if(item.includes(")")) {
+						tempArr.push(str);
+						x.pass = true
+					}
+					return true
+				}
+				if(!item.includes("(")) {
+					tempArr.push(item);
+					return true
+				}
+				x.s = 0;
+				x.e = 0;
+				for(let j = 0; j < item.length; j++) {
+					if(item[j] === "(") {x.s++}
+					else if(item[j] === ")") {x.e++}
+				}
+				if(x.s > x.e) {str = item}
+				else {tempArr.push(item)}
+				return true
+			});
+			arr = tempArr;
+			arr.every((item, i) => {
+				x.s = 0;
+				x.e = 0;
+				for(let j = 0; j < item.length; j++) {
+					if(item[j] === "(") {x.s++}
+					else if(item[j] === ")") {x.e++}
+				}
+				if(x.s !== x.e) {return false}
+				else if(i === arr.length - 1) {pass = true}
+				return true
+			});
+			cycle++
+		}
+		return arr
+	}
 	//
 	console.log(fn);
-	fn = fn.split(".");
+	fn = repair(fn.split("."), ".");
 	console.log(fn);
 	fn.forEach((fnx, i) => {
 		let j = fnx.indexOf("(");
