@@ -45,6 +45,39 @@ function epicFunction(fn, el, call) {
 		// error: incompatible fn
 		return
 	}
+	//
+	//
+	/*function ref(x) {
+		console.log("ref()");
+		console.log(x);
+		if(x === undefined) {
+			// error: missing x
+			return
+		}
+		if(typeof x !== "string" && typeof x !== "object") {
+			// error: incompatible x
+			return
+		}
+		if(typeof x === "string") {
+			if(x === "") {return epicRef}
+			if(x === "this") {x = el}
+			else {
+				// error: unrecognised string
+				return
+			}
+		}
+		console.log(x);
+		let tempX = [];
+		for(sys in epicRef) {
+			for(group in epicRef[sys]) {
+				for(id in epicRef[sys][group]) {
+					epicRef[sys][group][id].every()
+				}
+			}
+		}
+	}*/
+	//
+	//
 	function ref(x) {
 		console.log("ref()");
 		console.log(x);
@@ -568,6 +601,11 @@ function epicRefBuilder(sys, attrs, els) {
 	}
 	els.forEach(el => {
 		let groups = ["*"], id = el.getAttribute("epic-" + sys), ref = {"el": el}
+		//
+		//
+		//el.setAttribute("epic-ref", "");
+		//
+		//
 		attrs.forEach(attr => {
 			let val, str = "epic-" + sys + "-" + attr;
 			if(el.hasAttribute(str)) {
@@ -612,7 +650,12 @@ function epicActions() {
 		let actions = el.getAttribute("epic-actions").split("&");
 		actions.forEach(act => {
 			let i = act.indexOf("=");
-			act = {"ev": act.slice(0, i), "fn": epicConverter(act.slice(i + 1), el, false)}
+			//act = {"ev": act.slice(0, i), "fn": epicConverter(act.slice(i + 1), el, false)}
+			//
+			//
+			act = {"ev": act.slice(0, i), "fn": {"name": "epicConverter", "params": [act.slice(i + 1), el, false]}}
+			//
+			//
 			if(act.ev !== undefined && act.fn !== undefined) {
 				if(typeof act.fn === "object" && act.fn.hasOwnProperty("name") && act.fn.hasOwnProperty("params") && Array.isArray(act.fn.params)) {
 					el.addEventListener(act.ev, () => {
