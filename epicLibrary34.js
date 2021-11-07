@@ -660,7 +660,7 @@ function epicActions() {
 				if(typeof act.fn === "object" && act.fn.hasOwnProperty("name") && act.fn.hasOwnProperty("params") && Array.isArray(act.fn.params)) {
 					el.addEventListener(act.ev, () => {
 						console.log(act);
-						window[act.fn.name].apply(act.fn.params)
+						window[act.fn.name].apply(null, act.fn.params)
 					})
 				}
 			}
