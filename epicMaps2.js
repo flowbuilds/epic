@@ -5,6 +5,18 @@ function epicMapsPanTo() {
 		// error: missing maps ref
 		return
 	}
+	for(group in epicRef.maps) {
+		if(!epicRef.maps[group].hasOwnProperty("map")) {
+			// error: missing map ref
+			continue
+		}
+		epicRef.maps[group].map.every(map => {
+			if(!map.hasOwnProperty("map")) {return true}
+			map.map.panTo()
+			//
+			return true
+		})
+	}
 }
 
 function epicMapMarkers(ref) {
@@ -56,7 +68,7 @@ function epicMapMarkers(ref) {
 					})
 				}
 				else if(marker.hasAttribute("epic-marker-options")) {
-					let options = epicAttributes(marker.getAttribute("epic-marker-options"));
+					let options = epicAttribute(marker.getAttribute("epic-marker-options"));
 					if(!options.hasOwnProperty("geo")) {
 						// error: missing geo option
 						return true
@@ -92,7 +104,7 @@ function epicMapMarkers(ref) {
 						else {popup = options.popup}
 						let popupOptions = {}
 						if(popup.hasAttribute("epic-popup-options")) {
-							popupOptions = epicAttributes(popup.getAttribute("epic-popup-options"), popup)
+							popupOptions = epicAttribute(popup.getAttribute("epic-popup-options"), popup)
 						}
 						popup = new mapboxgl.Popup(popupOptions).setDOMContent(popup)
 					}
@@ -183,7 +195,7 @@ function epicMapBuilder(ref) {
 					if(map.options.platform === "mapbox") {
 						let options = {}
 						if(map.el.hasAttribute("epic-mapbox-options")) {
-							options = epicAttributes(map.el.getAttribute("epic-mapbox-options"))
+							options = epicAttribute(map.el.getAttribute("epic-mapbox-options"))
 						}
 						options.container = map.el.getAttribute("id");
 						ref[group].map[i].map = new mapboxgl.Map(options);
