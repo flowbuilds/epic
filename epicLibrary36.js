@@ -50,17 +50,17 @@ function epicFunction(fn, el, call) {
 	function ref(els) {
 		console.log("ref()");
 		console.log(els);
-		if(x === undefined) {
+		if(els === undefined) {
 			// error: missing x
 			return
 		}
-		if(typeof x !== "string" && typeof x !== "object") {
+		if(typeof els !== "string" && typeof els !== "object") {
 			// error: incompatible x
 			return
 		}
-		if(typeof x === "string") {
-			if(x === "") {return epicRef}
-			if(x === "this") {els = [el]}
+		if(typeof els === "string") {
+			if(els === "") {return epicRef}
+			if(els === "this") {els = [el]}
 			else {
 				// error: unrecognised string
 				return
