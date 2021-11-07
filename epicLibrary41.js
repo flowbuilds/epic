@@ -83,6 +83,7 @@ function epicFunction(fn, el, call) {
 							console.log(elx);
 							console.log(item.el);
 							if(item.el === elx) {
+								console.log("MATCH");
 								items.push(item)
 							}
 							return true
@@ -92,10 +93,12 @@ function epicFunction(fn, el, call) {
 			}
 		});
 		if(items.length === 0) {
+			console.log("ZERO MATCHES");
 			// error: no matching ref items
 			return
 		}
 		if(items.length === 1) {
+			console.log("ONE MATCH");
 			return items[0]
 		}
 		console.log(items);
