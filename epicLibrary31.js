@@ -64,6 +64,7 @@ function epicFunction(fn, el, call) {
 				return
 			}
 		}
+		console.log(x);
 		if(!x.hasAttribute("epic-ref")) {
 			// error: missing epic-ref
 			return
