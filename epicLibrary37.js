@@ -212,6 +212,7 @@ function epicFunction(fn, el, call) {
 	//
 	console.log(fn);
 	fn = fn.split(".");
+	console.log(fn);
 	fn.forEach((fnx, i) => {
 		let j = fnx.indexOf("(");
 		if(j === -1) {fn[i] = {"name": fnx}}
