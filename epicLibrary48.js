@@ -303,8 +303,8 @@ function epicFunction(fn, el, call) {
 				"params": fnx.slice(j + 1, -1)
 			}
 			console.log("PARAMS: " + fn[i].params);
-			if(fn[i].params === "") {
-				fn[i].params = [fn[i].params]
+			if(fn[i].params === undefined) {
+				fn[i].params = [""]
 			}
 			else {
 				fn[i].params = fn[i].params.split(",")
