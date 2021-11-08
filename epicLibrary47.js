@@ -300,7 +300,14 @@ function epicFunction(fn, el, call) {
 		else {
 			fn[i] = {
 				"name": fnx.slice(0, j),
-				"params": fnx.slice(j + 1).slice(0, -1).split(",")
+				"params": fnx.slice(j + 1, -1)
+			}
+			console.log("PARAMS: " + fn[i].params);
+			if(fn[i].params === "") {
+				fn[i].params = [fn[i].params]
+			}
+			else {
+				fn[i].params = fn[i].params.split(",")
 			}
 		}
 	});
