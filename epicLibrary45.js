@@ -207,8 +207,26 @@ function epicFunction(fn, el, call) {
 		if(qs === false) {return x}
 		return epicArray(x.querySelectorAll(sels))
 	}
-	function attr(attrs) {
-		console.log("attr()")
+	function attr(attr, elx) {
+		console.log("attr()");
+		if(attrs === undefined) {
+			// error: missing attrs
+			return
+		}
+		if(typeof attrs !== "string") {
+			// error: incompatible attrs
+			return
+		}
+		if(elx !== undefined && typeof elx !== "object") {
+			// error: incompatible els
+			return
+		}
+		if(Array.isArray(elx)) {elx = elx[0]}
+		if(!elx.hasAttribute(attr)) {
+			// error: missing attr
+			return
+		}
+		return epicAttribute(elx.getAttribute(attr), el)
 	}
 	let intFn = {
 		"ref": ref,
