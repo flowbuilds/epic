@@ -209,11 +209,11 @@ function epicFunction(fn, el, call) {
 	}
 	function attr(attr, elx) {
 		console.log("attr()");
-		if(attrs === undefined) {
+		if(attr === undefined) {
 			// error: missing attrs
 			return
 		}
-		if(typeof attrs !== "string") {
+		if(typeof attr !== "string") {
 			// error: incompatible attrs
 			return
 		}
