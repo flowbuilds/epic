@@ -734,13 +734,10 @@ function epicObject(x, el, call) {
 	x.every((y, i) => {
 		console.log(y);
 		let j = y.indexOf("(");
-		// no params
-		//
-		//
 		if(j === -1) {
 			let z = obj;
 			if(z === undefined) {z = window}
-			if(!z.hasOwnProperty(y)) {
+			if(!z.hasOwnProperty(y) && z[y] !== undefined) {
 				// error: no matching object
 				obj = undefined;
 				return false
@@ -757,7 +754,10 @@ function epicObject(x, el, call) {
 		console.log(name);
 		console.log(params);
 		params.forEach((param, k) => {
-			params[k] = epicConverter(param, el)
+			if(param !== "") {
+				params[k] = epicConverter(param, el)
+			}
+			//params[k] = epicConverter(param, el)
 		});
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
@@ -776,23 +776,6 @@ function epicObject(x, el, call) {
 		}
 		obj = z[name].apply(null, params);
 		return true
-		//
-		//
-		/*if(j === -1) {
-			x[i] = {"name": y}
-			return true
-		}
-		let name = y.slice(0, j), params = y.slice(j);
-		console.log(name + " + " + params);
-		// name = "ref" // params = "()"
-		if(params === "()") {params = ""}
-		else {params = params.slice(1, -1)}
-		console.log(name + " + " + params);
-		// w/ params
-		x[i] = {
-			"name": name,
-			"params", params.split(",")
-		}*/
 	});
 	return obj
 }
@@ -807,8 +790,8 @@ function epicConverter(str, el, fn) {
 		return str
 	}
 	// empty
-	//if(str === "") {str = undefined}
-	if(str === "") {return str}
+	if(str === "") {str = undefined}
+	//if(str === "") {return str}
 	// booleans / null / undefined / number
 	else if(str === "true") {str = true}
 	else if(str === "false") {str = false}
