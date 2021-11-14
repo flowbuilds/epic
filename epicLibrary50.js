@@ -760,6 +760,7 @@ function epicObject(x, el, call) {
 		});
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
+			console.log(params);
 			obj = epicIntFns[name].apply(null, params);
 			console.log("epicIntFns( )");
 			console.log(obj);
