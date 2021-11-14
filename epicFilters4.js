@@ -341,7 +341,7 @@ function epicFiltersFormsInit() {
 
 function epicFilter(group) {
 	if(group === undefined) {console.log("epicFilter(undefined)")}
-	else {console.log("epicFilter(defined:" + group = ")")}
+	else {console.log("epicFilter(defined:" + group + ")")}
 	epicFiltersInputs(group);
 	epicFiltersItems(group);
 	epicFiltersCounters(group);
