@@ -754,7 +754,8 @@ function epicObject(x, el, call) {
 		if(params === "()") {params = ""}
 		else {params = params.slice(1, -1)}
 		params = patch(params.split(","), ",");
-		console.log(name + " + " + params);
+		console.log(name);
+		console.log(params);
 		params.forEach((param, k) => {
 			params[k] = epicConverter(param, el)
 		});
