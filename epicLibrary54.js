@@ -737,7 +737,7 @@ function epicObject(x, el, call) {
 		if(j === -1) {
 			let z = obj;
 			if(z === undefined) {z = window}
-			if(!z.hasOwnProperty(y) && z[y] !== undefined) {
+			if(!z.hasOwnProperty(y) && z[y] === undefined) {
 				// error: no matching object
 				obj = undefined;
 				return false
