@@ -1,5 +1,5 @@
 function epicFiltersActive(group) {
-	if(group === undefined) {
+	if(group === undefined || group === "") {
 		group = "*"
 	}
 	else if(typeof group !== "string") {
@@ -46,7 +46,7 @@ function epicFiltersActive(group) {
 }
 
 function epicFiltersReset(group) {
-	if(group === undefined) {group = "*"}
+	if(group === undefined || group === "") {group = "*"}
 	else if(typeof group !== "string") {
 		epicError("epicFiltersReset()", false, "group", group, "string");
 		return
@@ -78,7 +78,7 @@ function epicFiltersCounters(group) {
 		// error: missing filters ref
 		return
 	}
-	if(group === undefined) {group = "*"}
+	if(group === undefined || group === "") {group = "*"}
 	else if(typeof group !== "string") {
 		// error: incompatible group
 		return
@@ -104,7 +104,7 @@ function epicFiltersCounters(group) {
 }
 
 function epicFiltersItems(group) {
-	if(group === undefined) {group = "*"}
+	if(group === undefined || group === "") {group = "*"}
 	else if(typeof group !== "string") {
 		// error: incompatible group
 		return
@@ -251,7 +251,7 @@ function epicFiltersItems(group) {
 }
 
 function epicFiltersInputs(group) {
-	if(group === undefined) {group = "*"}
+	if(group === undefined || group === "") {group = "*"}
 	else if(typeof group !== "string") {
 		// error: incompatible group
 		return
