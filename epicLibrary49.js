@@ -560,6 +560,241 @@ function epicFunction(fn, el, call) {
 	}
 }*/
 
+var epicIntFns = {
+	"ref": (els, el) => {
+		if(els === undefined) {
+			// error: missing els
+			return
+		}
+		if(typeof els !== "string" && typeof els !== "object") {
+			// error: incompatible els
+			return
+		}
+		if(typeof els === "string") {
+			if(els === "") {return epicRef}
+			if(els === "this") {els = [el]}
+			else {
+				// error: unrecognised els
+				return
+			}
+		}
+		if(!Array.isArray(els)) {els = [els]}
+		console.log("epicIntFns.ref()");
+		console.log(els);
+		let refItems = [];
+		els.every(elx => {
+			if(!elx.hasAttribute("epic-ref")) {
+				// error: no epic-ref attribute
+				return true
+			}
+			let refAttrs = elx.getAttribute("epic-ref").split("&");
+			refAttrs.every(x => {
+				x = x.split(".");
+				if(x.length !== 4) {
+					// error: incompatible refAttr
+					return true
+				}
+				if(epicRef.hasOwnProperty(x[0]) 
+					&& epicRef[x[0]].hasOwnProperty(x[1]) 
+					&& epicRef[x[0]][x[1]].hasOwnProperty(x[2]) 
+					&& epicRef[x[0]][x[1]][x[2]].hasOwnProperty(x[3])) {
+					refItems.push(epicRef[x[0]][x[1]][x[2]][x[3]])
+				}
+				else {
+					// error: no matching ref item
+					return true
+				}
+				return true
+			});
+			return true
+		});
+		return refItems
+	},
+	"get": (sels, el) => {
+		console.log("get(" + sels + ")");
+		if(sels === undefined) {
+			// error: missing sels
+			return
+		}
+		if(typeof sels !== "string") {
+			// error: incompatble sels
+			return
+		}
+		let x = document, qs = true;
+		if(sels.substr(0, 4) === "this") {
+			x = el;
+			if(sels.length === 4) {qs = false}
+			else {sels = sels.slice(4)}
+		}
+		if(qs === false) {return x}
+		return epicArray(x.querySelectorAll(sels))
+	},
+	"attr": (attr, attrEl, el) => {
+		console.log("attr(" + attr + ")");
+		if(attr === undefined) {
+			// error: missing attr
+			return
+		}
+		if(typeof attr !== "string") {
+			// error: incompatible attr
+			return
+		}
+		if(attrEl === undefined) {
+			// error: missing attrEl
+			return
+		}
+		if(typeof attrEl !== "object") {
+			// error: incompatible attrEl
+			return
+		}
+		if(Array.isArray(attrEl)) {attrEl = attrEl[0]}
+		if(!attrEl.hasAttribute(attr)) {
+			// error: missing attr
+			return
+		}
+		return epicAttribute(attrEl.getAttribute(attr), el)
+	}
+}
+
+function epicObject(x, el, call) {
+	// x = "ref().filters.*.item"
+	if(x === undefined) {
+		// error: missing x
+		return
+	}
+	if(typeof x !== "string") {
+		// error: incompatible x
+		return
+	}
+	function patch(arr, div) {
+		if(arr === undefined || div === undefined) {return}
+		if(!Array.isArray(arr)) {
+			// error: incompatible arr
+			return
+		}
+		if(typeof div !== "string") {
+			// error: incompatible div
+			return
+		}
+		let pass = false, cycle = 0;
+		while(cycle !== true && cycle < 20) {
+			let tempArr = [], str;
+			let x = {"s": 0, "e": 0, "pass": false}
+			arr.every((item, i) => {
+				if(x.pass === true) {
+					tempArr.push(item);
+					return true
+				}
+				if(str !== undefined) {
+					str += div + item;
+					if(item.includes(")")) {
+						tempArr.push(str);
+						x.pass = true
+					}
+					return true
+				}
+				if(!item.includes("(")) {
+					tempArr.push(item);
+					return true
+				}
+				x.s = 0;
+				x.e = 0;
+				for(let j = 0; j < item.length; j++) {
+					if(item[j] === "(") {x.s++}
+					else if(item[j] === ")") {x.e++}
+				}
+				if(x.s > x.e) {str = item}
+				else {tempArr.push(item)}
+				return true
+			});
+			arr = tempArr;
+			arr.every((item, i) => {
+				x.s = 0;
+				x.e = 0;
+				for(let j = 0; j < item.length; j++) {
+					if(item[j] === "(") {x.s++}
+					else if(item[j] === ")") {x.e++}
+				}
+				if(x.s !== x.e) {return false}
+				else if(i === arr.length - 1) {pass = true}
+				return true
+			});
+			cycle++
+		}
+		return arr
+	}
+	console.log("obj(" + x + ")");
+	if(x.includes(".")) {
+		x = patch(x.split("."), ".")
+	}
+	else {x = [x]}
+	// x = ["ref()", "filters", "*", "item"]
+	console.log(x);
+	let obj;
+	x.every((y, i) => {
+		console.log(y);
+		let j = y.indexOf("(");
+		// no params
+		//
+		//
+		if(j === -1) {
+			let z = obj;
+			if(z === undefined) {z = window}
+			if(!z.hasOwnProperty(y)) {
+				// error: no matching object
+				obj = undefined;
+				return false
+			}
+			obj = z[y];
+			console.log("NAME: " + y);
+			console.log(obj);
+			return true
+		}
+		let name = y.slice(0, j), params = y.slice(j);
+		if(params === "()") {params = ""}
+		else {params = params.slice(1, -1)}
+		params = patch(params.split(","), ",");
+		console.log(name + " + " + params);
+		params.forEach((param, k) => {
+			params[k] = epicConverter(param, el)
+		});
+		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
+			params.push(el);
+			obj = epicIntFns[name].apply(null, params);
+			console.log("epicIntFns( )");
+			console.log(obj);
+			return true
+		}
+		let z = obj;
+		if(z === undefined) {z = window}
+		if(!z.hasOwnProperty(name)) {
+			// error: no matching function
+			obj = undefined;
+			return false
+		}
+		obj = z[name].apply(null, params);
+		return true
+		//
+		//
+		/*if(j === -1) {
+			x[i] = {"name": y}
+			return true
+		}
+		let name = y.slice(0, j), params = y.slice(j);
+		console.log(name + " + " + params);
+		// name = "ref" // params = "()"
+		if(params === "()") {params = ""}
+		else {params = params.slice(1, -1)}
+		console.log(name + " + " + params);
+		// w/ params
+		x[i] = {
+			"name": name,
+			"params", params.split(",")
+		}*/
+	});
+	return obj
+}
+
 function epicConverter(str, el, fn) {
 	if(str === undefined) {
 		epicError("epicConverter()", true, "str");
@@ -600,7 +835,7 @@ function epicConverter(str, el, fn) {
 		str = epicFunction(str, el, fn)
 	}*/
 	else if(str.includes("(") && str.includes(")")) {
-		str = epicFunction(str, el, fn)
+		str = epicObject(str, el, fn)
 	}
 	return str
 }
