@@ -340,6 +340,7 @@ function epicFiltersFormsInit() {
 }
 
 function epicFilter(group) {
+	console.log("epicFilter(" + group + ")");
 	epicFiltersInputs(group);
 	epicFiltersItems(group);
 	epicFiltersCounters(group);
