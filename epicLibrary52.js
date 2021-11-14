@@ -807,7 +807,8 @@ function epicConverter(str, el, fn) {
 		return str
 	}
 	// empty
-	if(str === "") {str = undefined}
+	//if(str === "") {str = undefined}
+	if(str === "") {return str}
 	// booleans / null / undefined / number
 	else if(str === "true") {str = true}
 	else if(str === "false") {str = false}
