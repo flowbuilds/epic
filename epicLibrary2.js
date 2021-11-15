@@ -136,6 +136,7 @@ var epicIntFns = {
 }
 
 function epicObject(x, el, call) {
+	console.log("epicObject( )");
 	if(x === undefined) {
 		// error: missing x
 		return
@@ -205,10 +206,12 @@ function epicObject(x, el, call) {
 		x = patch(x.split("."), ".")
 	}
 	else {x = [x]}
+	console.log(x);
 	let obj;
 	x.every((y, i) => {
 		let j = y.indexOf("(");
 		if(j === -1) {
+			console.log(".key");
 			let z = obj;
 			if(z === undefined) {z = window}
 			if(!z.hasOwnProperty(y) && z[y] === undefined) {
@@ -217,8 +220,10 @@ function epicObject(x, el, call) {
 				return false
 			}
 			obj = z[y];
+			console.log(obj);
 			return true
 		}
+		console.log(".fn( )");
 		let name = y.slice(0, j), params = y.slice(j);
 		if(params === "()") {params = ""}
 		else {params = params.slice(1, -1)}
@@ -241,6 +246,7 @@ function epicObject(x, el, call) {
 			return false
 		}
 		obj = z[name].apply(null, params);
+		console.log(obj);
 		return true
 	});
 	return obj
