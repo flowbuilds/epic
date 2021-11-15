@@ -136,7 +136,6 @@ var epicIntFns = {
 }
 
 function epicObject(x, el, call) {
-	console.log("epicObject( )");
 	if(x === undefined) {
 		// error: missing x
 		return
@@ -206,12 +205,10 @@ function epicObject(x, el, call) {
 		x = patch(x.split("."), ".")
 	}
 	else {x = [x]}
-	console.log(x);
 	let obj;
 	x.every((y, i) => {
 		let j = y.indexOf("(");
 		if(j === -1) {
-			console.log(".key");
 			let z = obj;
 			if(z === undefined) {z = window}
 			if(!z.hasOwnProperty(y) && z[y] === undefined) {
@@ -220,22 +217,17 @@ function epicObject(x, el, call) {
 				return false
 			}
 			obj = z[y];
-			console.log(obj);
 			return true
 		}
-		console.log(".fn( )");
 		let name = y.slice(0, j), params = y.slice(j);
 		if(params === "()") {params = ""}
 		else {params = params.slice(1, -1)}
-		console.log("PARAMS: " + params);
 		params = patch(params.split(","), ",");
-		console.log(params);
 		params.forEach((param, k) => {
 			if(param !== "") {
 				params[k] = epicConverter(param, el)
 			}
 		});
-		console.log(params);
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
 			obj = epicIntFns[name].apply(null, params);
@@ -244,13 +236,11 @@ function epicObject(x, el, call) {
 		let z = obj;
 		if(z === undefined) {z = window}
 		if(!z.hasOwnProperty(name) && z[name] === undefined) {
-			console.log("ERROR SADNESS :(");
 			// error: no matching function
 			obj = undefined;
 			return false
 		}
 		obj = z[name].apply(null, params);
-		console.log(obj);
 		return true
 	});
 	return obj
