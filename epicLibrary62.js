@@ -70,10 +70,17 @@ var epicIntFns = {
 					// error: incompatible refAttr
 					return true
 				}
-				if(epicRef.hasOwnProperty(x[0]) 
+				if(!isNaN(x[3])) {x[3] = Number(x[3])}
+				/*if(epicRef.hasOwnProperty(x[0]) 
 					&& epicRef[x[0]].hasOwnProperty(x[1]) 
 					&& epicRef[x[0]][x[1]].hasOwnProperty(x[2]) 
 					&& epicRef[x[0]][x[1]][x[2]].hasOwnProperty(x[3])) {
+					refItems.push(epicRef[x[0]][x[1]][x[2]][x[3]])
+				}*/
+				if(epicRef.hasOwnProperty(x[0]) 
+					&& epicRef[x[0]].hasOwnProperty(x[1]) 
+					&& epicRef[x[0]][x[1]].hasOwnProperty(x[2]) 
+					&& x[3] < epicRef[x[0]][x[1]][x[2]].length) {
 					refItems.push(epicRef[x[0]][x[1]][x[2]][x[3]])
 				}
 				else {
@@ -404,7 +411,7 @@ function epicRefBuilder(sys, attrs, els) {
 			epicRef[sys][group][id].push(ref);
 			// epic-ref attribute
 			let num = epicRef[sys][group][id].length - 1;
-			let str = sys + "." + group + "." + id + "[" + num + "]";
+			let str = sys + "." + group + "." + id + "." + num;
 			if(el.hasAttribute("epic-ref")) {
 				str = el.getAttribute("epic-ref") + "&" + str
 			}
