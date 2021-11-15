@@ -15,7 +15,7 @@ function epicMapSearch(group) {
 		console.log(contRect);
 		map.options.markers.every((marker, i) => {
 			if(marker.options["marker-ref"].hasOwnProperty("active") 
-				&& !marker.options["marker-ref"].active === false) {return true}
+				&& marker.options["marker-ref"].active === false) {return true}
 			let markRect = marker.el.getBoundingClientRect();
 			console.log(markRect);
 			let active = true;
