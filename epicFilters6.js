@@ -62,13 +62,13 @@ function epicFiltersReset(group) {
 			return true
 		}
 		let type = input.el.getAttribute("type");
-		if(type === undefined) {type = input.el.tagName.toLowerCase()}
+		let tag = input.el.tagName.toLowerCase();
 		if(type === "checkbox") {
 			if(input.el.checked === true) {
 				input.el.click()
 			}
 		}
-		else if(type === "select") {
+		else if(tag === "select") {
 			input.el.selectedIndex = 0
 		}
 		//
