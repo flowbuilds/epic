@@ -55,8 +55,6 @@ var epicIntFns = {
 			}
 		}
 		if(!Array.isArray(els)) {els = [els]}
-		console.log("epicIntFns.ref()");
-		console.log(els);
 		let refItems = [];
 		els.every(elx => {
 			if(!elx.hasAttribute("epic-ref")) {
@@ -87,7 +85,6 @@ var epicIntFns = {
 		return refItems
 	},
 	"get": (sels, el) => {
-		console.log("get(" + sels + ")");
 		if(sels === undefined) {
 			// error: missing sels
 			return
@@ -111,7 +108,6 @@ var epicIntFns = {
 		return epicArray(x.querySelectorAll(sels))
 	},
 	"attr": (attr, attrEl, el) => {
-		console.log("attr(" + attr + ")");
 		if(attr === undefined) {
 			// error: missing attr
 			return
