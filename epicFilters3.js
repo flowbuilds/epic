@@ -68,7 +68,7 @@ function epicFiltersReset(group) {
 			}
 		}
 		else if(type === "select") {
-			input.selectedIndex = 0
+			input.el.selectedIndex = 0
 		}
 		//
 		return true
