@@ -626,6 +626,11 @@ var epicIntFns = {
 			if(sels.length === 4) {qs = false}
 			else {sels = sels.slice(4)}
 		}
+		else if(sels.substr(0, 6) === "parent") {
+			x = el.parentNode;
+			if(sels.length === 6) {qs = false}
+			else {sels = sels.slice(6)}
+		}
 		if(qs === false) {return x}
 		return epicArray(x.querySelectorAll(sels))
 	},
