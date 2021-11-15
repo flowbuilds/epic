@@ -1,22 +1,33 @@
 mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
 
-function epicMapsPanTo() {
-	if(!epicRef.hasOwnProperty("maps")) {
-		// error: missing maps ref
-		return
-	}
-	for(group in epicRef.maps) {
-		if(!epicRef.maps[group].hasOwnProperty("map")) {
-			// error: missing map ref
-			continue
-		}
-		epicRef.maps[group].map.every(map => {
-			if(!map.hasOwnProperty("map")) {return true}
-			map.map.panTo()
-			//
-			return true
-		})
-	}
+function epicMapSearch(group) {
+	if(group === undefined || group === "") {group = "*"}
+	console.log("epicMapSearch(" + group + ")");
+	if(typeof group !== "string") {return}
+	if(!epicRef.maps.hasOwnProperty(group)) {return}
+	let ref = epicRef.maps[group];
+	if(!ref.hasOwnProperty("map")) {return}
+	ref.map.every(map => {
+		if(!map.hasOwnProperty("map")) {return true}
+		if(!map.options.hasOwnProperty("markers")) {return true}
+		if(!map.options.hasOwnProperty("markersRef")) {return true}
+		let contRect = map.map._container.getBoundingClientRect();
+		console.log(contRect);
+		map.options.markers.every((marker, i) => {
+			if(marker.options.markersRef.hasOwnProperty("active") 
+				&& !marker.options.markersRef.active === false) {return true}
+			let markRect = marker.el.getBoundingClientRect();
+			console.log(markRect);
+			let active = true;
+			if(markRect.left < contRect.left 
+				|| markRect.top < contRect.top 
+				|| markRect.right >= contRect.right 
+				|| markRect.bottom >= contRect.bottom) {active = false}
+			marker.options.markersRef.active = active
+		});
+		return true
+	});
+	epicFiltersActive(group)
 }
 
 function epicMapMarkers(ref) {
@@ -121,12 +132,7 @@ function epicMapMarkers(ref) {
 					}
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker._element;
-					//
-					//
-					// item[i].options.marker-options.marker = newMarker
 					ref[group].map[i].options.markers[j].options["marker-options"].marker = newMarker;
-					//
-					//
 					if(markers[j].options["marker-options"].hasOwnProperty("filter") && markers[j].options["marker-options"].filter == true) {
 						if(markers[j].options["marker-ref"].options.hasOwnProperty("filter-group")) {
 							markers[j].options["marker-ref"].options["filter-group"].push(markers[j])
