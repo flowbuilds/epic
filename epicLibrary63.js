@@ -92,6 +92,7 @@ var epicIntFns = {
 			return true
 		});
 		console.log(refItems);
+		if(refItems.length === 1) {refItems = refItems[0]}
 		return refItems
 	},
 	"get": (sels, el) => {
