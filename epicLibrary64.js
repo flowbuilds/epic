@@ -38,7 +38,6 @@ function epicError(fn, msng, name, param, type) {
 
 var epicIntFns = {
 	"ref": (els, el) => {
-		console.log("ref( )");
 		if(els === undefined) {
 			// error: missing els
 			return
@@ -56,7 +55,6 @@ var epicIntFns = {
 			}
 		}
 		if(!Array.isArray(els)) {els = [els]}
-		console.log(els);
 		let refItems = [];
 		els.every(elx => {
 			if(!elx.hasAttribute("epic-ref")) {
@@ -71,12 +69,6 @@ var epicIntFns = {
 					return true
 				}
 				if(!isNaN(x[3])) {x[3] = Number(x[3])}
-				/*if(epicRef.hasOwnProperty(x[0]) 
-					&& epicRef[x[0]].hasOwnProperty(x[1]) 
-					&& epicRef[x[0]][x[1]].hasOwnProperty(x[2]) 
-					&& epicRef[x[0]][x[1]][x[2]].hasOwnProperty(x[3])) {
-					refItems.push(epicRef[x[0]][x[1]][x[2]][x[3]])
-				}*/
 				if(epicRef.hasOwnProperty(x[0]) 
 					&& epicRef[x[0]].hasOwnProperty(x[1]) 
 					&& epicRef[x[0]][x[1]].hasOwnProperty(x[2]) 
@@ -91,7 +83,6 @@ var epicIntFns = {
 			});
 			return true
 		});
-		console.log(refItems);
 		if(refItems.length === 1) {refItems = refItems[0]}
 		return refItems
 	},
