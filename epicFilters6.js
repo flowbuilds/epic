@@ -155,6 +155,7 @@ function epicFiltersItems(group) {
 						// error: incompatible data[name]
 						return true
 					}
+					dataVal = dataVal.toLowerCase();
 					if(dataVal.includes(fltr.val)) {
 						res[name].push(true)
 					}
@@ -221,7 +222,7 @@ function epicFiltersItems(group) {
 					}
 				}
 				else {
-					if(data[name] == fltr.val) {
+					if(data[name].toLowerCase() == fltr.val) {
 						res[name].push(true)
 					}
 					else {
@@ -298,7 +299,7 @@ function epicFiltersInputs(group) {
 		if(!epicRef.filters[group].activeFilters.hasOwnProperty(name)) {
 			epicRef.filters[group].activeFilters[name] = []
 		}
-		epicRef.filters[group].activeFilters[name].push({"type": fltrtype, "val": val})
+		epicRef.filters[group].activeFilters[name].push({"type": fltrtype, "val": val.toLowerCase()})
 		return true
 	})
 }
