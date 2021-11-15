@@ -222,7 +222,7 @@ function epicFiltersItems(group) {
 					}
 				}
 				else {
-					if(data[name].toLowerCase() == fltr.val) {
+					if(data[name] !== undefined && data[name].toLowerCase() == fltr.val) {
 						res[name].push(true)
 					}
 					else {
