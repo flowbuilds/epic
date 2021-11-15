@@ -23,7 +23,8 @@ function epicMapSearch(group) {
 				|| markRect.top < contRect.top 
 				|| markRect.right >= contRect.right 
 				|| markRect.bottom >= contRect.bottom) {active = false}
-			marker.options["marker-ref"].active = active
+			marker.options["marker-ref"].active = active;
+			return true
 		});
 		return true
 	});
