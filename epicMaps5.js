@@ -14,8 +14,8 @@ function epicMapSearch(group) {
 		let contRect = map.map._container.getBoundingClientRect();
 		console.log(contRect);
 		map.options.markers.every((marker, i) => {
-			if(marker.options.markersRef.hasOwnProperty("active") 
-				&& !marker.options.markersRef.active === false) {return true}
+			if(marker.options["marker-ref"].hasOwnProperty("active") 
+				&& !marker.options["marker-ref"].active === false) {return true}
 			let markRect = marker.el.getBoundingClientRect();
 			console.log(markRect);
 			let active = true;
@@ -23,7 +23,7 @@ function epicMapSearch(group) {
 				|| markRect.top < contRect.top 
 				|| markRect.right >= contRect.right 
 				|| markRect.bottom >= contRect.bottom) {active = false}
-			marker.options.markersRef.active = active
+			marker.options["marker-ref"].active = active
 		});
 		return true
 	});
