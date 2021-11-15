@@ -121,6 +121,12 @@ function epicMapMarkers(ref) {
 					}
 					markers[j].options.marker = newMarker;
 					markers[j].el = newMarker._element;
+					//
+					//
+					// item[i].options.marker-options.marker = newMarker
+					ref[group].map[i].options.markers[j].options["marker-options"].marker = newMarker;
+					//
+					//
 					if(markers[j].options["marker-options"].hasOwnProperty("filter") && markers[j].options["marker-options"].filter == true) {
 						if(markers[j].options["marker-ref"].options.hasOwnProperty("filter-group")) {
 							markers[j].options["marker-ref"].options["filter-group"].push(markers[j])
