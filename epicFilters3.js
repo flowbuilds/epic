@@ -293,13 +293,14 @@ function epicFiltersInputs(group) {
 		}
 		// store
 		if(val === undefined) {return true}
+		if(typeof val === "string") {val = val.toLowerCase()}
 		if(input.options.hasOwnProperty("filter-type")) {
 			fltrtype = input.options["filter-type"]
 		}
 		if(!epicRef.filters[group].activeFilters.hasOwnProperty(name)) {
 			epicRef.filters[group].activeFilters[name] = []
 		}
-		epicRef.filters[group].activeFilters[name].push({"type": fltrtype, "val": val.toLowerCase()})
+		epicRef.filters[group].activeFilters[name].push({"type": fltrtype, "val": val})
 		return true
 	})
 }
