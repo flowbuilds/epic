@@ -227,12 +227,15 @@ function epicObject(x, el, call) {
 		let name = y.slice(0, j), params = y.slice(j);
 		if(params === "()") {params = ""}
 		else {params = params.slice(1, -1)}
+		console.log("PARAMS: " + params);
 		params = patch(params.split(","), ",");
+		console.log(params);
 		params.forEach((param, k) => {
 			if(param !== "") {
 				params[k] = epicConverter(param, el)
 			}
 		});
+		console.log(params);
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
 			obj = epicIntFns[name].apply(null, params);
@@ -240,7 +243,8 @@ function epicObject(x, el, call) {
 		}
 		let z = obj;
 		if(z === undefined) {z = window}
-		if(!z.hasOwnProperty(name)) {
+		if(!z.hasOwnProperty(name) && z[name] === undefined) {
+			console.log("ERROR SADNESS :(");
 			// error: no matching function
 			obj = undefined;
 			return false
