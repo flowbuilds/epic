@@ -57,10 +57,10 @@ function epicFiltersReset(group) {
 	}
 	if(!epicRef.filters[group].hasOwnProperty("input")) {return}
 	epicRef.filters[group].input.every(input => {
-		if(!input.el.hasAttribute("type")) {
+		/*if(!input.el.hasAttribute("type")) {
 			// error: no input.options.type
 			return true
-		}
+		}*/
 		let type = input.el.getAttribute("type");
 		let tag = input.el.tagName.toLowerCase();
 		if(type === "checkbox") {
