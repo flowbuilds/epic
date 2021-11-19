@@ -231,10 +231,13 @@ function epicFiltersItems(group) {
 					// data[name] = [lat, lng]
 					if(!Array.isArray(data[name])) {
 						if(item.options.hasOwnProperty("geo")) {
-							data[name] = item.options.geo
+							console.log("Update geo");
+							ref.item[i].options["filter-data"][name] = item.options.geo
 						}
 						else {return true}
 					}
+					data = ref.item[i].options["filter-data"];
+					console.log(data);
 					if(data[name].length !== 2) {return true}
 					// lng < top && > bottom
 					// lat > left && < right
