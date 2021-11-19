@@ -228,10 +228,10 @@ function epicObject(x, el, call) {
 				params[k] = epicConverter(param, el)
 			}
 		});
-		console.log(this);
+		//console.log(this);
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
-			obj = epicIntFns[name].apply(null, params);
+			obj = epicIntFns[name].apply(this, params);
 			return true
 		}
 		let z = obj;
@@ -241,7 +241,7 @@ function epicObject(x, el, call) {
 			obj = undefined;
 			return false
 		}
-		obj = z[name].apply(null, params);
+		obj = z[name].apply(this, params);
 		return true
 	});
 	return obj
