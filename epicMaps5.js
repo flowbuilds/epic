@@ -1,11 +1,14 @@
 mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
 
 function epicMapboxGetBounds(map) {
-	console.log("epicMapboxGetBounds( )");
-	console.log(map);
-	if(map === undefined) {console.log("undefined"); return}
+	if(map === undefined) {return}
 	let x = map.getBounds();
-	return {"left": x._sw.lng, "top": x._ne.lat, "right": x._ne.lng, "bottom": x._sw.lat}
+	return {
+		"left": x._sw.lng,
+		"top": x._ne.lat,
+		"right": x._ne.lng,
+		"bottom": x._sw.lat
+	}
 }
 
 function epicMapMarkers(ref) {
