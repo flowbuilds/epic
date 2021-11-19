@@ -135,7 +135,7 @@ var epicIntFns = {
 	}
 }
 
-function epicObject(x, el, call) {
+function epicObject(x, el) {
 	if(x === undefined) {
 		// error: missing x
 		return
@@ -201,6 +201,10 @@ function epicObject(x, el, call) {
 		}
 		return arr
 	}
+	if(x.charAt(0) === "!") {
+		x = x.slice(1);
+		return () => {epicObject(x, el)}
+	}
 	if(x.includes(".")) {
 		x = patch(x.split("."), ".")
 	}
@@ -246,7 +250,7 @@ function epicObject(x, el, call) {
 	return obj
 }
 
-function epicConverter(str, el, fn) {
+function epicConverter(str, el) {
 	if(str === undefined) {
 		epicError("epicConverter()", true, "str");
 		return
@@ -283,7 +287,7 @@ function epicConverter(str, el, fn) {
 	}
 	// function
 	else if(str.includes("(") && str.includes(")")) {
-		str = epicObject(str, el, fn)
+		str = epicObject(str, el)
 	}
 	return str
 }
