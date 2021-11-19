@@ -230,9 +230,10 @@ function epicFiltersItems(group) {
 					// fltr.val = {"left": #, "top": #, "right": #, "bottom": #}
 					// data[name] = [lat, lng]
 					if(!Array.isArray(data[name])) {
-						if(item.options.hasOwnProperty("geo")) {
+						if(item.options.hasOwnProperty("marker-options") &&
+							item.options["marker-options"].hasOwnProperty("geo")) {
 							console.log("Update geo");
-							ref.item[i].options["filter-data"][name] = item.options.geo
+							ref.item[i].options["filter-data"][name] = item.options["marker-options"].geo
 						}
 						else {return true}
 					}
