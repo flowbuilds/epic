@@ -4,10 +4,10 @@ function epicMapboxGetBounds(map) {
 	if(map === undefined) {return}
 	let x = map.getBounds();
 	return {
-		"left": x._sw.lng,
-		"top": x._ne.lat,
-		"right": x._ne.lng,
-		"bottom": x._sw.lat
+		"left": x._sw.lat,
+		"top": x._ne.lng,
+		"right": x._ne.lat,
+		"bottom": x._sw.lng
 	}
 }
 
