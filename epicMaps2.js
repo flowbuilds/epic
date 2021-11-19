@@ -1,5 +1,33 @@
 mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
 
+function epicMapboxGetBounds(map) {
+	if(map === undefined) {return}
+	return map.getBounds()
+}
+
+/*function epicMapSearch(group) {
+	if(group === undefined || group === "") {group = "*"}
+	if(typeof group !== "string") {return}
+	if(!epicRef.maps.hasOwnProperty(group)) {return}
+	if(!epicRef.maps[group].hasOwnProperty("map")) {return}
+	epicRef.maps[group].map.every(map => {
+		if(!map.hasOwnProperty("map")) {return true}
+		if(!map.options.hasOwnProperty("markers")) {return true}
+		let mapGeo = map.map.getBounds();
+		console.log(mapGeo);
+		map.options.markers.every(marker => {
+			if(!marker.options.hasOwnProperty("marker-options")) {return true}
+			if(!marker.options["marker-options"].hasOwnProperty("geo")) {return true}
+			if(!Array.isArray(marker.options.geo)) {return true}
+			if(!marker.options.hasOwnProperty("marker-ref")) {return true}
+			//
+			return true
+		});
+		return true
+	});
+	epicFiltersActive(group)
+}
+
 function epicMapSearch(group) {
 	if(group === undefined || group === "") {group = "*"}
 	console.log("epicMapSearch(" + group + ")");
@@ -29,7 +57,7 @@ function epicMapSearch(group) {
 		return true
 	});
 	epicFiltersActive(group)
-}
+}*/
 
 function epicMapMarkers(ref) {
 	if(ref === undefined) {
