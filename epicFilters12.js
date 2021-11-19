@@ -315,8 +315,12 @@ function epicFiltersInputs(group) {
 		if(type === "checkbox") {
 			if(input.el.checked == true) {
 				if(input.options.hasOwnProperty("value")) {
-					val = input.options.value;
-					if(typeof val === "function") {val = val()}
+					if(typeof input.options.value === "function") {
+						val = input.options.value()
+					}
+					else {val = input.options.value}
+					//val = input.options.value;
+					//if(typeof val === "function") {val = val()}
 				}
 				else {val = true}
 				console.log(val)
