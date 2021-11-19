@@ -225,6 +225,23 @@ function epicFiltersItems(group) {
 						}
 					}
 				}
+				else if(fltr.type === "geo") {
+					console.log("geo");
+					// fltr.val = {"left": #, "top": #, "right": #, "bottom": #}
+					// data[name] = [lat, lng]
+					if(!Array.isArray(data[name])) {return true}
+					if(data[name].length !== 2) {return true}
+					// lng < top && > bottom
+					// lat > left && < right
+					if(data[name][0] > left && 
+						data[name][0] < right && 
+						data[name][1] < top && 
+						data[name][1] > bottom) {
+						console.log("Winner winner, chicken dinner");
+						res[name].push(true)
+					}
+					else {res[name].push(false)}
+				}
 				else {
 					if(data[name] !== undefined && data[name].toLowerCase() == fltr.val) {
 						res[name].push(true)
