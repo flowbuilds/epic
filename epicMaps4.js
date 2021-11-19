@@ -4,62 +4,9 @@ function epicMapboxGetBounds(map) {
 	console.log("epicMapboxGetBounds( )");
 	console.log(map);
 	if(map === undefined) {console.log("undefined"); return}
-	return map.getBounds()
+	let x = map.getBounds();
+	return {"left": x._sw.lng, "top": x._ne.lat, "right": x._ne.lng, "bottom": x._sw.lat}
 }
-
-/*function epicMapSearch(group) {
-	if(group === undefined || group === "") {group = "*"}
-	if(typeof group !== "string") {return}
-	if(!epicRef.maps.hasOwnProperty(group)) {return}
-	if(!epicRef.maps[group].hasOwnProperty("map")) {return}
-	epicRef.maps[group].map.every(map => {
-		if(!map.hasOwnProperty("map")) {return true}
-		if(!map.options.hasOwnProperty("markers")) {return true}
-		let mapGeo = map.map.getBounds();
-		console.log(mapGeo);
-		map.options.markers.every(marker => {
-			if(!marker.options.hasOwnProperty("marker-options")) {return true}
-			if(!marker.options["marker-options"].hasOwnProperty("geo")) {return true}
-			if(!Array.isArray(marker.options.geo)) {return true}
-			if(!marker.options.hasOwnProperty("marker-ref")) {return true}
-			//
-			return true
-		});
-		return true
-	});
-	epicFiltersActive(group)
-}
-
-function epicMapSearch(group) {
-	if(group === undefined || group === "") {group = "*"}
-	console.log("epicMapSearch(" + group + ")");
-	if(typeof group !== "string") {return}
-	if(!epicRef.maps.hasOwnProperty(group)) {return}
-	let ref = epicRef.maps[group];
-	if(!ref.hasOwnProperty("map")) {return}
-	ref.map.every(map => {
-		if(!map.hasOwnProperty("map")) {return true}
-		if(!map.options.hasOwnProperty("markers")) {return true}
-		if(!map.options.hasOwnProperty("markersRef")) {return true}
-		let contRect = map.map._container.getBoundingClientRect();
-		console.log(contRect);
-		map.options.markers.every((marker, i) => {
-			if(marker.options["marker-ref"].hasOwnProperty("active") 
-				&& marker.options["marker-ref"].active === false) {return true}
-			let markRect = marker.el.getBoundingClientRect();
-			console.log(markRect);
-			let active = true;
-			if(markRect.left < contRect.left 
-				|| markRect.top < contRect.top 
-				|| markRect.right >= contRect.right 
-				|| markRect.bottom >= contRect.bottom) {active = false}
-			marker.options["marker-ref"].active = active;
-			return true
-		});
-		return true
-	});
-	epicFiltersActive(group)
-}*/
 
 function epicMapMarkers(ref) {
 	if(ref === undefined) {
