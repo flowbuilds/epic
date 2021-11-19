@@ -272,7 +272,7 @@ function epicConverter(str, el) {
 	else if(str.charAt(0) === "[" && str.charAt(str.length - 1) === "]") {
 		str = str.slice(1, str.length - 1).split(",");
 		str.forEach((x, i) => {
-			str[i] = epicConverter(x, el, fn)
+			str[i] = epicConverter(x, el)
 		})
 	}
 	// object
@@ -281,7 +281,7 @@ function epicConverter(str, el) {
 		let temp = {}
 		str.forEach(x => {
 			x = x.split(":");
-			temp[x[0]] = epicConverter(x[1], el, fn)
+			temp[x[0]] = epicConverter(x[1], el)
 		});
 		str = temp
 	}
