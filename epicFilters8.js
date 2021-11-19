@@ -229,7 +229,12 @@ function epicFiltersItems(group) {
 					console.log("geo");
 					// fltr.val = {"left": #, "top": #, "right": #, "bottom": #}
 					// data[name] = [lat, lng]
-					if(!Array.isArray(data[name])) {return true}
+					if(!Array.isArray(data[name])) {
+						if(item.options.hasOwnProperty("geo")) {
+							data[name] = item.options.geo
+						}
+						else {return true}
+					}
 					if(data[name].length !== 2) {return true}
 					// lng < top && > bottom
 					// lat > left && < right
