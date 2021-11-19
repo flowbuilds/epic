@@ -242,10 +242,10 @@ function epicFiltersItems(group) {
 					if(data[name].length !== 2) {return true}
 					// lng < top && > bottom
 					// lat > left && < right
-					if(data[name][0] > left && 
-						data[name][0] < right && 
-						data[name][1] < top && 
-						data[name][1] > bottom) {
+					if(data[name][0] > fltr.val.left && 
+						data[name][0] < fltr.val.right && 
+						data[name][1] < fltr.val.top && 
+						data[name][1] > fltr.val.bottom) {
 						console.log("Winner winner, chicken dinner");
 						res[name].push(true)
 					}
