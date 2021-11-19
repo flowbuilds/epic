@@ -1,7 +1,9 @@
 mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
 
 function epicMapboxGetBounds(map) {
-	if(map === undefined) {return}
+	console.log("epicMapboxGetBounds( )");
+	console.log(map);
+	if(map === undefined) {console.log("undefined"); return}
 	return map.getBounds()
 }
 
