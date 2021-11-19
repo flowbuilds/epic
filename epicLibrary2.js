@@ -228,6 +228,7 @@ function epicObject(x, el, call) {
 				params[k] = epicConverter(param, el)
 			}
 		});
+		console.log(this);
 		if(obj === undefined && epicIntFns.hasOwnProperty(name)) {
 			params.push(el);
 			obj = epicIntFns[name].apply(null, params);
