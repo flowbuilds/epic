@@ -203,7 +203,7 @@ function epicObject(x, el) {
 	}
 	if(x.charAt(0) === "!") {
 		x = x.slice(1);
-		return function() {epicObject(x, el)}
+		return function() {return epicObject(x, el)}
 	}
 	if(x.includes(".")) {
 		x = patch(x.split("."), ".")
