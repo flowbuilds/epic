@@ -272,6 +272,7 @@ function epicFiltersInputs(group) {
 	epicRef.filters[group].activeFilters = {}
 	epicRef.filters[group].input.every(input => {
 		let name, type, val = input.el.value, fltrtype;
+		console.log(val);
 		if(!input.options.hasOwnProperty("filter-name")) {
 			// error: missing name
 			return true
