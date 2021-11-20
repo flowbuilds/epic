@@ -226,27 +226,19 @@ function epicFiltersItems(group) {
 					}
 				}
 				else if(fltr.type === "geo") {
-					console.log("geo");
-					// fltr.val = {"left": #, "top": #, "right": #, "bottom": #}
-					// data[name] = [lat, lng]
 					if(!Array.isArray(data[name])) {
 						if(item.options.hasOwnProperty("marker-options") &&
 							item.options["marker-options"].hasOwnProperty("geo")) {
-							console.log("Update geo");
 							ref.item[i].options["filter-data"][name] = item.options["marker-options"].geo
 						}
 						else {return true}
 					}
 					data = ref.item[i].options["filter-data"];
-					console.log(data);
 					if(data[name].length !== 2) {return true}
-					// lng < top && > bottom
-					// lat > left && < right
 					if(data[name][0] > fltr.val.left && 
 						data[name][0] < fltr.val.right && 
 						data[name][1] < fltr.val.top && 
 						data[name][1] > fltr.val.bottom) {
-						console.log("Winner winner, chicken dinner");
 						res[name].push(true)
 					}
 					else {res[name].push(false)}
@@ -319,11 +311,8 @@ function epicFiltersInputs(group) {
 						val = input.options.value()
 					}
 					else {val = input.options.value}
-					//val = input.options.value;
-					//if(typeof val === "function") {val = val()}
 				}
 				else {val = true}
-				console.log(val)
 			}
 			else {return true}
 		}
