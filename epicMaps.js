@@ -1,5 +1,3 @@
-mapboxgl.accessToken = "pk.eyJ1IjoidGhlY2hyaXNlbHNvbiIsImEiOiJjazY2aWMwYW4wNHN3M2xwajVwdXg5bnZwIn0.qN17abkQA21Ry6Bu2PbMBA";
-
 function epicMapboxGetBounds(map) {
 	if(map === undefined) {return}
 	let x = map.getBounds();
