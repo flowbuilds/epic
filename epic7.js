@@ -51,7 +51,7 @@ var epic = {
 					if(attr.specified === false) {continue}
 					if(!attr.name.includes("epic-" + sys + "-")) {continue}
 					if(attr.name === "epic-" + sys + "-element") {continue}
-					obj[attr.name.replace("epic-" + sys + "-", "")] = attr.value
+					obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value)
 				}
 				if(!ref.hasOwnProperty(name)) {ref[name] = []}
 				ref[name].push(obj);
