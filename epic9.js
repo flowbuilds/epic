@@ -14,6 +14,31 @@ var epic = {
 		"value": (val, el) => {
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
+			// empty
+			if(val === "") {str = undefined}
+			// booleans // null // undefined
+			else if(val === "true") {str = true}
+			else if(val === "false") {val = false}
+			else if(val === "null") {val = null}
+			else if(val === "undefined") {val = undefined}
+			// number
+			else if(!isNaN(val)) {val = Number(val)}
+			// array
+			else if(val.charAt(0) === "[" && val.charAt(val.length - 1) === "]") {
+				val = val.slice(1, val.length - 1).split(",");
+				val.forEach((v, i) => {val[i] = epic.js.value(v, el)})
+			}
+			// object
+			else if(val.charAt(0) === "{" && val.charAt(val.length - 1) === "}") {
+				val = val.slice(1, val.length - 1).split(",");
+				let obj = {}
+				val.forEach(v => {
+					v = v.split(":");
+					obj[v[0]] = epic.js.value(v[1], el)
+				});
+				val = obj
+			}
+			// function
 			//
 			return val
 		},
