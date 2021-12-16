@@ -11,6 +11,31 @@ var epic = {
 			}
 			return y
 		},
+		"value": (val, el) => {
+			if(val === undefined) {return val}
+			if(typeof val !== "string") {return val}
+			//
+			return val
+		},
+		"attribute": (val, el) => {
+			if(val === undefined) {return val}
+			if(typeof val !== "string") {return val}
+			if(!val.includes("&") && !val.includes("=")) {
+				return epic.js.value(val, el)
+			}
+			let obj = {}, o = false;
+			val = val.split("&");
+			val.forEach((v, i) => {
+				let j = v.indexOf("=");
+				if(j === -1) {val[i] = epic.js.value(v)}
+				else {
+					obj[v.slice(0, j)] = epic.js.value(v.slice(i + 1), el);
+					o = true
+				}
+			});
+			if(o === true) {val = obj}
+			return val
+		},
 		"refBuilder": (sys) => {
 			let ref = {}
 			if(sys === undefined) {return ref}
