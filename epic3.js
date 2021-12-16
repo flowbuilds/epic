@@ -23,6 +23,9 @@ var epic = {
 				let obj = {"el": el}
 				for(let i = 0; i < el.attributes.length; i++) {
 					let attr = el.attributes[i];
+					console.log(attr.name);
+					console.log(attr.value);
+					console.log("Specified: " + attr.specified);
 					if(attr.specified === false) {continue}
 					if(!attr.name.includes("epic-" + sys + "-")) {continue}
 					if(attr.name === "epic-" + sys + "-element") {continue}
