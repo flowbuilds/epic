@@ -29,7 +29,7 @@ var epic = {
 				let j = v.indexOf("=");
 				if(j === -1) {val[i] = epic.js.value(v)}
 				else {
-					obj[v.slice(0, j)] = epic.js.value(v.slice(i + 1), el);
+					obj[v.slice(0, j)] = epic.js.value(v.slice(j + 1), el);
 					o = true
 				}
 			});
