@@ -10,7 +10,7 @@ var epic = {
 				}
 			}
 			return y
-		}
+		},
 		"refBuilder": (sys) => {
 			let ref = {}
 			if(sys === undefined) {return ref}
@@ -33,7 +33,7 @@ var epic = {
 			});
 			console.log(ref);
 			return ref
-		}
+		},
 		"initActions": () => {
 			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
 				let acts = el.getAttribute("epic-actions").split("&");
