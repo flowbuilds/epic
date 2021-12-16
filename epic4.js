@@ -15,7 +15,7 @@ var epic = {
 			let ref = {}
 			if(sys === undefined) {return ref}
 			if(typeof sys !== "string") {return ref}
-			let els = document.querySelectorAll("epic-" + sys + "-element");
+			let els = document.querySelectorAll("[epic-" + sys + "-element]");
 			if(els === null) {return ref}
 			els = epic.js.array(els);
 			els.forEach(el => {
