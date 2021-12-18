@@ -69,7 +69,7 @@ var epic = {
 								}
 							}
 						}
-						else {obj = r.el}
+						else {obj = r}
 						ref.push(obj);
 						return false
 					}
