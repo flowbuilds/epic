@@ -223,23 +223,6 @@ var epic = {
 			if(o === true) {val = obj}
 			return val
 		},
-		"actions": () => {
-			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
-				let acts = el.getAttribute("epic-actions").split("&");
-				acts.forEach(act => {
-					let i = act.indexOf("=");
-					act = {
-						"ev": act.slice(0, i),
-						"fn": [act.slice(i + 1), el]
-					}
-					if(act.ev !== undefined) {
-						el.addEventListener(act.ev, () => {
-							epic.js.value.apply(null, act.fn)
-						})
-					}
-				})
-			})
-		},
 		"refBuilder": (sys) => {
 			// let ref = {}
 			if(sys === undefined) {return ref}
@@ -279,7 +262,24 @@ var epic = {
 				epic.ref[refi][sys] = epic[sys].ref[name][sysi]
 			});
 			// return ref
+		},
+		"actions": () => {
+			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
+				let acts = el.getAttribute("epic-actions").split("&");
+				acts.forEach(act => {
+					let i = act.indexOf("=");
+					act = {
+						"ev": act.slice(0, i),
+						"fn": [act.slice(i + 1), el]
+					}
+					if(act.ev !== undefined) {
+						el.addEventListener(act.ev, () => {
+							epic.js.value.apply(null, act.fn)
+						})
+					}
+				})
+			})
 		}
-	}
+	},
 	"ref": []
 }
