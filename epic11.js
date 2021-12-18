@@ -48,18 +48,36 @@ var epic = {
 			if(typeof val !== "string") {return}
 			return epic.js.qs(val, true, el)
 		},
-		// INCOMPLETE
-		"ref": (val, el) => {
-			if(val === undefined) {return}
-			if(typeof val !== "string" && typeof val !== "object") {return}
-			if(typeof val === "string") {
-				if(val === "") {return epic}
-				val = val.split(".");
-				val.forEach((v, i) => {
-					val[i] = epic.js.value(v, el)
-				});
-				if(val[0] === "this") {val[0] = el}
+		"ref": (els, el) => {
+			if(els === undefined) {return}
+			if(typeof els !== "string" && typeof els !== "object") {return}
+			if(typeof els === "string") {
+				if(els === "this") {els = el}
+				else {return}
 			}
+			let ref = [];
+			if(!Array.isArray(els)) {els = [els]}
+			els.forEach(e => {
+				epic.ref.every((r, i) => {
+					if(r.el === e) {
+						let j = 0, obj;
+						for(key in r.el) {j++}
+						if(j === 2) {
+							for(key in r.el) {
+								if(key !== "el") {
+									obj = r.el[key]
+								}
+							}
+						}
+						else {obj = r.el}
+						ref.push(obj);
+						return false
+					}
+					return true
+				})
+			});
+			if(ref.length === 1) {ref = ref[0]}
+			return ref
 		},
 		"key": (val, el) => {
 			if(val === undefined) {return val}
@@ -205,13 +223,20 @@ var epic = {
 			if(o === true) {val = obj}
 			return val
 		},
-		// INCOMPLETE
 		"actions": () => {
 			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
 				let acts = el.getAttribute("epic-actions").split("&");
 				acts.forEach(act => {
 					let i = act.indexOf("=");
-					//
+					act = {
+						"ev": act.slice(0, i),
+						"fn": [act.slice(i + 1), el]
+					}
+					if(act.ev !== undefined) {
+						el.addEventListener(act.ev, () => {
+							epic.js.value.apply(null, act.fn)
+						})
+					}
 				})
 			})
 		},
