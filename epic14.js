@@ -61,11 +61,11 @@ var epic = {
 				epic.ref.every((r, i) => {
 					if(r.el === e) {
 						let j = 0, obj;
-						for(key in r.el) {j++}
+						for(key in r) {j++}
 						if(j === 2) {
-							for(key in r.el) {
+							for(key in r) {
 								if(key !== "el") {
-									obj = r.el[key]
+									obj = r[key]
 								}
 							}
 						}
