@@ -4,5 +4,5 @@ if(typeof epic !== "undefined") {
 	epic.cart = {
 		//
 	}
-	epic.cart.ref = epic.js.refBuilder("cart")
+	epic.js.refBuilder("cart")
 }
