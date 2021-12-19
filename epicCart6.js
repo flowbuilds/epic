@@ -10,6 +10,14 @@ if(typeof epic !== "undefined") {
 				epic.cart.ref.variation.every(vari => {
 					if(!vari.hasOwnProperty(opt.variation)) {return true}
 					if(opt.el.tagName === "SELECT") {
+						// let x = false;
+						for(let i = 0; i < opt.el.options.length; i++) {
+							if(opt.el.options[i].text === vari[opt.variation]) {
+								// x = true;
+								// break
+								return true
+							}
+						}
 						let op = document.createElement("option");
 						op.text = vari[opt.variation];
 						opt.el.add(op)
