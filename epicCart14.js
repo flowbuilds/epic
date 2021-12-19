@@ -29,6 +29,16 @@ if(typeof epic !== "undefined") {
 				return true
 			})
 		},
+		"setproducts": () => {
+			if(!epic.cart.ref.hasOwnProperty("product")) {return}
+			epic.cart.ref.product.every((product, i) => {
+				epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(item => {
+					console.log(item);
+					return true
+				});
+				return true
+			})
+		},
 		"getvariation": () => {
 			//
 		},
@@ -79,6 +89,7 @@ if(typeof epic !== "undefined") {
 	}
 	epic.js.refBuilder("cart");
 	if(epic.cart.hasOwnProperty("ref")) {
-		epic.cart.setoptions()
+		epic.cart.setoptions();
+		epic.cart.setproducts()
 	}
 }
