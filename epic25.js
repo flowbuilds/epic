@@ -12,9 +12,6 @@ var epic = {
 			return y
 		},
 		"attr": (attr, attrel, el) => {
-			console.log("attr( )");
-			console.log(attr);
-			console.log(attrel);
 			if(attr === undefined) {return}
 			if(typeof attr !== "string") {return}
 			if(attrel === undefined) {return}
@@ -24,8 +21,6 @@ var epic = {
 			return epic.js.attribute(attrel.getAttribute(attr), el)
 		},
 		"qs": (val, all, el) => {
-			console.log("qs( )");
-			console.log(val);
 			if(val === undefined) {return}
 			if(typeof val !== "string") {return}
 			let par = document, qs = true;
@@ -44,8 +39,6 @@ var epic = {
 			return par.querySelector(val)
 		},
 		"get": (val, el) => {
-			console.log("get( )");
-			console.log(val);
 			if(val === undefined) {return}
 			if(typeof val !== "string") {return}
 			return epic.js.qs(val, false, el)
@@ -87,26 +80,18 @@ var epic = {
 			return ref
 		},
 		"key": (val, el) => {
-			console.log("key( )");
-			console.log(val);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			function patch(arr, sep) {
-				console.log("patch( )");
-				console.log("sep: " + sep);
-				console.log(arr);
 				if(arr === undefined) {return arr}
 				if(!Array.isArray(arr)) {return arr}
 				if(sep === undefined) {return arr}
 				if(typeof sep !== "string") {return arr}
 				let pass = false, cycle = 0;
 				while(pass !== true && cycle < 25) {
-					console.log("cycle: " + (cycle + 1));
 					let temp = [], str;
 					let x = {"s": 0, "e": 0, "pass": false}
 					arr.every((item, i) => {
-						console.log("arr.every( )");
-						console.log(item);
 						if(x.pass === true) {
 							temp.push(item);
 							return true
@@ -133,10 +118,7 @@ var epic = {
 						else {temp.push(item)}
 						return true
 					});
-					console.log(temp);
 					if(temp.length >= 1) {arr = temp}
-					console.log(arr);
-					// arr = temp;
 					arr.every((item, i) => {
 						x.s = 0;
 						x.e = 0;
@@ -167,7 +149,6 @@ var epic = {
 					return true
 				}
 				let name = v.slice(0, j), params = v.slice(j);
-				console.log("name: " + name + " - params: " + params);
 				if(params === "()") {params = ""}
 				else {params = params.slice(1, -1)}
 				params = patch(params.split(","), ",");
@@ -191,8 +172,6 @@ var epic = {
 			return obj
 		},
 		"value": (val, el) => {
-			console.log("value( )");
-			console.log(val);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			// empty
@@ -245,7 +224,6 @@ var epic = {
 			return val
 		},
 		"refBuilder": (sys) => {
-			// let ref = {}
 			if(sys === undefined) {return ref}
 			if(typeof sys !== "string") {return ref}
 			if(!epic.hasOwnProperty(sys)) {epic[sys] = {}}
@@ -282,7 +260,6 @@ var epic = {
 				}
 				epic.ref[refi][sys] = epic[sys].ref[name][sysi]
 			});
-			// return ref
 		},
 		"actions": () => {
 			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
