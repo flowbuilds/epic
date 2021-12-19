@@ -88,6 +88,9 @@ var epic = {
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			function patch(arr, sep) {
+				console.log("patch( )");
+				console.log("sep: " + sep);
+				console.log(arr);
 				if(arr === undefined) {return arr}
 				if(!Array.isArray(arr)) {return arr}
 				if(sep === undefined) {return arr}
