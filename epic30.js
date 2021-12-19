@@ -3,12 +3,15 @@
 var epic = {
 	"js": {
 		"array": (x) => {
+			console.log("array( )");
+			console.log(x);
 			let y = [];
 			if(x !== undefined) {
 				for(let i = 0; i < x.length; i++) {
 					y.push(x[i])
 				}
 			}
+			console.log(y);
 			return y
 		},
 		"attr": (attr, attrel, el) => {
@@ -263,6 +266,7 @@ var epic = {
 		},
 		"actions": () => {
 			console.log("actions( )");
+			console.log(document.querySelectorAll("[epic-actions]"));
 			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
 				console.log(el);
 				let acts = el.getAttribute("epic-actions").split("&");
