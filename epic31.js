@@ -291,4 +291,6 @@ var epic = {
 	},
 	"ref": []
 }
-epic.js.actions();
+window.addEventListener("DOMContentLoaded", () => {
+	epic.js.actions()
+})
