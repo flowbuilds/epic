@@ -28,6 +28,20 @@ if(typeof epic !== "undefined") {
 				});
 				return true
 			})
+		},
+		"addtocart": (product) => {
+			if(product === undefined) {return}
+			if(typeof product !== "string") {return}
+			if(!epic.cart.ref.hasOwnProperty("product")) {return}
+			epic.cart.ref.product.every((p, i) => {
+				if(p.name === product) {
+					product = epic.cart.ref.product[i];
+					return false
+				}
+				return true
+			});
+			if(typeof product === "string") {return}
+			console.log(product)
 		}
 	}
 	epic.js.refBuilder("cart");
