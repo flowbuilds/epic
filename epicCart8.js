@@ -22,6 +22,7 @@ if(typeof epic !== "undefined") {
 						op.text = vari[opt.variation];
 						opt.el.add(op)
 					}
+					return true
 				});
 				return true
 			})
