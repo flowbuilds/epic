@@ -177,6 +177,8 @@ var epic = {
 			return obj
 		},
 		"value": (val, el) => {
+			console.log("value( )");
+			console.log(val);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			// empty
