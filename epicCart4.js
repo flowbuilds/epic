@@ -7,7 +7,7 @@ if(typeof epic !== "undefined") {
 			if(!epic.cart.ref.hasOwnProperty("variation")) {return}
 			epic.cart.ref.option.every(opt => {
 				if(!opt.hasOwnProperty("variation")) {return true}
-				epic.cart.variation.every(vari => {
+				epic.cart.ref.variation.every(vari => {
 					if(!vari.hasOwnProperty(opt.variation)) {return true}
 					if(opt.el.tagName === "SELECT") {
 						let op = document.createElement("option");
