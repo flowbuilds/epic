@@ -270,6 +270,8 @@ var epic = {
 						"ev": act.slice(0, i),
 						"fn": [act.slice(i + 1), el]
 					}
+					console.log("ev: " + act.ev + " - fn: ");
+					console.log(fn);
 					if(act.ev !== undefined) {
 						el.addEventListener(act.ev, () => {
 							console.log("ev: " + act.ev + " - fn: ");
