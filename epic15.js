@@ -12,6 +12,9 @@ var epic = {
 			return y
 		},
 		"attr": (attr, attrel, el) => {
+			console.log("attr( )");
+			console.log(attr);
+			console.log(attrel);
 			if(attr === undefined) {return}
 			if(typeof attr !== "string") {return}
 			if(attrel === undefined) {return}
