@@ -127,7 +127,7 @@ var epic = {
 						x.e = 0;
 						for(let j = 0; j < item.length; j++) {
 							if(item[j] === "(") {x.s++}
-							else if(item[j] === "(") {x.e++}
+							else if(item[j] === ")") {x.e++}
 						}
 						if(x.s > x.e) {str = item}
 						else {temp.push(item)}
