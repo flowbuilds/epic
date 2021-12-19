@@ -24,6 +24,8 @@ var epic = {
 			return epic.js.attribute(attrel.getAttribute(attr), el)
 		},
 		"qs": (val, all, el) => {
+			console.log("qs( )");
+			console.log(val);
 			if(val === undefined) {return}
 			if(typeof val !== "string") {return}
 			let par = document, qs = true;
@@ -42,6 +44,8 @@ var epic = {
 			return par.querySelector(val)
 		},
 		"get": (val, el) => {
+			console.log("get( )");
+			console.log(val);
 			if(val === undefined) {return}
 			if(typeof val !== "string") {return}
 			return epic.js.qs(val, false, el)
@@ -161,6 +165,7 @@ var epic = {
 					return true
 				}
 				let name = v.slice(0, j), params = v.slice(j);
+				console.log("name: " + name + " - params: " + params);
 				if(params === "()") {params = ""}
 				else {params = params.slice(1, -1)}
 				params = patch(params.split(","), ",");
