@@ -97,7 +97,7 @@ var epic = {
 				if(typeof sep !== "string") {return arr}
 				let pass = false, cycle = 0;
 				while(pass !== true && cycle < 25) {
-					console.log("cycle: " + cycle + 1);
+					console.log("cycle: " + (cycle + 1));
 					let temp = [], str;
 					let x = {"s": 0, "e": 0, "pass": false}
 					arr.every((item, i) => {
@@ -127,6 +127,11 @@ var epic = {
 						else {temp.push(item)}
 						return true
 					});
+					console.log(temp);
+					if(!temp.length >= 1) {
+						pass = true;
+						return false
+					}
 					arr = temp;
 					arr.every((item, i) => {
 						x.s = 0;
