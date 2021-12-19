@@ -17,7 +17,12 @@ if(typeof epic !== "undefined") {
 						}
 						let op = document.createElement("option");
 						op.text = vari[opt.variation];
-						opt.el.add(op)
+						if(vari.hasOwnProperty("quantity")) {
+							if(vari.quantity === 0 || vari.quantity === "") {
+								op.setAttribute("disabled", "")
+							}
+						}
+						opt.el.add(op);
 					}
 					return true
 				});
