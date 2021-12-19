@@ -283,3 +283,4 @@ var epic = {
 	},
 	"ref": []
 }
+epic.js.actions();
