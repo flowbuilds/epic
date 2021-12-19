@@ -128,11 +128,9 @@ var epic = {
 						return true
 					});
 					console.log(temp);
-					if(!temp.length >= 1) {
-						pass = true;
-						return false
-					}
-					arr = temp;
+					if(temp.length >= 1) {arr = temp}
+					console.log(arr);
+					// arr = temp;
 					arr.every((item, i) => {
 						x.s = 0;
 						x.e = 0;
