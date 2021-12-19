@@ -32,10 +32,11 @@ if(typeof epic !== "undefined") {
 		"setproducts": () => {
 			if(!epic.cart.ref.hasOwnProperty("product")) {return}
 			epic.cart.ref.product.every((product, i) => {
+				epic.cart.ref.product[i].children = [];
 				epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(item => {
-					console.log(item);
 					if(item.hasOwnProperty("product")) {return true}
-					item.product = epic.cart.ref.product[i]
+					epic.cart.ref.product[i].children.push(item);
+					item.product = epic.cart.ref.product[i];
 					return true
 				});
 				return true
