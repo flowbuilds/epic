@@ -29,6 +29,9 @@ if(typeof epic !== "undefined") {
 				return true
 			})
 		},
+		"getvariation": () => {
+			//
+		},
 		"getproduct": (id) => {
 			if(id === undefined) {return}
 			if(typeof id !== "string") {return}
@@ -43,12 +46,17 @@ if(typeof epic !== "undefined") {
 			});
 			return x
 		},
-		"updateproduct": (product, option) => {
-			if(product === undefined) {return}
-			if(typeof product !== "string") {return}
+		"updateproduct": (product, option, value) => {
 			product = epic.cart.getproduct(product);
 			if(product === undefined) {return}
-			// option checks
+			if(option === undefined) {return}
+			if(typeof option !== "string") {return}
+			if(value === undefined) {return}
+			if(typeof value !== "string") {return}
+			// apply update(s)
+			product[option] = value;
+			console.log(product);
+			// match to a variation
 		},
 		"addtocart": (product) => {
 			if(product === undefined) {return}
@@ -57,7 +65,7 @@ if(typeof epic !== "undefined") {
 			if(product === undefined) {return}
 			console.log(product);
 			let obj = {
-				"name": product.name,
+				"name": product.id,
 				"catalogid": "",
 				"price": "",
 				"quantity": "1"
