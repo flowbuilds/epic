@@ -2,7 +2,7 @@
 
 if(typeof epic !== "undefined") {
 	epic.cart = {
-		"options": () => {
+		"setoptions": () => {
 			if(!epic.cart.ref.hasOwnProperty("option")) {return}
 			if(!epic.cart.ref.hasOwnProperty("variation")) {return}
 			epic.cart.ref.option.every(opt => {
@@ -29,23 +29,48 @@ if(typeof epic !== "undefined") {
 				return true
 			})
 		},
-		"addtocart": (product) => {
-			if(product === undefined) {return}
-			if(typeof product !== "string") {return}
+		"getproduct": (id) => {
+			if(id === undefined) {return}
+			if(typeof id !== "string") {return}
 			if(!epic.cart.ref.hasOwnProperty("product")) {return}
+			let x;
 			epic.cart.ref.product.every((p, i) => {
-				if(p.name === product) {
-					product = epic.cart.ref.product[i];
+				if(p.id === id) {
+					x = epic.cart.ref.product[i];
 					return false
 				}
 				return true
 			});
-			if(typeof product === "string") {return}
-			console.log(product)
-		}
+			return x
+		},
+		"updateproduct": (product, option) => {
+			if(product === undefined) {return}
+			if(typeof product !== "string") {return}
+			product = epic.cart.getproduct(product);
+			if(product === undefined) {return}
+			// option checks
+		},
+		"addtocart": (product) => {
+			if(product === undefined) {return}
+			if(typeof product !== "string") {return}
+			product = epic.cart.getproduct(product);
+			if(product === undefined) {return}
+			console.log(product);
+			let obj = {
+				"name": product.name,
+				"catalogid": "",
+				"price": "",
+				"quantity": "1"
+			}
+			console.log(obj);
+			// collate options + inputs
+			// add to the cart as a new item OR update existing
+			// open cart modal
+		},
+		"current": []
 	}
 	epic.js.refBuilder("cart");
 	if(epic.cart.hasOwnProperty("ref")) {
-		epic.cart.options()
+		epic.cart.setoptions()
 	}
 }
