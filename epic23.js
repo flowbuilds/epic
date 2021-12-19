@@ -105,6 +105,8 @@ var epic = {
 					let temp = [], str;
 					let x = {"s": 0, "e": 0, "pass": false}
 					arr.every((item, i) => {
+						console.log("arr.every( )");
+						console.log(item);
 						if(x.pass === true) {
 							temp.push(item);
 							return true
