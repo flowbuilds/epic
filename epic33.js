@@ -262,10 +262,7 @@ var epic = {
 			});
 		},
 		"actions": () => {
-			console.log("actions( )");
-			console.log(document.querySelectorAll("[epic-actions]"));
 			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
-				console.log(el);
 				let acts = el.getAttribute("epic-actions").split("&");
 				acts.forEach(act => {
 					let i = act.indexOf("=");
@@ -273,12 +270,8 @@ var epic = {
 						"ev": act.slice(0, i),
 						"fn": [act.slice(i + 1), el]
 					}
-					console.log("ev: " + act.ev + " - fn: ");
-					console.log(act.fn);
 					if(act.ev !== undefined) {
 						el.addEventListener(act.ev, () => {
-							console.log("ev: " + act.ev + " - fn: ");
-							console.log(act.fn);
 							epic.js.value.apply(null, act.fn)
 						})
 					}
