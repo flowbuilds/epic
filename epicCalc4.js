@@ -38,7 +38,7 @@ if(typeof epic !== "undefined") {
 							return true
 						});
 						if(y === undefined) {return true}
-						calc = calc.replace(x, y)
+						calc = calc.replace("[" + x + "]", y)
 					}
 					else {ev = true}
 				}
