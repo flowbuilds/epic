@@ -17,6 +17,7 @@ if(typeof epic !== "undefined") {
 				if(outputs.length === 0) {return}
 			}
 			else {outputs = epic.calc.ref.output}
+			console.log(outputs);
 			outputs.every(output => {
 				if(!output.hasOwnProperty("calc")) {return true}
 				// store original + calculate & display
