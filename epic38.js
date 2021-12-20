@@ -233,13 +233,13 @@ var epic = {
 			return val
 		},
 		"refBuilder": (sys) => {
-			if(sys === undefined) {return ref}
-			if(typeof sys !== "string") {return ref}
+			if(sys === undefined) {return}
+			if(typeof sys !== "string") {return}
 			if(!epic.hasOwnProperty(sys)) {epic[sys] = {}}
 			if(!epic[sys].hasOwnProperty("ref")) {epic[sys].ref = {}}
 			let ref = epic[sys].ref;
 			let els = document.querySelectorAll("[epic-" + sys + "-element]");
-			if(els === null) {return ref}
+			if(els === null) {return}
 			els = epic.js.array(els);
 			els.forEach(el => {
 				let name = el.getAttribute("epic-" + sys + "-element");
@@ -249,7 +249,7 @@ var epic = {
 					if(attr.specified === false) {continue}
 					if(!attr.name.includes("epic-" + sys + "-")) {continue}
 					if(attr.name === "epic-" + sys + "-element") {continue}
-					obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value)
+					obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value, el)
 				}
 				// system reference
 				if(!ref.hasOwnProperty(name)) {ref[name] = []}
