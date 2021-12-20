@@ -73,7 +73,8 @@ if(typeof epic !== "undefined") {
 			// add to the cart as a new item OR update existing
 			// open cart modal
 		},
-		"input": (input) => {
+		"input": (x, input) => {
+			console.log(x);
 			console.log(input);
 			if(input === undefined) {return}
 			if(typeof input !== "object") {return}
