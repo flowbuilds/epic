@@ -245,11 +245,14 @@ var epic = {
 				let name = el.getAttribute("epic-" + sys + "-element");
 				let obj = {"el": el}
 				for(let i = 0; i < el.attributes.length; i++) {
-					let attr = el.attributes[i];
+					let attr = el.attributes[i], value;
 					if(attr.specified === false) {continue}
 					if(!attr.name.includes("epic-" + sys + "-")) {continue}
 					if(attr.name === "epic-" + sys + "-element") {continue}
-					obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value, el)
+					if(attr.value.charAt(0) === "!") {value = attr.value.slice(1)}
+					else {value = epic.js.attribute(attr.value, el)}
+					obj[attr.name.replace("epic-" + sys + "-", "")] = value
+					// obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value, el)
 				}
 				// system reference
 				if(!ref.hasOwnProperty(name)) {ref[name] = []}
