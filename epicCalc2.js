@@ -3,9 +3,11 @@
 if(typeof epic !== "undefined") {
 	epic.calc = {
 		"update": (name) => {
+			console.log("update( )");
+			console.log("name: " + name);
 			if(!epic.calc.ref.hasOwnProperty("output")) {return}
 			let outputs = [];
-			if(name !== undefined) {
+			if(name !== undefined && name !== "") {
 				if(typeof name !== "string") {return}
 				epic.calc.ref.output.every(output => {
 					if(!output.hasOwnProperty("name")) {return true}
