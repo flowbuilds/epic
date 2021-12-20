@@ -272,6 +272,7 @@ var epic = {
 					}
 					if(act.ev !== undefined) {
 						el.addEventListener(act.ev, () => {
+							console.log("action");
 							epic.js.value.apply(null, act.fn)
 						})
 					}
