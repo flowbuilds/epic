@@ -80,6 +80,8 @@ var epic = {
 			return ref
 		},
 		"key": (val, el) => {
+			console.log(val);
+			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			function patch(arr, sep) {
