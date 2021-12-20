@@ -76,6 +76,7 @@ if(typeof epic !== "undefined") {
 		"input": (x, input) => {
 			console.log(x);
 			console.log(input);
+			console.log(this);
 			if(input === undefined) {return}
 			if(typeof input !== "object") {return}
 			input = epic.js.ref(input);
