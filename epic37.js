@@ -80,6 +80,7 @@ var epic = {
 			return ref
 		},
 		"key": (val, el) => {
+			console.log("key( )");
 			console.log(val);
 			console.log(el);
 			if(val === undefined) {return val}
@@ -174,6 +175,9 @@ var epic = {
 			return obj
 		},
 		"value": (val, el) => {
+			console.log("value( )");
+			console.log(val);
+			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			// empty
@@ -207,6 +211,9 @@ var epic = {
 			return val
 		},
 		"attribute": (val, el) => {
+			console.log("attribute( )");
+			console.log(val);
+			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			if(!val.includes("&") && !val.includes("=")) {
