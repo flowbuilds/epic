@@ -279,9 +279,9 @@ var epic = {
 						"fn": [act.slice(i + 1), el]
 					}
 					if(act.ev !== undefined) {
-						el.addEventListener(act.ev, () => {
+						el.addEventListener(act.ev, (ev) => {
 							console.log(act.fn);
-							console.log(this);
+							console.log(ev.this);
 							epic.js.value.apply(null, act.fn)
 						})
 					}
