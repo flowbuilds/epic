@@ -63,7 +63,7 @@ if(typeof epic !== "undefined") {
 					}
 					if(options !== undefined) {
 						// select
-						if(input.el.tagName === "SELECT") {
+						if(option.el.tagName === "SELECT") {
 							options.every(opt => {
 								for(let i = 0; i < input.el.options.length; i++) {
 									if(input.el.options[i].text === opt[input.name]) {
