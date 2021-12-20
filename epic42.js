@@ -155,18 +155,19 @@ var epic = {
 				params.forEach((p, k) => {
 					if(p !== "") {params[k] = epic.js.value(p, el)}
 				});
-				//
-				//
-				// if epic[sys].hasOwnProperty(name)
-				//
-				//
 				if(obj === undefined && epic.js.hasOwnProperty(name)) {
 					params.push(el);
 					obj = epic.js[name].apply(null, params);
 					return true
 				}
 				else {
-					//
+					for(sys in epic) {
+						if(epic[sys] === obj) {
+							if(epic[sys].hasOwnProperty(name)) {
+								params.push(el)
+							}
+						}
+					}
 				}
 				let par = obj;
 				if(par === undefined) {par = window}
@@ -279,9 +280,8 @@ var epic = {
 						"fn": [act.slice(i + 1), el]
 					}
 					if(act.ev !== undefined) {
-						el.addEventListener(act.ev, (ev) => {
+						el.addEventListener(act.ev, () => {
 							console.log(act.fn);
-							console.log(ev.this);
 							epic.js.value.apply(null, act.fn)
 						})
 					}
