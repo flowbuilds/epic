@@ -80,9 +80,6 @@ var epic = {
 			return ref
 		},
 		"key": (val, el) => {
-			console.log("key( )");
-			console.log(val);
-			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			function patch(arr, sep) {
@@ -169,15 +166,12 @@ var epic = {
 					obj = undefined;
 					return false
 				}
-				obj = par[name].apply(null, params);
+				obj = par[name].apply(el, params);
 				return true
 			});
 			return obj
 		},
 		"value": (val, el) => {
-			console.log("value( )");
-			console.log(val);
-			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			// empty
@@ -211,9 +205,6 @@ var epic = {
 			return val
 		},
 		"attribute": (val, el) => {
-			console.log("attribute( )");
-			console.log(val);
-			console.log(el);
 			if(val === undefined) {return val}
 			if(typeof val !== "string") {return val}
 			if(!val.includes("&") && !val.includes("=")) {
