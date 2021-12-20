@@ -33,27 +33,28 @@ if(typeof epic !== "undefined") {
 			// add to the cart as a new item OR update existing
 			// open cart modal
 		},
-		"input": (x, input) => {
+		"option": (x, option) => {
 			if(x === undefined) {return}
 			if(typeof x !== "string") {return}
-			if(input === undefined) {return}
-			if(typeof input !== "object") {return}
-			input = epic.js.ref(input);
-			if(!input.hasOwnProperty("name")) {return}
-			if(!input.hasOwnProperty("product")) {return}
-			let value = input.el.value;
-			if(input.hasOwnProperty("value")) {value = input.value}
-			input.product[input.name] = value
+			if(option === undefined) {return}
+			if(typeof option !== "object") {return}
+			option = epic.js.ref(option);
+			if(!option.hasOwnProperty("name")) {return}
+			if(!option.hasOwnProperty("product")) {return}
+			let value = option.el.value;
+			if(option.hasOwnProperty("value")) {value = option.value}
+			if(!option.product.hasOwnProperty("options")) {option.product.options = {}}
+			option.product.options[option.name] = value
 		},
-		"setinputs": () => {
-			if(!epic.cart.ref.hasOwnProperty("input")) {return}
+		"setoptions": () => {
+			if(!epic.cart.ref.hasOwnProperty("option")) {return}
 			if(!epic.cart.ref.hasOwnProperty("product")) {return}
-			epic.cart.ref.input.every(input => {
-				if(!input.hasOwnProperty("product")) {return true}
-				if(!input.hasOwnProperty("name")) {return true}
+			epic.cart.ref.option.every(option => {
+				if(!option.hasOwnProperty("product")) {return true}
+				if(!option.hasOwnProperty("name")) {return true}
 				// populate options
-				if(input.hasOwnProperty("options")) {
-					let options, o = input.options;
+				if(option.hasOwnProperty("options")) {
+					let options, o = option.options;
 					if(typeof o === "string") {
 						if(o === "variations") {o = "variation"}
 						if(epic.cart.ref.hasOwnProperty(o)) {
@@ -63,20 +64,20 @@ if(typeof epic !== "undefined") {
 					if(options !== undefined) {
 						// select
 						if(input.el.tagName === "SELECT") {
-							options.every(option => {
+							options.every(opt => {
 								for(let i = 0; i < input.el.options.length; i++) {
-									if(input.el.options[i].text === option[input.name]) {
+									if(input.el.options[i].text === opt[input.name]) {
 										return true
 									}
 								}
 								o = document.createElement("option");
-								o.text = option[input.name];
-								if(option.hasOwnProperty("quantity")) {
-									if(option.quantity === 0 || option.quantity === "") {
+								o.text = opt[input.name];
+								if(opt.hasOwnProperty("quantity")) {
+									if(opt.quantity === 0 || opt.quantity === "") {
 										o.setAttribute("disabled", "")
 									}
 								}
-								input.el.add(o);
+								option.el.add(o);
 								return true
 							})
 						}
@@ -85,7 +86,7 @@ if(typeof epic !== "undefined") {
 				return true
 			})
 		},
-		"setoptions": () => {
+		/*"setoptions": () => {
 			if(!epic.cart.ref.hasOwnProperty("option")) {return}
 			if(!epic.cart.ref.hasOwnProperty("variation")) {return}
 			epic.cart.ref.option.every(opt => {
@@ -111,7 +112,7 @@ if(typeof epic !== "undefined") {
 				});
 				return true
 			})
-		},
+		},*/
 		"setproducts": () => {
 			if(!epic.cart.ref.hasOwnProperty("product")) {return}
 			epic.cart.ref.product.every((product, i) => {
@@ -131,6 +132,6 @@ if(typeof epic !== "undefined") {
 	if(epic.cart.hasOwnProperty("ref")) {
 		// epic.cart.setoptions();
 		epic.cart.setproducts();
-		epic.cart.setinputs()
+		epic.cart.setoptions()
 	}
 }
