@@ -65,13 +65,13 @@ if(typeof epic !== "undefined") {
 						// select
 						if(option.el.tagName === "SELECT") {
 							options.every(opt => {
-								for(let i = 0; i < input.el.options.length; i++) {
-									if(input.el.options[i].text === opt[input.name]) {
+								for(let i = 0; i < option.el.options.length; i++) {
+									if(option.el.options[i].text === opt[option.name]) {
 										return true
 									}
 								}
 								o = document.createElement("option");
-								o.text = opt[input.name];
+								o.text = opt[option.name];
 								if(opt.hasOwnProperty("quantity")) {
 									if(opt.quantity === 0 || opt.quantity === "") {
 										o.setAttribute("disabled", "")
