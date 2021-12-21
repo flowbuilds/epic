@@ -75,7 +75,10 @@ if(typeof epic !== "undefined") {
 					}
 					if(sepa !== undefined && sepb !== undefined) {
 						let i = calc.indexOf(".");
-						if(i !== -1) {calc = calc.replace(".", sepa)}
+						if(i !== -1) {
+							i = calc.length - i;
+							calc = calc.replace(".", sepa)
+						}
 						else {i = 0}
 						i += 3;
 						console.log(calc);
@@ -89,21 +92,6 @@ if(typeof epic !== "undefined") {
 					}
 					if(cur !== undefined) {calc = cur + calc}
 				}
-				//
-				//
-				/*if(output.hasOwnProperty("format")) {
-					if(output.format.toLowerCase() === "usd") {
-						let i = calc.indexOf("."), cycle = 0, temp;
-						if(i !== -1) {i -= calc.length}
-						else {i = 0}
-						while(cycle < 20 && i * -1 < calc.length) {
-							i -= 3;
-							temp = calc.slice(0, )
-							cycle++
-						}
-						calc = "$" + calc
-					}
-				}*/
 				// display
 				if(output.el.tagName === "INPUT") {
 					output.el.value = calc
