@@ -46,7 +46,10 @@ if(typeof epic !== "undefined") {
 						});
 						if(y === undefined) {return true}
 						else if(y === false) {
-							if(output.hasOwnProperty("ogtext")) {
+							if(output.el.tagName === "INPUT") {
+								output.el.value = ""
+							}
+							else if(output.hasOwnProperty("ogtext")) {
 								output.el.textContent = output.ogtext
 							}
 							return true
@@ -55,14 +58,14 @@ if(typeof epic !== "undefined") {
 					}
 					else {ev = true}
 				}
+				// calculate
 				calc = eval(calc);
 				if(calc === undefined) {return true}
-				// TEMPORARY
+				// display
 				if(output.el.tagName === "INPUT") {
 					output.el.value = calc
 				}
 				else {output.el.textContent = calc}
-				//output.el.textContent = calc;
 				return true
 			})
 		}
