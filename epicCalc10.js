@@ -52,6 +52,7 @@ if(typeof epic !== "undefined") {
 					}
 					else {ev = true}
 				}
+				console.log("ev: " + ev);
 				if(ev !== true) {
 					if(output.hasOwnProperty("ogtext")) {
 						output.el.textContent = output.ogtext
