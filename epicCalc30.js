@@ -44,6 +44,9 @@ if(typeof epic !== "undefined") {
 								else if(value === "") {y = false}
 								else {y = value}
 								if(input.hasOwnProperty("format")) {
+									if(input.format.toLowerCase() === "usd") {
+										y = Number(y.replace("$", ""))
+									}
 									if(input.format === "%") {
 										y = Number(y) / 100
 									}
