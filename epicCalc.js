@@ -53,42 +53,10 @@ if(typeof epic !== "undefined") {
 										}
 									}
 								}
-								/*if(input.hasOwnProperty("format")) {
-									if(input.format.toLowerCase() === "usd") {
-										y = Number(y.replace("$", ""))
-									}
-									if(input.format === "%") {
-										y = Number(y) / 100
-									}
-								}*/
-								console.log(y);
 								return false
 							}
 							return true
 						});
-						//
-						//
-						//
-						//
-						/*let x = calc.slice(i + 1, j), y;
-						epic.calc.ref.input.every(input => {
-							if(!input.hasOwnProperty("name")) {return true}
-							if(input.name === x) {
-								if(input.el.value === "") {y = false}
-								else {y = input.el.value}
-								if(input.hasOwnProperty("format")) {
-									if(input.format === "%") {
-										y = Number(y) / 100
-									}
-								}
-								return false
-							}
-							return true
-						});*/
-						//
-						//
-						//
-						//
 						if(y === undefined) {return true}
 						else if(y === false) {
 							if(output.el.tagName === "INPUT") {
@@ -102,7 +70,6 @@ if(typeof epic !== "undefined") {
 						if(key === "output") {x = "{" + x + "}"}
 						else {x = "[" + x + "]"}
 						calc = calc.replace(x, y);
-						console.log("calc: " + calc)
 					}
 					else {ev = true}
 				}
