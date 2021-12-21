@@ -40,7 +40,6 @@ if(typeof epic !== "undefined") {
 								console.log(input.el.value);
 								if(input.el.value === "") {y = false}
 								else {y = input.el.value}
-								// y = input.el.value;
 								return false
 							}
 							return true
@@ -56,19 +55,14 @@ if(typeof epic !== "undefined") {
 					}
 					else {ev = true}
 				}
-				/*console.log("ev: " + ev);
-				if(ev !== true) {
-					if(output.hasOwnProperty("ogtext")) {
-						output.el.textContent = output.ogtext
-					}
-					return true
-				}*/
-				// if all calc var inputs have values, calculate
-				// if not, set output text to original
 				calc = eval(calc);
 				if(calc === undefined) {return true}
 				// TEMPORARY
-				output.el.textContent = calc;
+				if(output.el.tagName === "INPUT") {
+					output.el.value = calc
+				}
+				else {output.el.textContent = calc}
+				//output.el.textContent = calc;
 				return true
 			})
 		}
