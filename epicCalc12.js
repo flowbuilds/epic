@@ -36,14 +36,14 @@ if(typeof epic !== "undefined") {
 						epic.calc.ref.input.every(input => {
 							if(!input.hasOwnProperty("name")) {return true}
 							if(input.name === x) {
+								console.log(input.name);
+								console.log(input.el.value);
 								y = input.el.value;
 								return false
 							}
 							return true
 						});
 						if(y === undefined) {return true}
-						console.log(input.name);
-						console.log(y);
 						calc = calc.replace("[" + x + "]", y)
 					}
 					else {ev = true}
