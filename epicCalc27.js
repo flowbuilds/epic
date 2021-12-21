@@ -48,6 +48,7 @@ if(typeof epic !== "undefined") {
 										y = Number(y) / 100
 									}
 								}
+								console.log(y);
 								return false
 							}
 							return true
