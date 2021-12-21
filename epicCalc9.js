@@ -53,8 +53,8 @@ if(typeof epic !== "undefined") {
 					else {ev = true}
 				}
 				if(ev !== true) {
-					if(calc.hasOwnProperty("ogtext")) {
-						calc.el.textContent = calc.ogtext
+					if(output.hasOwnProperty("ogtext")) {
+						output.el.textContent = output.ogtext
 					}
 					return true
 				}
