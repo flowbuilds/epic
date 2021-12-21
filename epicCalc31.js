@@ -43,14 +43,24 @@ if(typeof epic !== "undefined") {
 								if(input.hasOwnProperty("ogtext") && value === input.ogtext) {y = false}
 								else if(value === "") {y = false}
 								else {y = value}
-								if(input.hasOwnProperty("format")) {
+								if(y !== false) {
+									if(input.hasOwnProperty("format")) {
+										if(input.format.toLowerCase() === "usd") {
+											y = Number(y.replace("$", ""))
+										}
+										else if(input.format === "%") {
+											y = Number(y) / 100
+										}
+									}
+								}
+								/*if(input.hasOwnProperty("format")) {
 									if(input.format.toLowerCase() === "usd") {
 										y = Number(y.replace("$", ""))
 									}
 									if(input.format === "%") {
 										y = Number(y) / 100
 									}
-								}
+								}*/
 								console.log(y);
 								return false
 							}
