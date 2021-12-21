@@ -86,7 +86,8 @@ if(typeof epic !== "undefined") {
 							}
 							return true
 						}
-						calc = calc.replace("[" + x + "]", y)
+						calc = calc.replace("[" + x + "]", y);
+						console.log("calc: " + calc)
 					}
 					else {ev = true}
 				}
