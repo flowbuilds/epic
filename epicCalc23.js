@@ -3,7 +3,6 @@
 if(typeof epic !== "undefined") {
 	epic.calc = {
 		"update": (name) => {
-			console.log("update( )");
 			if(!epic.calc.ref.hasOwnProperty("output")) {return}
 			let outputs = [];
 			if(name !== undefined && name !== "") {
@@ -16,7 +15,6 @@ if(typeof epic !== "undefined") {
 				if(outputs.length === 0) {return}
 			}
 			else {outputs = epic.calc.ref.output}
-			console.log(outputs);
 			outputs.every(output => {
 				if(!output.hasOwnProperty("calc")) {return true}
 				// store original text, if any
@@ -36,8 +34,6 @@ if(typeof epic !== "undefined") {
 						epic.calc.ref.input.every(input => {
 							if(!input.hasOwnProperty("name")) {return true}
 							if(input.name === x) {
-								console.log(input.name);
-								console.log(input.el.value);
 								if(input.el.value === "") {y = false}
 								else {y = input.el.value}
 								return false
@@ -65,7 +61,6 @@ if(typeof epic !== "undefined") {
 				let dec = 0;
 				if(output.hasOwnProperty("decimal")) {
 					dec = output.decimal
-					//calc = calc.toFixed(output.decimal)
 				}
 				calc = calc.toFixed(dec);
 				if(output.hasOwnProperty("format")) {
@@ -81,14 +76,11 @@ if(typeof epic !== "undefined") {
 						}
 						else {i = 0}
 						i += 3;
-						console.log(calc);
 						while(cycle < 10 && i < calc.length) {
 							calc = calc.slice(0, calc.length - i) + sepb + calc.slice(calc.length - i)
-							console.log(calc);
 							i += 4;
 							cycle++
 						}
-						console.log(calc)
 					}
 					if(cur !== undefined) {calc = cur + calc}
 				}
