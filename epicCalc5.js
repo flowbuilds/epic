@@ -20,8 +20,14 @@ if(typeof epic !== "undefined") {
 			console.log(outputs);
 			outputs.every(output => {
 				if(!output.hasOwnProperty("calc")) {return true}
-				// store original + calculate & display
+				// store original // if
+				// calculate & display
 				// calc=![1b]*[1c]*[1d]*[1a]*365
+				if(!output.hasOwnProperty("ogtext")) {
+					if(output.el.textContent !== "") {
+						output.ogtext = output.el.textContent
+					}
+				}
 				let calc = output.calc, ev = false, cycle = 0;
 				while(ev === false && cycle < 20) {
 					cycle++;
