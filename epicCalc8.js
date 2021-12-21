@@ -46,13 +46,9 @@ if(typeof epic !== "undefined") {
 							}
 							return true
 						});
-						//
-						//
-						if(y === undefined || y === "") {break}
-						//
-						//
-						/*if(y === undefined) {return true}
-						calc = calc.replace("[" + x + "]", y)*/
+						if(y === undefined) {return true}
+						else if(y === "") {return false}
+						calc = calc.replace("[" + x + "]", y)
 					}
 					else {ev = true}
 				}
