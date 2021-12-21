@@ -4,7 +4,6 @@ if(typeof epic !== "undefined") {
 	epic.calc = {
 		"update": (name) => {
 			console.log("update( )");
-			console.log("name: " + name);
 			if(!epic.calc.ref.hasOwnProperty("output")) {return}
 			let outputs = [];
 			if(name !== undefined && name !== "") {
@@ -20,10 +19,6 @@ if(typeof epic !== "undefined") {
 			console.log(outputs);
 			outputs.every(output => {
 				if(!output.hasOwnProperty("calc")) {return true}
-				// store original // if
-				// calculate & display
-				// calc=![1b]*[1c]*[1d]*[1a]*365
-				//
 				// store original text, if any
 				if(!output.hasOwnProperty("ogtext")) {
 					if(output.el.textContent !== "") {
@@ -47,7 +42,8 @@ if(typeof epic !== "undefined") {
 							return true
 						});
 						if(y === undefined) {return true}
-						else if(y === "") {return false}
+						console.log(input.name);
+						console.log(y);
 						calc = calc.replace("[" + x + "]", y)
 					}
 					else {ev = true}
