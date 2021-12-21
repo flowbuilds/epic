@@ -63,7 +63,7 @@ if(typeof epic !== "undefined") {
 				if(calc === undefined) {return true}
 				// format
 				if(output.hasOwnProperty("decimal")) {
-					calc = Number(calc.toFixed(output.decimal))
+					calc = calc.toFixed(output.decimal)
 				}
 				if(output.hasOwnProperty("format")) {
 					//
