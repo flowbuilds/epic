@@ -61,6 +61,13 @@ if(typeof epic !== "undefined") {
 				// calculate
 				calc = eval(calc);
 				if(calc === undefined) {return true}
+				// format
+				if(output.hasOwnProperty("decimal")) {
+					calc = Number(calc.toFixed(output.decimal))
+				}
+				if(output.hasOwnProperty("format")) {
+					//
+				}
 				// display
 				if(output.el.tagName === "INPUT") {
 					output.el.value = calc
