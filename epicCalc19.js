@@ -91,7 +91,7 @@ if(typeof epic !== "undefined") {
 				}
 				//
 				//
-				if(output.hasOwnProperty("format")) {
+				/*if(output.hasOwnProperty("format")) {
 					if(output.format.toLowerCase() === "usd") {
 						let i = calc.indexOf("."), cycle = 0, temp;
 						if(i !== -1) {i -= calc.length}
@@ -103,7 +103,7 @@ if(typeof epic !== "undefined") {
 						}
 						calc = "$" + calc
 					}
-				}
+				}*/
 				// display
 				if(output.el.tagName === "INPUT") {
 					output.el.value = calc
