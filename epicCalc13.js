@@ -38,23 +38,31 @@ if(typeof epic !== "undefined") {
 							if(input.name === x) {
 								console.log(input.name);
 								console.log(input.el.value);
-								y = input.el.value;
+								if(input.el.value === "") {y = false}
+								else {y = input.el.value}
+								// y = input.el.value;
 								return false
 							}
 							return true
 						});
 						if(y === undefined) {return true}
+						else if(y === false) {
+							if(output.hasOwnProperty("ogtext")) {
+								output.el.textContent = output.ogtext
+							}
+							return true
+						}
 						calc = calc.replace("[" + x + "]", y)
 					}
 					else {ev = true}
 				}
-				console.log("ev: " + ev);
+				/*console.log("ev: " + ev);
 				if(ev !== true) {
 					if(output.hasOwnProperty("ogtext")) {
 						output.el.textContent = output.ogtext
 					}
 					return true
-				}
+				}*/
 				// if all calc var inputs have values, calculate
 				// if not, set output text to original
 				calc = eval(calc);
