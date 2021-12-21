@@ -27,10 +27,35 @@ if(typeof epic !== "undefined") {
 				let calc = output.calc, ev = false, cycle = 0;
 				while(ev === false && cycle < 20) {
 					cycle++;
-					let i = calc.indexOf("[");
-					let j = calc.indexOf("]");
-					if(i !== -1 && j !== -1) {
-						let x = calc.slice(i + 1, j), y;
+					let i = calc.indexOf("["), j = calc.indexOf("]");
+					let k = calc.indexOf("{"), l = calc.indexOf("}");
+					if(i !== -1 && j !== -1 || k !== -1 && l !== -1) {
+						let key = "input", a, b, x, y;
+						if(i !== -1 && j !== -1) {a = i; b = j}
+						else {key = "output"; a = k; b = l}
+						x = calc.slice(a + 1, b);
+						epic.calc.ref[key].every(input => {
+							if(!input.hasOwnProperty("name")) {return true}
+							if(input.name === x) {
+								let value;
+								if(input.el.tagName === "INPUT") {value = input.el.value}
+								else {value = input.el.textContent}
+								if(value === "") {y = false}
+								else {y = value}
+								if(input.hasOwnProperty("format")) {
+									if(input.format === "%") {
+										y = Number(y) / 100
+									}
+								}
+								return false
+							}
+							return true
+						});
+						//
+						//
+						//
+						//
+						/*let x = calc.slice(i + 1, j), y;
 						epic.calc.ref.input.every(input => {
 							if(!input.hasOwnProperty("name")) {return true}
 							if(input.name === x) {
@@ -44,7 +69,11 @@ if(typeof epic !== "undefined") {
 								return false
 							}
 							return true
-						});
+						});*/
+						//
+						//
+						//
+						//
 						if(y === undefined) {return true}
 						else if(y === false) {
 							if(output.el.tagName === "INPUT") {
