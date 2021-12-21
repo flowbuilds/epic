@@ -36,6 +36,11 @@ if(typeof epic !== "undefined") {
 							if(input.name === x) {
 								if(input.el.value === "") {y = false}
 								else {y = input.el.value}
+								if(input.hasOwnProperty("format")) {
+									if(input.format === "%") {
+										y = Number(y) / 100
+									}
+								}
 								return false
 							}
 							return true
