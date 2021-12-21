@@ -86,7 +86,9 @@ if(typeof epic !== "undefined") {
 							}
 							return true
 						}
-						calc = calc.replace("[" + x + "]", y);
+						if(key === "output") {x = "{" + x + "}"}
+						else {x = "[" + x + "]"}
+						calc = calc.replace(x, y);
 						console.log("calc: " + calc)
 					}
 					else {ev = true}
