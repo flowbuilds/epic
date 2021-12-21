@@ -41,14 +41,18 @@ if(typeof epic !== "undefined") {
 						epic.calc.ref.input.every(input => {
 							if(!input.hasOwnProperty("name")) {return true}
 							if(input.name === x) {
-								if(input.el.value === "") {break}
 								y = input.el.value;
 								return false
 							}
 							return true
 						});
-						if(y === undefined) {return true}
-						calc = calc.replace("[" + x + "]", y)
+						//
+						//
+						if(y === undefined || y === "") {break}
+						//
+						//
+						/*if(y === undefined) {return true}
+						calc = calc.replace("[" + x + "]", y)*/
 					}
 					else {ev = true}
 				}
