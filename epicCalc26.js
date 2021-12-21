@@ -40,7 +40,8 @@ if(typeof epic !== "undefined") {
 								let value;
 								if(input.el.tagName === "INPUT") {value = input.el.value}
 								else {value = input.el.textContent}
-								if(value === "") {y = false}
+								if(input.hasOwnProperty("ogtext") && value === input.ogtext) {y = false}
+								else if(value === "") {y = false}
 								else {y = value}
 								if(input.hasOwnProperty("format")) {
 									if(input.format === "%") {
