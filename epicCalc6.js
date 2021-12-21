@@ -23,11 +23,14 @@ if(typeof epic !== "undefined") {
 				// store original // if
 				// calculate & display
 				// calc=![1b]*[1c]*[1d]*[1a]*365
+				//
+				// store original text, if any
 				if(!output.hasOwnProperty("ogtext")) {
 					if(output.el.textContent !== "") {
 						output.ogtext = output.el.textContent
 					}
 				}
+				// replace calc vars with input values
 				let calc = output.calc, ev = false, cycle = 0;
 				while(ev === false && cycle < 20) {
 					cycle++;
@@ -38,6 +41,7 @@ if(typeof epic !== "undefined") {
 						epic.calc.ref.input.every(input => {
 							if(!input.hasOwnProperty("name")) {return true}
 							if(input.name === x) {
+								if(input.el.value === "") {break}
 								y = input.el.value;
 								return false
 							}
@@ -48,7 +52,14 @@ if(typeof epic !== "undefined") {
 					}
 					else {ev = true}
 				}
-				if(ev !== true) {return true}
+				if(ev !== true) {
+					if(calc.hasOwnProperty("ogtext")) {
+						calc.el.textContent = calc.ogtext
+					}
+					return true
+				}
+				// if all calc var inputs have values, calculate
+				// if not, set output text to original
 				calc = eval(calc);
 				if(calc === undefined) {return true}
 				// TEMPORARY
