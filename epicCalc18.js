@@ -62,11 +62,47 @@ if(typeof epic !== "undefined") {
 				calc = eval(calc);
 				if(calc === undefined) {return true}
 				// format
+				let dec = 0;
 				if(output.hasOwnProperty("decimal")) {
-					calc = calc.toFixed(output.decimal)
+					dec = output.decimal
+					//calc = calc.toFixed(output.decimal)
 				}
+				calc = calc.toFixed(dec);
 				if(output.hasOwnProperty("format")) {
-					//
+					let sepa, sepb, cur, cycle = 0;
+					if(output.format.toLowerCase() === "usd") {
+						sepa = "."; sepb = ","; cur = "$"
+					}
+					if(sepa !== undefined && sepb !== undefined) {
+						let i = calc.indexOf(".");
+						if(i !== -1) {calc = calc.replace(".", sepa)}
+						else {i = 0}
+						i += 3;
+						console.log(calc);
+						while(cycle < 10 && i < calc.length) {
+							calc = calc.slice(0, calc.length - i) + sepb + calc.slice(i + 1)
+							console.log(calc);
+							i += 4;
+							cycle++
+						}
+						console.log(calc)
+					}
+					if(cur !== undefined) {calc = cur + calc}
+				}
+				//
+				//
+				if(output.hasOwnProperty("format")) {
+					if(output.format.toLowerCase() === "usd") {
+						let i = calc.indexOf("."), cycle = 0, temp;
+						if(i !== -1) {i -= calc.length}
+						else {i = 0}
+						while(cycle < 20 && i * -1 < calc.length) {
+							i -= 3;
+							temp = calc.slice(0, )
+							cycle++
+						}
+						calc = "$" + calc
+					}
 				}
 				// display
 				if(output.el.tagName === "INPUT") {
