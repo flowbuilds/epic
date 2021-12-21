@@ -80,7 +80,7 @@ if(typeof epic !== "undefined") {
 						i += 3;
 						console.log(calc);
 						while(cycle < 10 && i < calc.length) {
-							calc = calc.slice(0, calc.length - i) + sepb + calc.slice(i + 1)
+							calc = calc.slice(0, calc.length - i) + sepb + calc.slice(calc.length - i + 1)
 							console.log(calc);
 							i += 4;
 							cycle++
