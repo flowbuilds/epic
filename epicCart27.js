@@ -35,6 +35,7 @@ if(typeof epic !== "undefined") {
 					return true
 				});
 				if(matches.length === 1) {options.variation = matches[0]}
+				else {delete options.variation}
 			}
 		},
 		"setoptions": () => {
