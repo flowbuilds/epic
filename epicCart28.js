@@ -28,6 +28,7 @@ if(typeof epic !== "undefined") {
 				epic.cart.ref.variation.every(vari => {
 					if(!vari.hasOwnProperty("id")) {return true}
 					for(name in options) {
+						if(name === "quantity") {continue}
 						if(!vari.hasOwnProperty(name)) {continue}
 						if(vari[name] !== options[name]) {return true}
 					}
