@@ -15,16 +15,18 @@ if(typeof epic !== "undefined") {
 			if(typeof option !== "object") {return}
 			option = epic.js.ref(option);
 			if(option === undefined) {return}
-			// add/update product options
+			// add/update/remove product options
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("product")) {return}
 			let value = option.el.value;
 			if(option.hasOwnProperty("value")) {value = option.value}
 			if(!option.product.hasOwnProperty("options")) {option.product.options = {}}
-			option.product.options[option.name] = value;
+			let options = option.product.options;
+			if(value !== undefined && value !== "") {options[option.name] = value}
+			else {delete options[option.name]}
 			// variation match
 			if(epic.cart.ref.hasOwnProperty("variation")) {
-				let matches = [], options = option.product.options;
+				let matches = [];
 				epic.cart.ref.variation.every(vari => {
 					if(!vari.hasOwnProperty("id")) {return true}
 					for(name in options) {
