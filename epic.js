@@ -274,8 +274,8 @@ var epic = {
 			});
 		},
 		"actions": () => {
-			epic.js.array(document.querySelectorAll("[epic-actions]")).forEach(el => {
-				let acts = el.getAttribute("epic-actions").split("&");
+			epic.js.array(document.querySelectorAll("[epic-action]")).forEach(el => {
+				let acts = el.getAttribute("epic-action").split("&");
 				acts.forEach(act => {
 					let i = act.indexOf("=");
 					act = {
