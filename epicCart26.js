@@ -2,6 +2,12 @@
 
 if(typeof epic !== "undefined") {
 	epic.cart = {
+		"remove": () => {
+			//
+		},
+		"addtocart": () => {
+			//
+		},
 		"update": (x, option) => {
 			if(x === undefined) {return}
 			if(typeof x !== "string") {return}
@@ -9,12 +15,27 @@ if(typeof epic !== "undefined") {
 			if(typeof option !== "object") {return}
 			option = epic.js.ref(option);
 			if(option === undefined) {return}
+			// add/update product options
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("product")) {return}
 			let value = option.el.value;
 			if(option.hasOwnProperty("value")) {value = option.value}
 			if(!option.product.hasOwnProperty("options")) {option.product.options = {}}
-			option.product.options[option.name] = value
+			option.product.options[option.name] = value;
+			// variation match
+			if(epic.cart.ref.hasOwnProperty("variation")) {
+				let matches = [], options = option.product.options;
+				epic.cart.ref.variation.every(vari => {
+					if(!vari.hasOwnProperty("id")) {return true}
+					for(name in options) {
+						if(!vari.hasOwnProperty(name)) {continue}
+						if(vari[name] !== options[name]) {return true}
+					}
+					matches.push(vari.id);
+					return true
+				});
+				if(matches.length === 1) {options.variation = matches[0]}
+			}
 		},
 		"setoptions": () => {
 			if(!epic.cart.ref.hasOwnProperty("option")) {return}
