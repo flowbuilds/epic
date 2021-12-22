@@ -2,12 +2,13 @@
 
 if(typeof epic !== "undefined") {
 	epic.cart = {
-		"option": (x, option) => {
+		"update": (x, option) => {
 			if(x === undefined) {return}
 			if(typeof x !== "string") {return}
 			if(option === undefined) {return}
 			if(typeof option !== "object") {return}
 			option = epic.js.ref(option);
+			if(option === undefined) {return}
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("product")) {return}
 			let value = option.el.value;
