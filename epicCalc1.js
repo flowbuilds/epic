@@ -34,6 +34,7 @@ epic.calc = {
 					if(i !== -1 && j !== -1) {a = i; b = j}
 					else {key = "output"; a = k; b = l}
 					x = calc.slice(a + 1, b);
+					// inputs
 					epic.calc.ref[key].every(input => {
 						if(!input.hasOwnProperty("name")) {return true}
 						if(input.name === x) {
@@ -43,6 +44,11 @@ epic.calc = {
 							if(input.hasOwnProperty("ogtext") && value === input.ogtext) {y = false}
 							else if(value === "") {y = false}
 							else {y = value}
+							if(y === false) {
+								if(input.hasOwnProperty("default")) {
+									y = input.default.toString()
+								}
+							}
 							if(y !== false) {
 								if(input.hasOwnProperty("format")) {
 									if(input.format.toLowerCase() === "usd") {
@@ -57,6 +63,7 @@ epic.calc = {
 						}
 						return true
 					});
+					// output
 					if(y === undefined) {return true}
 					else if(y === false) {
 						if(output.el.tagName === "INPUT") {
@@ -114,4 +121,7 @@ epic.calc = {
 }
 if(epic.hasOwnProperty("js")) {
 	epic.js.refBuilder("calc")
+}
+if(epic.calc.hasOwnProperty("ref")) {
+	epic.calc.update()
 }
