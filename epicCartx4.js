@@ -25,7 +25,11 @@ epic.cart = {
 		let add = true;
 		epic.cart.current.every(product => {
 			if(product.variation === el.product.options.variation) {
-				product.quantity += el.product.options.quantity;
+				let quantity = 1;
+				if(el.product.options.hasOwnProperty("quantity")) {
+					quantity = Number(el.product.options.quantity)
+				}
+				product.quantity += quantity;
 				add = false;
 				return false
 			}
@@ -33,7 +37,7 @@ epic.cart = {
 		});
 		if(add === true) {
 			epic.cart.current.push({
-				"quantity": el.product.options.quantity,
+				"quantity": Number(el.product.options.quantity),
 				"variation": el.product.options.variation
 			})
 		}
