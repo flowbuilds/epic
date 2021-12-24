@@ -245,23 +245,6 @@ epic.js = {
 			x = true;
 			return true
 		});
-		//
-		//
-		/*val.forEach((v, i) => {
-			let j = v.indexOf("=");
-			if(j === -1) {val[i] = epic.js.value(v)}
-			else {
-				let k = v.indexOf("("), l = v.indexOf(")");
-				if(k !== -1 && l !== -1) {
-					if(k < j && l > j) {
-						val[i] = epic.js.value(v);
-						//
-					}
-				}
-				obj[v.slice(0, j)] = epic.js.value(v.slice(j + 1), el);
-				x = true
-			}
-		});*/
 		if(x === true) {val = obj}
 		console.log(val);
 		return val
