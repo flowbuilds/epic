@@ -296,7 +296,9 @@ epic.js = {
 			attr.forEach(val => {
 				if(val === "disable") {
 					Webflow.push(() => {
-						form.submit(() => {return false})
+						$(form).submit(() => {
+							return false
+						})
 					})
 				}
 			})
