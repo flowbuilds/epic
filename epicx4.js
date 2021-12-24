@@ -300,13 +300,6 @@ epic.js = {
 							return false
 						})
 					})
-					//
-					//
-					/*Webflow.push(() => {
-						$(form).submit(() => {
-							return false
-						})
-					})*/
 				}
 			})
 		})
@@ -314,7 +307,12 @@ epic.js = {
 	"onload": () => {
 		epic.js.actions();
 		epic.js.forms()
-	}
+	},
+	"init": () => {
+		epic.js.refBuilder("js")
+	},
+	"ref": {}
 }
 epic.ref = [];
+epic.js.init();
 window.addEventListener("DOMContentLoaded", () => {epic.js.onload()})
