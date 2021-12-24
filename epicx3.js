@@ -295,11 +295,18 @@ epic.js = {
 			let attr = form.getAttribute("epic-form").split("&");
 			attr.forEach(val => {
 				if(val === "disable") {
-					Webflow.push(() => {
-						$(form).submit(() => {
+					Webflow.push(function() {
+						$(form).submit(function() {
 							return false
 						})
 					})
+					//
+					//
+					/*Webflow.push(() => {
+						$(form).submit(() => {
+							return false
+						})
+					})*/
 				}
 			})
 		})
