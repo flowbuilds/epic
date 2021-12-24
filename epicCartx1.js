@@ -2,11 +2,23 @@
 
 if(typeof epic === "undefined") {var epic = {}}
 epic.cart = {
+	"checkout": () => {
+		//
+	},
 	"remove": () => {
 		//
 	},
-	"addtocart": () => {
-		//
+	"addtocart": (x, el) => {
+		// product = the product's id
+		// fetch product ref by id
+		if(x === undefined) {return}
+		if(typeof x !== "string") {return}
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		el = epic.js.ref(el);
+		if(el === undefined) {return}
+		if(!el.hasOwnProperty("product")) {return}
+		// use product.variation to match // product.variations
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
@@ -83,6 +95,23 @@ epic.cart = {
 	},
 	"setproducts": () => {
 		if(!epic.cart.ref.hasOwnProperty("product")) {return}
+		epic.cart.ref.product.every(product => {
+			product.elements = [];
+			product.variations = [];
+			epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(el => {
+				if(el.el.getAttribute("epic-cart-element") === "variation") {
+					product.variations.push(el)
+				}
+				if(el.hasOwnProperty("product")) {return true}
+				product.elements.push(el);
+				el.product = product
+				return true
+			});
+			return true
+		})
+	},
+	/*"setproducts": () => {
+		if(!epic.cart.ref.hasOwnProperty("product")) {return}
 		epic.cart.ref.product.every((product, i) => {
 			epic.cart.ref.product[i].elements = [];
 			epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(item => {
@@ -93,13 +122,13 @@ epic.cart = {
 			});
 			return true
 		})
+	},*/
+	"init": () => {
+		epic.js.refBuilder("cart");
+		epic.cart.setproducts();
+		epic.cart.setoptions()
 	},
+	"ref": {},
 	"current": []
 }
-if(epic.hasOwnProperty("js")) {
-	epic.js.refBuilder("cart")
-}
-if(epic.cart.hasOwnProperty("ref")) {
-	epic.cart.setproducts();
-	epic.cart.setoptions()
-}
+if(epic.hasOwnProperty("js")) {epic.cart.init()}
