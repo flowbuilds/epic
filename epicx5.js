@@ -273,6 +273,20 @@ epic.js = {
 			epic.ref[refi][sys] = epic[sys].ref[name][sysi]
 		});
 	},
+	"forms": () => {
+		if(!epic.js.ref.hasOwnProperty("form")) {return}
+		epic.js.ref.form.forEach(form => {
+			if(form.hasOwnProperty("submit")) {
+				if(form.submit === "disable") {
+					Webflow.push(function() {
+						$(form.el).submit(function() {
+							return false
+						})
+					})
+				}
+			}
+		})
+	},
 	"actions": () => {
 		epic.js.array(document.querySelectorAll("[epic-action]")).forEach(el => {
 			let acts = el.getAttribute("epic-action").split("&");
@@ -290,7 +304,7 @@ epic.js = {
 			})
 		})
 	},
-	"forms": () => {
+	/*"forms": () => {
 		epic.js.array(document.querySelectorAll("[epic-form]")).forEach(form => {
 			let attr = form.getAttribute("epic-form").split("&");
 			attr.forEach(val => {
@@ -303,7 +317,7 @@ epic.js = {
 				}
 			})
 		})
-	},
+	},*/
 	"onload": () => {
 		epic.js.actions();
 		epic.js.forms()
