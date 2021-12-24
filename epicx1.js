@@ -289,9 +289,23 @@ epic.js = {
 				}
 			})
 		})
+	},
+	"forms": () => {
+		epic.js.array(document.querySelectorAll("[epic-form]")).forEach(form => {
+			let attr = form.getAttribute("epic-form").split("&");
+			attr.forEach(val => {
+				if(val === "disable") {
+					Webflow.push(() => {
+						form.submit(() => {return false})
+					})
+				}
+			})
+		})
+	},
+	"onload": () => {
+		epic.js.actions();
+		epic.js.forms()
 	}
 }
 epic.ref = [];
-window.addEventListener("DOMContentLoaded", () => {
-	epic.js.actions()
-})
+window.addEventListener("DOMContentLoaded", () => {epic.js.onload()})
