@@ -219,17 +219,23 @@ epic.js = {
 		if(!val.includes("&") && !val.includes("=")) {
 			return epic.js.value(val, el)
 		}
-		let obj = {}, o = false;
+		let obj = {}, x = false;
 		val = val.split("&");
 		val.forEach((v, i) => {
 			let j = v.indexOf("=");
 			if(j === -1) {val[i] = epic.js.value(v)}
 			else {
-				obj[v.slice(0, j)] = epic.js.value(v.slice(j + 1), el);
-				o = true
+				let k = v.indexOf("("), l = v.indexOf(")");
+				if(k !== -1 && l !== -1) {
+					if(k < j && l > j) {val[i] = epic.js.value(v)}
+				}
+				else {
+					obj[v.slice(0, j)] = epic.js.value(v.slice(j + 1), el);
+					x = true
+				}
 			}
 		});
-		if(o === true) {val = obj}
+		if(x === true) {val = obj}
 		return val
 	},
 	"refBuilder": (sys) => {
@@ -304,20 +310,6 @@ epic.js = {
 			})
 		})
 	},
-	/*"forms": () => {
-		epic.js.array(document.querySelectorAll("[epic-form]")).forEach(form => {
-			let attr = form.getAttribute("epic-form").split("&");
-			attr.forEach(val => {
-				if(val === "disable") {
-					Webflow.push(function() {
-						$(form).submit(function() {
-							return false
-						})
-					})
-				}
-			})
-		})
-	},*/
 	"init": () => {
 		epic.js.refBuilder("js")
 		epic.js.actions();
