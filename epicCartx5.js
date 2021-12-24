@@ -22,13 +22,12 @@ epic.cart = {
 		// variation.name // variation.image // variation.color // variation.size
 		// cart.current.push({"quantity": #, "variation": {}})
 		// check if already exists in .current
-		let add = true;
+		let add = true, quantity = 1;
+		if(el.product.options.hasOwnProperty("quantity")) {
+			quantity = Number(el.product.options.quantity)
+		}
 		epic.cart.current.every(product => {
 			if(product.variation === el.product.options.variation) {
-				let quantity = 1;
-				if(el.product.options.hasOwnProperty("quantity")) {
-					quantity = Number(el.product.options.quantity)
-				}
 				product.quantity += quantity;
 				add = false;
 				return false
@@ -37,7 +36,7 @@ epic.cart = {
 		});
 		if(add === true) {
 			epic.cart.current.push({
-				"quantity": Number(el.product.options.quantity),
+				"quantity": quantity,
 				"variation": el.product.options.variation
 			})
 		}
