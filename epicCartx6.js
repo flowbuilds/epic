@@ -5,6 +5,9 @@ epic.cart = {
 	"checkout": () => {
 		//
 	},
+	"updatecart": () => {
+		// cycle through .current & populate items
+	},
 	"remove": () => {
 		//
 	},
@@ -13,15 +16,12 @@ epic.cart = {
 		if(typeof x !== "string") {return}
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
-		el = epic.js.ref(el);
+		el = epic.js.getref(el);
 		if(el === undefined) {return}
 		if(!el.hasOwnProperty("product")) {return}
 		if(!el.product.hasOwnProperty("options")) {return}
 		if(!el.product.options.hasOwnProperty("variation")) {return}
-		// el.product.options.variation // el.product.options.quantity
-		// variation.name // variation.image // variation.color // variation.size
-		// cart.current.push({"quantity": #, "variation": {}})
-		// check if already exists in .current
+		// add to cart
 		let add = true, quantity = 1;
 		if(el.product.options.hasOwnProperty("quantity")) {
 			quantity = Number(el.product.options.quantity)
@@ -47,7 +47,7 @@ epic.cart = {
 		if(typeof x !== "string") {return}
 		if(option === undefined) {return}
 		if(typeof option !== "object") {return}
-		option = epic.js.ref(option);
+		option = epic.js.getref(option);
 		if(option === undefined) {return}
 		// add/update/remove product options
 		if(!option.hasOwnProperty("name")) {return}
@@ -58,9 +58,7 @@ epic.cart = {
 		let options = option.product.options;
 		if(value !== undefined && value !== "") {options[option.name] = value}
 		else {delete options[option.name]}
-		// variation match
-		//
-		//
+		// match to variation
 		if(option.product.hasOwnProperty("variations")) {
 			let matches = [];
 			option.product.variations.every(vari => {
@@ -75,23 +73,6 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
-		//
-		//
-		/*if(epic.cart.ref.hasOwnProperty("variation")) {
-			let matches = [];
-			epic.cart.ref.variation.every(vari => {
-				if(!vari.hasOwnProperty("id")) {return true}
-				for(name in options) {
-					if(name === "quantity") {continue}
-					if(!vari.hasOwnProperty(name)) {continue}
-					if(vari[name] !== options[name]) {return true}
-				}
-				matches.push(vari.id);
-				return true
-			});
-			if(matches.length === 1) {options.variation = matches[0]}
-			else {delete options.variation}
-		}*/
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
@@ -138,7 +119,7 @@ epic.cart = {
 		epic.cart.ref.product.every(product => {
 			product.elements = [];
 			product.variations = [];
-			epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(el => {
+			epic.js.getref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(el => {
 				if(el.el.getAttribute("epic-cart-element") === "variation") {
 					product.variations.push(el)
 				}
@@ -150,19 +131,6 @@ epic.cart = {
 			return true
 		})
 	},
-	/*"setproducts": () => {
-		if(!epic.cart.ref.hasOwnProperty("product")) {return}
-		epic.cart.ref.product.every((product, i) => {
-			epic.cart.ref.product[i].elements = [];
-			epic.js.ref(epic.js.array(product.el.querySelectorAll("[epic-cart-element]"))).every(item => {
-				if(item.hasOwnProperty("product")) {return true}
-				epic.cart.ref.product[i].elements.push(item);
-				item.product = epic.cart.ref.product[i];
-				return true
-			});
-			return true
-		})
-	},*/
 	"init": () => {
 		epic.js.refBuilder("cart");
 		epic.cart.setproducts();
