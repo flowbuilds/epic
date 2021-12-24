@@ -318,15 +318,12 @@ epic.js = {
 			})
 		})
 	},*/
-	"onload": () => {
-		epic.js.actions();
-		epic.js.forms()
-	},
 	"init": () => {
 		epic.js.refBuilder("js")
+		epic.js.actions();
+		epic.js.forms()
 	},
 	"ref": {}
 }
 epic.ref = [];
-epic.js.init();
-window.addEventListener("DOMContentLoaded", () => {epic.js.onload()})
+window.addEventListener("DOMContentLoaded", () => {epic.js.init()})
