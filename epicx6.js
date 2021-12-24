@@ -48,7 +48,7 @@ epic.js = {
 		if(typeof val !== "string") {return}
 		return epic.js.qs(val, true, el)
 	},
-	"ref": (els, el) => {
+	"getref": (els, el) => {
 		if(els === undefined) {return}
 		if(typeof els !== "string" && typeof els !== "object") {return}
 		if(typeof els === "string") {
