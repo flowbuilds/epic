@@ -37,7 +37,25 @@ epic.cart = {
 		if(value !== undefined && value !== "") {options[option.name] = value}
 		else {delete options[option.name]}
 		// variation match
-		if(epic.cart.ref.hasOwnProperty("variation")) {
+		//
+		//
+		if(option.product.hasOwnProperty("variations")) {
+			let matches = [];
+			option.product.variations.every(vari => {
+				for(name in options) {
+					if(name === "quantity") {continue}
+					if(!vari.hasOwnProperty(name)) {continue}
+					if(vari[name] !== options[name]) {return true}
+				}
+				matches.push(vari);
+				return true
+			});
+			if(matches.length === 1) {options.variation = matches[0]}
+			else {delete options.variation}
+		}
+		//
+		//
+		/*if(epic.cart.ref.hasOwnProperty("variation")) {
 			let matches = [];
 			epic.cart.ref.variation.every(vari => {
 				if(!vari.hasOwnProperty("id")) {return true}
@@ -51,7 +69,7 @@ epic.cart = {
 			});
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
-		}
+		}*/
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
