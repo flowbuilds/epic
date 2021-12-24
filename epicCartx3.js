@@ -9,8 +9,6 @@ epic.cart = {
 		//
 	},
 	"addtocart": (x, el) => {
-		// product = the product's id
-		// fetch product ref by id
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
 		if(el === undefined) {return}
@@ -18,7 +16,28 @@ epic.cart = {
 		el = epic.js.ref(el);
 		if(el === undefined) {return}
 		if(!el.hasOwnProperty("product")) {return}
-		// use product.variation to match // product.variations
+		if(!el.product.hasOwnProperty("options")) {return}
+		if(!el.product.options.hasOwnProperty("variation")) {return}
+		// el.product.options.variation // el.product.options.quantity
+		// variation.name // variation.image // variation.color // variation.size
+		// cart.current.push({"quantity": #, "variation": {}})
+		// check if already exists in .current
+		let add = true;
+		epic.cart.current.every(product => {
+			if(product.variation === el.product.options.variation) {
+				product.quantity += el.product.options.quantity;
+				add = false;
+				return false
+			}
+			return true
+		});
+		if(add === true) {
+			epic.cart.current.push({
+				"quantity": el.product.options.quantity,
+				"variation": el.product.options.variation
+			})
+		}
+		// update display
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
