@@ -216,8 +216,6 @@ epic.js = {
 	"attribute": (val, el) => {
 		if(val === undefined) {return val}
 		if(typeof val !== "string") {return val}
-		//
-		//
 		if(!val.includes("&")) {
 			if(!val.includes("=")) {
 				return epic.js.value(val, el)
@@ -228,15 +226,8 @@ epic.js = {
 				return epic.js.value(val, el)
 			}
 		}
-		//
-		//
-		/*if(!val.includes("&") && !val.includes("=")) {
-			return epic.js.value(val, el)
-		}*/
 		let obj = {}, x = false;
 		val = val.split("&");
-		//
-		//
 		val.every((v, i) => {
 			let j = v.indexOf("=");
 			if(j === -1) {
@@ -246,7 +237,7 @@ epic.js = {
 			let k = v.indexOf("["), l = v.indexOf("]");
 			if(k !== -1 && l !== -1) {
 				if(k < j && j < l) {
-					val[i] = epic.js.value(v);
+					val[i] = epic.js.value(v, el);
 					return true
 				}
 			}
