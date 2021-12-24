@@ -258,6 +258,7 @@ epic.js = {
 			}
 		});*/
 		if(x === true) {val = obj}
+		console.log(val);
 		return val
 	},
 	"refBuilder": (sys) => {
