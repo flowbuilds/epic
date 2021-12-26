@@ -24,6 +24,7 @@ epic.cart = {
 				return true
 			});
 			console.log(req);
+			console.log(y);
 			// ADD DISCOUNTS
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
