@@ -28,6 +28,7 @@ epic.cart = {
 			// ADD DISCOUNTS
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.responseType = "json";
 			xhr.onload = () => {console.log(xhr.response)}
 			xhr.send()
