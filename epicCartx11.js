@@ -5,6 +5,31 @@ epic.cart = {
 	"checkout": (x, y, z) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
+		if(x === "ext") {
+			// y = webhook url
+			if(y === undefined) {return}
+			if(typeof y !== "string") {return}
+			// webhook request
+			let req = {"items": []}
+			epic.cart.current.forEach(item => {
+				if(!item.hasOwnProperty("variation")) {return true}
+				let obj = {
+					"quantity": "1",
+					"data": item.variation
+				}
+				if(item.hasOwnProperty("quantity")) {
+					obj.quantity = item.quantity.toString()
+				}
+				req.items.push(obj);
+				return true
+			});
+			console.log(req);
+			// ADD DISCOUNTS
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", y, true);
+			xhr.responseType = "json";
+			xhr.onload = () => {console.log(xhr.response)}
+		}
 		if(x === "square") {
 			// y = store location id
 			if(y === undefined) {return}
