@@ -184,9 +184,10 @@ epic.js = {
 		if(val === undefined) {return val}
 		if(typeof val !== "string") {return val}
 		// empty
-		if(val === "") {str = undefined}
+		if(val === "") {val = undefined}
+		else if(val.charAt(0) === "!") {val = val.slice(1)}
 		// booleans // null // undefined
-		else if(val === "true") {str = true}
+		else if(val === "true") {val = true}
 		else if(val === "false") {val = false}
 		else if(val === "null") {val = null}
 		else if(val === "undefined") {val = undefined}
@@ -266,8 +267,9 @@ epic.js = {
 				if(attr.specified === false) {continue}
 				if(!attr.name.includes("epic-" + sys + "-")) {continue}
 				if(attr.name === "epic-" + sys + "-element") {continue}
-				if(attr.value.charAt(0) === "!") {value = attr.value.slice(1)}
-				else {value = epic.js.attribute(attr.value, el)}
+				// if(attr.value.charAt(0) === "!") {value = attr.value.slice(1)}
+				// else {value = epic.js.attribute(attr.value, el)}
+				value = epic.js.attribute(attr.value, el);
 				obj[attr.name.replace("epic-" + sys + "-", "")] = value
 				// obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value, el)
 			}
