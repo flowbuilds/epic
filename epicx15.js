@@ -184,7 +184,7 @@ epic.js = {
 		if(val === undefined) {return val}
 		if(typeof val !== "string") {return val}
 		// empty
-		if(val === "") {val = undefined}
+		if(val === "") {/*val = undefined*/}
 		else if(val.charAt(0) === "!") {val = val.slice(1)}
 		// booleans // null // undefined
 		else if(val === "true") {val = true}
