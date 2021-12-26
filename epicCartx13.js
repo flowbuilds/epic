@@ -30,6 +30,7 @@ epic.cart = {
 			xhr.open("POST", y, true);
 			xhr.responseType = "json";
 			xhr.onload = () => {console.log(xhr.response)}
+			xhr.send()
 		}
 		if(x === "square") {
 			// y = store location id
