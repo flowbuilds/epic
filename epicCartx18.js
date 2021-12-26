@@ -20,7 +20,7 @@ epic.cart = {
 				if(item.hasOwnProperty("quantity")) {
 					obj.quantity = item.quantity.toString()
 				}
-				for(key in item) {
+				for(key in item.variation) {
 					if(key === "el") {continue}
 					if(key === "product") {continue}
 					if(key === "quantity") {continue}
