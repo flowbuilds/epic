@@ -2,7 +2,7 @@
 
 if(typeof epic === "undefined") {var epic = {}}
 epic.cart = {
-	"checkout": (x, y) => {
+	"checkout": (x, y, z) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
 		if(x === "square") {
