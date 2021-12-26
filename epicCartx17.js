@@ -14,11 +14,17 @@ epic.cart = {
 			epic.cart.current.forEach(item => {
 				if(!item.hasOwnProperty("variation")) {return true}
 				let obj = {
-					"quantity": "1",
-					"data": item.variation
+					"quantity": "1"/*,
+					"data": item.variation*/
 				}
 				if(item.hasOwnProperty("quantity")) {
 					obj.quantity = item.quantity.toString()
+				}
+				for(key in item) {
+					if(key === "el") {continue}
+					if(key === "product") {continue}
+					if(key === "quantity") {continue}
+					obj[key] = item[key]
 				}
 				req.items.push(obj);
 				return true
