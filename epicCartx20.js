@@ -29,6 +29,7 @@ epic.cart = {
 				req.items.push(obj);
 				return true
 			});
+			req = JSON.stringify(req);
 			console.log(req);
 			console.log(y);
 			// ADD DISCOUNTS
