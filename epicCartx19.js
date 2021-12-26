@@ -24,7 +24,7 @@ epic.cart = {
 					if(key === "el") {continue}
 					if(key === "product") {continue}
 					if(key === "quantity") {continue}
-					obj[key] = item[key]
+					obj[key] = item.variation[key]
 				}
 				req.items.push(obj);
 				return true
