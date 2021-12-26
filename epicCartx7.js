@@ -2,8 +2,38 @@
 
 if(typeof epic === "undefined") {var epic = {}}
 epic.cart = {
-	"checkout": () => {
-		//
+	"checkout": (x, y) => {
+		if(x === undefined) {return}
+		if(typeof x !== "string") {return}
+		if(x === "square") {
+			// y = store location id
+			if(y === undefined) {return}
+			if(typeof y !== "string") {return}
+			// API request
+			let req = {
+				"idempotency_key": "",
+				"order": {
+					"order": {
+						"location_id": y,
+						"line_items": []
+					}
+				}
+			}
+			epic.cart.current.forEach(item => {
+				if(!item.hasOwnProperty("variation")) {return true}
+				if(!item.variation.hasOwnProperty("catalogid")) {return true}
+				let quantity = "1";
+				if(item.hasOwnProperty("quantity")) {quantity = item.quantity.toString()}
+				req.order.order.line_items.push({
+					"catalog_object_id": item.variation.catalogid,
+					"quantity": quantity
+				});
+				//
+				return true
+			});
+			// on success response, go to url
+			console.log(req)
+		}
 	},
 	"updatecart": () => {
 		// cycle through .current & populate items
@@ -40,7 +70,7 @@ epic.cart = {
 				"variation": el.product.options.variation
 			})
 		}
-		// update display
+		epic.cart.updatecart()
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
