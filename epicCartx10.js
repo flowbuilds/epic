@@ -37,7 +37,7 @@ epic.cart = {
 			req.open("POST", "https://connect.squareup.com/v2/locations/" + y + "/checkouts", true);
 			req.responseType = "json";
 			req.setRequestHeader("Authorization", "Bearer " + z);
-			reg.onload = () => {
+			req.onload = () => {
 				if(req.status == 200) {
 					if(req.response.hasOwnProperty("checkout") && 
 						req.response.checkout.hasOwnProperty("checkout_page_url")) {
