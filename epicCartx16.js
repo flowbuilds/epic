@@ -29,10 +29,9 @@ epic.cart = {
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
-			xhr.setRequestHeader("Body-Type", "raw");
 			xhr.responseType = "json";
 			xhr.onload = () => {console.log(xhr.response)}
-			xhr.send()
+			xhr.send(req)
 		}
 		if(x === "square") {
 			// y = store location id
