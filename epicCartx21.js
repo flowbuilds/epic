@@ -37,55 +37,13 @@ epic.cart = {
 			xhr.open("POST", y, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.responseType = "json";
-			xhr.onload = () => {console.log(xhr.response)}
+			xhr.onload = () => {
+				console.log(xhr.response);
+				if(xhr.response.hasOwnProperty("url")) {
+					window.open(xhr.response.url)
+				}
+			}
 			xhr.send(req)
-		}
-		if(x === "square") {
-			// y = store location id
-			if(y === undefined) {return}
-			if(typeof y !== "string") {return}
-			// API request
-			// GENERATE AN IDEMPOTENCY KEY
-			let obj = {
-				"idempotency_key": "xxxx-xxxx-xxxx-xxxx",
-				"order": {
-					"order": {
-						"location_id": y,
-						"line_items": []
-					}
-				}
-			}
-			epic.cart.current.forEach(item => {
-				if(!item.hasOwnProperty("variation")) {return true}
-				if(!item.variation.hasOwnProperty("catalogid")) {return true}
-				let quantity = "1";
-				if(item.hasOwnProperty("quantity")) {quantity = item.quantity.toString()}
-				obj.order.order.line_items.push({
-					"catalog_object_id": item.variation.catalogid,
-					"quantity": quantity
-				});
-				return true
-			});
-			console.log(obj)
-			// ADD DISCOUNTS
-			let req = new XMLHttpRequest();
-			req.open("POST", "https://connect.squareup.com/v2/locations/" + y + "/checkouts", true);
-			req.responseType = "json";
-			req.setRequestHeader("Authorization", "Bearer " + z);
-			req.onload = () => {
-				if(req.status == 200) {
-					if(req.response.hasOwnProperty("checkout") && 
-						req.response.checkout.hasOwnProperty("checkout_page_url")) {
-						console.log(req.response.checkout.checkout_page_url)
-					}
-					else {
-						console.log("API Request Error: Response does not include .checkout or .checkout.checkout_page_url");
-						console.log(req.response)
-					}
-				}
-				else {console.log("API Request Error: Bad Response")}
-			}
-			req.send()
 		}
 	},
 	"updatecart": () => {
