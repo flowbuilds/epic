@@ -34,6 +34,11 @@ epic.cart = {
 				return true
 			});
 			// ADD DISCOUNTS
+			if(epic.cart.current.discounts.length >= 1) {
+				req.discounts = epic.cart.current.discounts
+			}
+			//
+			//
 			req = JSON.stringify(req);
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
