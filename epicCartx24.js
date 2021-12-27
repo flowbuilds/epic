@@ -11,7 +11,7 @@ epic.cart = {
 			if(typeof y !== "string") {return}
 			// webhook request
 			let req = {"items": []}
-			epic.cart.current.forEach(item => {
+			epic.cart.current.items.forEach(item => {
 				if(!item.hasOwnProperty("variation")) {return true}
 				let obj = {
 					"quantity": "1"
