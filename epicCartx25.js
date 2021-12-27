@@ -10,7 +10,12 @@ epic.cart = {
 			if(y === undefined) {return}
 			if(typeof y !== "string") {return}
 			// webhook request
-			let req = {"items": []}
+			let req = {
+				"items": [],
+				"discounts": [],
+				"shipping": epic.cart.current.shipping
+			}
+			// items
 			epic.cart.current.items.forEach(item => {
 				if(!item.hasOwnProperty("variation")) {return true}
 				let obj = {
@@ -51,10 +56,10 @@ epic.cart = {
 		}
 	},
 	"updatecart": () => {
-		let shipping = false;
+		let shipping = "false";
 		epic.cart.current.items.every(item => {
 			if(item.variation.hasOwnProperty("shipping") && item.variation.shipping === true) {
-				shipping = true;
+				shipping = "true";
 				return false
 			}
 			return true
