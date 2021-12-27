@@ -14,8 +14,7 @@ epic.cart = {
 			epic.cart.current.forEach(item => {
 				if(!item.hasOwnProperty("variation")) {return true}
 				let obj = {
-					"quantity": "1"/*,
-					"data": item.variation*/
+					"quantity": "1"
 				}
 				if(item.hasOwnProperty("quantity")) {
 					obj.quantity = item.quantity.toString()
@@ -29,10 +28,8 @@ epic.cart = {
 				req.items.push(obj);
 				return true
 			});
-			req = JSON.stringify(req);
-			console.log(req);
-			console.log(y);
 			// ADD DISCOUNTS
+			req = JSON.stringify(req);
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
@@ -54,7 +51,18 @@ epic.cart = {
 		}
 	},
 	"updatecart": () => {
-		// cycle through .current & populate items
+		let shipping = false;
+		epic.cart.current.items.every(item => {
+			if(item.variation.hasOwnProperty("shipping") && item.variation.shipping === true) {
+				shipping = true;
+				return false
+			}
+			return true
+		});
+		epic.cart.shipping = shipping;
+		console.log("Include shipping: " + epic.cart.shipping);
+		// populate items, discounts, & shipping
+		// calculate subtotal
 	},
 	"remove": () => {
 		//
@@ -74,16 +82,16 @@ epic.cart = {
 		if(el.product.options.hasOwnProperty("quantity")) {
 			quantity = Number(el.product.options.quantity)
 		}
-		epic.cart.current.every(product => {
-			if(product.variation === el.product.options.variation) {
-				product.quantity += quantity;
+		epic.cart.current.items.every(item => {
+			if(item.variation === el.product.options.variation) {
+				item.quantity += quantity;
 				add = false;
 				return false
 			}
 			return true
 		});
 		if(add === true) {
-			epic.cart.current.push({
+			epic.cart.current.items.push({
 				"quantity": quantity,
 				"variation": el.product.options.variation
 			})
@@ -185,6 +193,10 @@ epic.cart = {
 		epic.cart.setoptions()
 	},
 	"ref": {},
-	"current": []
+	"current": {
+		"items": [],
+		"discounts": [],
+		"shipping": "false"
+	}
 }
 if(epic.hasOwnProperty("js")) {epic.cart.init()}
