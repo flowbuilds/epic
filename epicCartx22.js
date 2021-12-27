@@ -39,8 +39,15 @@ epic.cart = {
 			xhr.responseType = "json";
 			xhr.onload = () => {
 				console.log(xhr.response);
-				if(xhr.response.hasOwnProperty("url")) {
-					window.open(xhr.response.url)
+				if(xhr.status == 200) {
+					if(xhr.response.hasOwnProperty("url")) {
+						window.open(xhr.response.url, "_self")
+					}
+				}
+				else {
+					console.log("ERROR: Something went wrong:");
+					console.log(xhr.response);
+					console.log(xhr.status)
 				}
 			}
 			xhr.send(req)
