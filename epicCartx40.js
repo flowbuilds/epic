@@ -120,11 +120,14 @@ epic.cart = {
 				console.log(name);
 				console.log(attr.value);
 				if(!item.hasOwnProperty(name)) {continue}
-				let val = epic.js.attribute(attr.value, cartitem);
+				let val = attr.value;
+				if(val.charAt(0) === "!") {val = val.slice(1)}
+				console.log(val);
+				let el = epic.js.attribute(val, cartitem);
 				// set value
-				if(typeof val !== "object") {continue}
-				if(val.tagName === "INPUT") {val.value = item[name]}
-				else {val.textContent = item[name]}
+				if(typeof el !== "object") {continue}
+				if(el.tagName === "INPUT") {el.value = item[name]}
+				else {el.textContent = item[name]}
 			}
 		});
 	},
