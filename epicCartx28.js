@@ -113,6 +113,7 @@ epic.cart = {
 		//
 		let add = true, obj = {};
 		keys.every(key => {
+			if(key === "el") {return true}
 			if(key === "remove") {return true}
 			if(key === "quantity") {return true}
 			obj[key] = el.product.options.variation[key];
