@@ -135,6 +135,7 @@ epic.cart = {
 				else if(el.tagName === "IMG") {el.src = item[name]}
 				else {el.textContent = item[name]}
 			}
+			return true
 		});
 	},
 	"remove": () => {
