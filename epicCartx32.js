@@ -63,7 +63,7 @@ epic.cart = {
 	"updatecart": () => {
 		let shipping = "false";
 		epic.cart.current.items.every(item => {
-			if(item.variation.hasOwnProperty("shipping") && item.variation.shipping === true) {
+			if(item.hasOwnProperty("shipping") && item.shipping === true) {
 				shipping = "true";
 				return false
 			}
@@ -72,15 +72,6 @@ epic.cart = {
 		epic.cart.current.shipping = shipping;
 		// populate items, discounts, & shipping
 		// calculate subtotal
-		//
-		// populate
-		// cartitem = template // .name // .name.textContent = item.variation.name
-		// ls[{"name": "", "price": ""}]
-		let ls = [];
-		epic.cart.current.items.every(item => {
-			//
-		});
-		localStorage.setItem("epicCart", "")
 	},
 	"remove": () => {
 		//
@@ -146,88 +137,14 @@ epic.cart = {
 			}
 			return true
 		});
+		//
 		if(add === true) {
 			obj.quantity = quantity.toString();
 			epic.cart.current.items.push(obj)
 		}
-		console.log(epic.cart.current)
-	},
-	/*"addtocart": (x, el) => {
-		if(el === undefined) {return}
-		if(typeof el !== "object") {return}
-		el = epic.js.getref(el);
-		if(el === undefined) {return}
-		if(!el.hasOwnProperty("product")) {return}
-		if(!el.product.hasOwnProperty("options")) {return}
-		if(!el.product.options.hasOwnProperty("variation")) {return}
-		// cartitem keys
-		let keys = [], cartitem;
-		if(el.hasOwnProperty("cartitem")) {cartitem = el.cartitem}
-		else if(epic.cart.ref.hasOwnProperty("cartitem")) {
-			cartitem = epic.cart.ref.cartitem[0]
-		}
-		if(cartitem === undefined) {return}
-		if(typeof cartitem === "string") {keys.push(cartitem)}
-		else if(Array.isArray(cartitem)) {keys = cartitem}
-		else if(typeof cartitem === "object") {
-			for(name in cartitem) {keys.push(name)}
-		}
-		else {return}
-		// add to cart
-		let options = el.product.options, add = true, obj = {"quantity": "1"};
-		if(el.hasOwnProperty("quantity")) {
-			obj.quantity = options.quantity
-		}
-		keys.every(key => {
-			if(key === "el") {return true}
-			if(key === "remove") {return true}
-			if(key === "quantity") {return true}
-			obj[key] = options.variation[key];
-			return true
-		});
-		// match to existing items
-		epic.cart.current.items(item => {
-			match = false;
-			for(key in obj) {
-				if()
-			}
-			//
-			return true
-		});
-		// current.items = [{"image": "", "name": ""}]
-		if()
-	},*/
-	/*"addtocart": (x, el) => {
-		if(x === undefined) {return}
-		if(typeof x !== "string") {return}
-		if(el === undefined) {return}
-		if(typeof el !== "object") {return}
-		el = epic.js.getref(el);
-		if(el === undefined) {return}
-		if(!el.hasOwnProperty("product")) {return}
-		if(!el.product.hasOwnProperty("options")) {return}
-		if(!el.product.options.hasOwnProperty("variation")) {return}
-		// add to cart
-		let add = true, quantity = 1;
-		if(el.product.options.hasOwnProperty("quantity")) {
-			quantity = Number(el.product.options.quantity)
-		}
-		epic.cart.current.items.every(item => {
-			if(item.variation === el.product.options.variation) {
-				item.quantity += quantity;
-				add = false;
-				return false
-			}
-			return true
-		});
-		if(add === true) {
-			epic.cart.current.items.push({
-				"quantity": quantity,
-				"variation": el.product.options.variation
-			})
-		}
+		console.log(epic.cart.current);
 		epic.cart.updatecart()
-	},*/
+	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
