@@ -90,7 +90,7 @@ epic.cart = {
 		while(next === false && cycle < 20) {
 			cartitems.push(sibling);
 			sibling = sibling.nextSibling;
-			if(!sibling.hasAttribute("epic-cart-element='cartitem'")) {
+			if(sibling !== null || !sibling.hasAttribute("epic-cart-element='cartitem'")) {
 				next = true
 			}
 			cycle++
