@@ -85,7 +85,20 @@ epic.cart = {
 		//
 		// populate
 		//
-		let cartitems = [], next = false, cycle = 0;
+		//
+		//
+		let ogcartitem = epic.cart.ref.cartitem[0];
+		let cartitems = epic.js.array(ogcartitem.el.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
+		//
+		cartitems.forEach((cartitem, i) => {
+			if(i !== 0 && i >= epic.cart.current.items.length) {
+				cartitem.remove()
+			}
+		});
+		cartitems = epic.js.array(ogcartitem.el.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
+		//
+		//
+		/*let cartitems = [], next = false, cycle = 0;
 		let sibling = epic.cart.ref.cartitem[0].el;
 		while(next === false && cycle < 20) {
 			cartitems.push(sibling);
@@ -95,29 +108,21 @@ epic.cart = {
 				next = true
 			}
 			cycle++
-		}
+		}*/
 		//
 		//
-		console.log("Items in cart: " + epic.cart.current.items.length);
+		/*console.log("Items in cart: " + epic.cart.current.items.length);
 		cartitems.forEach((cartitem, i) => {
 			console.log("Item " + i);
 			if(i !== 0 && i >= epic.cart.current.items.length) {
 				console.log(".remove( )");
+				// remove from array
 				cartitem.remove()
 			}
-		});
+		});*/
 		//
 		//
-		/*if(cartitems.length >= epic.cart.current.items.length) {
-			cartitems.every((cartitem, i) => {
-				if(i > epic.cart.current.items.length) {
-					cartitem.remove()
-				}
-			})
-		}*/
-		//
-		//
-		let ogcartitem = epic.cart.ref.cartitem[0].el;
+		// let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
 			if(i < cartitems.length) {cartitem = cartitems[i]}
