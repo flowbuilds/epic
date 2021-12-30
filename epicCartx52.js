@@ -61,8 +61,6 @@ epic.cart = {
 		}
 	},
 	"updatecart": (x) => {
-		console.log("updatecart( )");
-		console.log(x);
 		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
 		// update shipping + store cart
 		// OR retrieve cart from storage
@@ -142,8 +140,15 @@ epic.cart = {
 			return true
 		});
 	},
-	"remove": () => {
-		//
+	"remove": (x, el) => {
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		if(!el.hasAttribute("epic-cart-remove")) {return}
+		let i = Number(el.getAttribute("epic-cart-remove"));
+		if(isNaN(i) || i < 0) {return}
+		if(i >= epic.cart.current.items.length) {return}
+		epic.cart.current.items.splice(i, 1);
+		epic.cart.updatecart()
 	},
 	"addtocart": (x, el) => {
 		if(el === undefined) {return}
