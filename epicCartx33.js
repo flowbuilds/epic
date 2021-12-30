@@ -70,6 +70,13 @@ epic.cart = {
 			return true
 		});
 		epic.cart.current.shipping = shipping;
+		localStorage.setItem("epicCart", epic.cart.current);
+		//
+		// populate
+		//
+		epic.cart.current.items.every(item => {
+			//
+		});
 		// populate items, discounts, & shipping
 		// calculate subtotal
 	},
