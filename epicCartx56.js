@@ -87,15 +87,15 @@ epic.cart = {
 		//
 		//
 		//
-		let ogcartitem = epic.cart.ref.cartitem[0];
-		let cartitems = epic.js.array(ogcartitem.el.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
+		let ogcartitem = epic.cart.ref.cartitem[0].el;
+		let cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
 		//
 		cartitems.forEach((cartitem, i) => {
 			if(i !== 0 && i >= epic.cart.current.items.length) {
 				cartitem.remove()
 			}
 		});
-		cartitems = epic.js.array(ogcartitem.el.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
+		cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
 		//
 		//
 		/*let cartitems = [], next = false, cycle = 0;
