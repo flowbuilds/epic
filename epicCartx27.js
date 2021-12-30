@@ -33,12 +33,11 @@ epic.cart = {
 				req.items.push(obj);
 				return true
 			});
-			// ADD DISCOUNTS
+			// discounts
 			if(epic.cart.current.discounts.length >= 1) {
 				req.discounts = epic.cart.current.discounts
 			}
-			//
-			//
+			// request
 			req = JSON.stringify(req);
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST", y, true);
@@ -48,7 +47,8 @@ epic.cart = {
 				console.log(xhr.response);
 				if(xhr.status == 200) {
 					if(xhr.response.hasOwnProperty("url")) {
-						window.open(xhr.response.url, "_self")
+						/* OPEN IN SAME TAB */
+						window.open(xhr.response.url/*, "_self"*/)
 					}
 				}
 				else {
@@ -69,15 +69,103 @@ epic.cart = {
 			}
 			return true
 		});
-		epic.cart.shipping = shipping;
-		console.log("Include shipping: " + epic.cart.shipping);
+		epic.cart.current.shipping = shipping;
 		// populate items, discounts, & shipping
 		// calculate subtotal
+		//
+		// populate
+		// cartitem = template // .name // .name.textContent = item.variation.name
+		// ls[{"name": "", "price": ""}]
+		let ls = [];
+		epic.cart.current.items.every(item => {
+			//
+		});
+		localStorage.setItem("epicCart", "")
 	},
 	"remove": () => {
 		//
 	},
 	"addtocart": (x, el) => {
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		//
+		el = epic.js.getref(el);
+		if(el === undefined) {return}
+		//
+		if(!el.hasOwnProperty("product")) {return}
+		if(!el.product.hasOwnProperty("options")) {return}
+		if(!el.product.options.hasOwnProperty("variation")) {return}
+		// cartitem keys
+		let keys = [], cartitem;
+		//
+		if(el.hasOwnProperty("cartitem")) {cartitem = el.cartitem}
+		else if(epic.cart.ref.hasOwnProperty("cartitem")) {
+			cartitem = epic.cart.ref.cartitem[0]
+		}
+		if(cartitem === undefined) {return}
+		//
+		if(typeof cartitem === "string") {keys.push(cartitem)}
+		else if(Array.isArray(cartitem)) {keys = cartitem}
+		else if(typeof cartitem === "object") {
+			for(key in cartitem) {keys.push(key)}
+		}
+		else {return}
+		//
+		let add = true, obj = {};
+		keys.every(key => {
+			if(key === "remove") {return true}
+			if(key === "quantity") {return true}
+			obj[key] = el.product.options.variation[key];
+			return true
+		});
+		console.log(obj);
+	},
+	/*"addtocart": (x, el) => {
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		el = epic.js.getref(el);
+		if(el === undefined) {return}
+		if(!el.hasOwnProperty("product")) {return}
+		if(!el.product.hasOwnProperty("options")) {return}
+		if(!el.product.options.hasOwnProperty("variation")) {return}
+		// cartitem keys
+		let keys = [], cartitem;
+		if(el.hasOwnProperty("cartitem")) {cartitem = el.cartitem}
+		else if(epic.cart.ref.hasOwnProperty("cartitem")) {
+			cartitem = epic.cart.ref.cartitem[0]
+		}
+		if(cartitem === undefined) {return}
+		if(typeof cartitem === "string") {keys.push(cartitem)}
+		else if(Array.isArray(cartitem)) {keys = cartitem}
+		else if(typeof cartitem === "object") {
+			for(name in cartitem) {keys.push(name)}
+		}
+		else {return}
+		// add to cart
+		let options = el.product.options, add = true, obj = {"quantity": "1"};
+		if(el.hasOwnProperty("quantity")) {
+			obj.quantity = options.quantity
+		}
+		keys.every(key => {
+			if(key === "el") {return true}
+			if(key === "remove") {return true}
+			if(key === "quantity") {return true}
+			obj[key] = options.variation[key];
+			return true
+		});
+		// match to existing items
+		epic.cart.current.items(item => {
+			match = false;
+			for(key in obj) {
+				if()
+			}
+			//
+			return true
+		});
+		// current.items = [{"image": "", "name": ""}]
+		if()
+	},*/
+	/*"addtocart": (x, el) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
 		if(el === undefined) {return}
@@ -107,7 +195,7 @@ epic.cart = {
 			})
 		}
 		epic.cart.updatecart()
-	},
+	},*/
 	"update": (x, option) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
@@ -139,6 +227,29 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
+	},
+	"toggle": (state) => {
+		if(state === undefined) {return}
+		if(typeof state !== "string") {return}
+		if(state !== "open" && state !== "close") {return}
+		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
+		epic.cart.ref.cart.every(cart => {
+			if(!cart.hasOwnProperty("state")) {return true}
+			if(cart.state === "class") {
+				//
+			}
+			//
+			return true
+		})
+		// epic-cart-state='class'
+		// epic-cart-close='inactive'
+		// if has an option that matches new state, 
+	},
+	"close": () => {
+		epic.cart.toggle("close")
+	},
+	"open": () => {
+		epic.cart.toggle("open")
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
