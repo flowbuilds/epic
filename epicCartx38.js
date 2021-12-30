@@ -108,7 +108,7 @@ epic.cart = {
 			if(i < cartitems.length) {cartitem = cartitems[i]}
 			else {
 				cartitem = ogcartitem.cloneNode(true);
-				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling())
+				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling)
 			}
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
