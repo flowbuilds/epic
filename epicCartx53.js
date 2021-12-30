@@ -96,13 +96,27 @@ epic.cart = {
 			}
 			cycle++
 		}
-		if(cartitems.length >= epic.cart.current.items.length) {
+		//
+		//
+		console.log("Items in cart: " + epic.cart.current.items.length);
+		cartitems.every((cartitem, i) => {
+			console.log("Item " + i);
+			if(i >= epic.cart.current.items.length) {
+				console.log(".remove( )");
+				cartitem.remove()
+			}
+		});
+		//
+		//
+		/*if(cartitems.length >= epic.cart.current.items.length) {
 			cartitems.every((cartitem, i) => {
 				if(i > epic.cart.current.items.length) {
 					cartitem.remove()
 				}
 			})
-		}
+		}*/
+		//
+		//
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
