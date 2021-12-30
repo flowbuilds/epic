@@ -87,11 +87,11 @@ epic.cart = {
 		//
 		let cartitems = [], next = false, cycle = 0;
 		let sibling = epic.cart.ref.cartitem[0].el;
-		while(next === true && cycle < 20) {
+		while(next === false && cycle < 20) {
 			cartitems.push(sibling);
 			sibling = sibling.nextSibling();
 			if(!sibling.hasAttribute("epic-cart-element='cartitem'")) {
-				next = false
+				next = true
 			}
 			cycle++
 		}
