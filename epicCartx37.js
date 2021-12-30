@@ -102,7 +102,7 @@ epic.cart = {
 				}
 			})
 		}
-		let ogcartitem = epic.cart.ref.cartitem[0];
+		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
 			if(i < cartitems.length) {cartitem = cartitems[i]}
