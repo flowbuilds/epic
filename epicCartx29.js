@@ -95,7 +95,9 @@ epic.cart = {
 		if(!el.hasOwnProperty("product")) {return}
 		if(!el.product.hasOwnProperty("options")) {return}
 		if(!el.product.options.hasOwnProperty("variation")) {return}
+		//
 		// cartitem keys
+		//
 		let keys = [], cartitem;
 		//
 		if(el.hasOwnProperty("cartitem")) {cartitem = el.cartitem}
@@ -111,7 +113,10 @@ epic.cart = {
 		}
 		else {return}
 		//
+		// add to cart
+		//
 		let add = true, obj = {};
+		//
 		keys.every(key => {
 			if(key === "el") {return true}
 			if(key === "remove") {return true}
@@ -120,6 +125,30 @@ epic.cart = {
 			return true
 		});
 		console.log(obj);
+		//
+		epic.cart.current.items.every(item => {
+			let match = true;
+			for(key in obj) {
+				if(!item.hasOwnProperty(key)) {continue}
+				if(obj[key] != item[key]) {
+					match = false;
+					break
+				}
+			}
+			if(match === true) {
+				let quantity = Number(el.product.options.quantity);
+				item.quantity = Number(item.quantity) + quantity;
+				item.quantity = item.quantity.toString();
+				add = false;
+				return false
+			}
+			return true
+		});
+		if(add === true) {
+			obj.quantity = el.product.options.quantity;
+			epic.cart.current.items.push(obj)
+		}
+		console.log(epic.cart.current)
 	},
 	/*"addtocart": (x, el) => {
 		if(el === undefined) {return}
