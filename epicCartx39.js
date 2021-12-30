@@ -112,10 +112,13 @@ epic.cart = {
 			}
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
+				console.log(attr);
 				if(attr.specified === false) {continue}
 				if(!attr.name.includes("epic-cart-")) {continue}
 				if(attr.name === "epic-cart-element") {continue}
 				let name = attr.name.replace("epic-cart-", "");
+				console.log(name);
+				console.log(attr.value);
 				if(!item.hasOwnProperty(name)) {continue}
 				let val = epic.js.attribute(attr.value, cartitem);
 				// set value
