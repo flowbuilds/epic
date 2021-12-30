@@ -60,25 +60,33 @@ epic.cart = {
 			xhr.send(req)
 		}
 	},
-	"updatecart": () => {
-		let shipping = "false";
-		epic.cart.current.items.every(item => {
-			if(item.hasOwnProperty("shipping") && item.shipping === true) {
-				shipping = "true";
-				return false
-			}
-			return true
-		});
-		epic.cart.current.shipping = shipping;
-		localStorage.setItem("epicCart", JSON.stringify(epic.cart.current));
+	"updatecart": (x) => {
+		// update shipping + store cart
+		// OR retrieve cart from storage
+		// reset & populate cart items
+		// reset & populate discounts
+		// set shipping & calculate subtotal
+		if(x === undefined || x == true) {
+			let shp = "false";
+			epic.cart.current.items.every(item => {
+				if(item.hasOwnProperty("shipping") && item.shipping == true) {
+					shp = "true"
+					return false
+				}
+				return true
+			});
+			epic.cart.current.shipping = shp;
+			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
+		}
+		else {
+			epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))
+		}
 		//
 		// populate
 		//
 		epic.cart.current.items.every(item => {
 			//
 		});
-		// populate items, discounts, & shipping
-		// calculate subtotal
 	},
 	"remove": () => {
 		//
