@@ -115,7 +115,10 @@ epic.cart = {
 		//
 		// add to cart
 		//
-		let add = true, obj = {};
+		let add = true, obj = {}, quantity = 1;
+		if(el.product.options.hasOwnProperty("quantity")) {
+			quantity = Number(el.product.options.quantity)
+		}
 		//
 		keys.every(key => {
 			if(key === "el") {return true}
@@ -136,7 +139,6 @@ epic.cart = {
 				}
 			}
 			if(match === true) {
-				let quantity = Number(el.product.options.quantity);
 				item.quantity = Number(item.quantity) + quantity;
 				item.quantity = item.quantity.toString();
 				add = false;
@@ -145,7 +147,7 @@ epic.cart = {
 			return true
 		});
 		if(add === true) {
-			obj.quantity = el.product.options.quantity;
+			obj.quantity = quantity.toString;
 			epic.cart.current.items.push(obj)
 		}
 		console.log(epic.cart.current)
