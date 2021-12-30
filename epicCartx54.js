@@ -99,9 +99,9 @@ epic.cart = {
 		//
 		//
 		console.log("Items in cart: " + epic.cart.current.items.length);
-		cartitems.every((cartitem, i) => {
+		cartitems.forEach((cartitem, i) => {
 			console.log("Item " + i);
-			if(i >= epic.cart.current.items.length) {
+			if(i !== 0 && i >= epic.cart.current.items.length) {
 				console.log(".remove( )");
 				cartitem.remove()
 			}
