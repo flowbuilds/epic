@@ -125,6 +125,7 @@ epic.cart = {
 				// set value
 				if(typeof el !== "object") {continue}
 				if(el.tagName === "INPUT") {el.value = item[name]}
+				else if(el.tagName === "IMG") {el.src = item[name]}
 				else {el.textContent = item[name]}
 			}
 		});
