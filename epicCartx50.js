@@ -118,7 +118,7 @@ epic.cart = {
 					else if(Array.isArray(remove)) {removers = remove}
 					if(removers.length <= 1) {
 						removers.forEach(r => {
-							r.setAttribute("epic-cart-remove", i)
+							r.el.setAttribute("epic-cart-remove", i)
 						})
 					}
 				}
