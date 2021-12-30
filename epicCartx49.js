@@ -105,20 +105,24 @@ epic.cart = {
 				}
 			})
 		}
-		console.log(cartitems);
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
-			console.log("Populate:");
-			console.log(item);
 			let cartitem;
-			console.log("" + i + " < " + cartitems.length);
 			if(i < cartitems.length) {cartitem = cartitems[i]}
 			else {
 				cartitem = ogcartitem.cloneNode(true);
-				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling)
+				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling);
+				if(epic.cart.ref.cartitem[0].hasOwnProperty("remove")) {
+					let removers = [], remove = epic.cart.ref.cartitem[0].remove;
+					if(typeof remove === "string") {removers.push(remove)}
+					else if(Array.isArray(remove)) {removers = remove}
+					if(removers.length <= 1) {
+						removers.forEach(r => {
+							r.setAttribute("epic-cart-remove", i)
+						})
+					}
+				}
 			}
-			console.log("cartitem:");
-			console.log(cartitem);
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
 				if(attr.specified === false) {continue}
@@ -183,7 +187,6 @@ epic.cart = {
 			obj[key] = el.product.options.variation[key];
 			return true
 		});
-		console.log(obj);
 		//
 		epic.cart.current.items.every(item => {
 			let match = true;
@@ -207,7 +210,6 @@ epic.cart = {
 			obj.quantity = quantity.toString();
 			epic.cart.current.items.push(obj)
 		}
-		console.log(epic.cart.current);
 		epic.cart.updatecart()
 	},
 	"update": (x, option) => {
