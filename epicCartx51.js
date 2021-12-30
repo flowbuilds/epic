@@ -111,17 +111,17 @@ epic.cart = {
 			if(i < cartitems.length) {cartitem = cartitems[i]}
 			else {
 				cartitem = ogcartitem.cloneNode(true);
-				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling);
-				if(epic.cart.ref.cartitem[0].hasOwnProperty("remove")) {
-					let removers = [], remove = epic.cart.ref.cartitem[0].remove;
-					if(typeof remove === "string") {removers.push(remove)}
-					else if(Array.isArray(remove)) {removers = remove}
-					if(removers.length <= 1) {
-						removers.forEach(r => {
-							r.el.setAttribute("epic-cart-remove", i)
-						})
-					}
-				}
+				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling)
+			}
+			if(cartitem.hasAttribute("epic-cart-remove")) {
+				let removers = [], remove = cartitem.getAttribute("epic-cart-remove");
+				if(remove.charAt(0) === "!") {remove = remove.slice(1)}
+				remove = epic.js.attribute(remove, cartitem);
+				if(Array.isArray(remove)) {removers = remove}
+				else if(typeof remove === "object") {removers.push(remove)}
+				removers.forEach(remover => {
+					remover.setAttribute("epic-cart-remove", i)
+				})
 			}
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
