@@ -102,6 +102,7 @@ epic.cart = {
 				}
 			})
 		}
+		console.log(cartitems);
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
@@ -112,17 +113,13 @@ epic.cart = {
 			}
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
-				console.log(attr);
 				if(attr.specified === false) {continue}
 				if(!attr.name.includes("epic-cart-")) {continue}
 				if(attr.name === "epic-cart-element") {continue}
 				let name = attr.name.replace("epic-cart-", "");
-				console.log(name);
-				console.log(attr.value);
 				if(!item.hasOwnProperty(name)) {continue}
 				let val = attr.value;
 				if(val.charAt(0) === "!") {val = val.slice(1)}
-				console.log(val);
 				let el = epic.js.attribute(val, cartitem);
 				// set value
 				if(typeof el !== "object") {continue}
