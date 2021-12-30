@@ -147,7 +147,7 @@ epic.cart = {
 			return true
 		});
 		if(add === true) {
-			obj.quantity = quantity.toString;
+			obj.quantity = quantity.toString();
 			epic.cart.current.items.push(obj)
 		}
 		console.log(epic.cart.current)
