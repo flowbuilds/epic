@@ -70,7 +70,7 @@ epic.cart = {
 			return true
 		});
 		epic.cart.current.shipping = shipping;
-		localStorage.setItem("epicCart", epic.cart.current);
+		localStorage.setItem("epicCart", JSON.stringify(epic.cart.current));
 		//
 		// populate
 		//
