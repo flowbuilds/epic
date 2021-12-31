@@ -239,28 +239,12 @@ epic.cart = {
 			else {delete options.variation}
 		}
 	},
-	"toggle": (state) => {
-		if(state === undefined) {return}
-		if(typeof state !== "string") {return}
-		if(state !== "open" && state !== "close") {return}
-		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
-		epic.cart.ref.cart.every(cart => {
-			if(!cart.hasOwnProperty("state")) {return true}
-			if(cart.state === "class") {
-				//
-			}
-			//
-			return true
-		})
-		// epic-cart-state='class'
-		// epic-cart-close='inactive'
-		// if has an option that matches new state, 
-	},
 	"close": () => {
-		epic.cart.toggle("close")
+		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
+		epic.js.state("inactive", epic.cart.ref.cart[0].el)
 	},
 	"open": () => {
-		// epic.cart.toggle("open")
+		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
 		epic.js.state("active", epic.cart.ref.cart[0].el)
 	},
 	"setoptions": () => {
