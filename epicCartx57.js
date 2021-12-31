@@ -79,13 +79,9 @@ epic.cart = {
 			epic.cart.current.shipping = shp;
 			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
 		}
-		else {
-			epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))
-		}
+		else {epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))}
 		//
 		// populate
-		//
-		//
 		//
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		let cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
@@ -97,39 +93,15 @@ epic.cart = {
 		});
 		cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
 		//
-		//
-		/*let cartitems = [], next = false, cycle = 0;
-		let sibling = epic.cart.ref.cartitem[0].el;
-		while(next === false && cycle < 20) {
-			cartitems.push(sibling);
-			sibling = sibling.nextSibling;
-			if(sibling === null) {next = true}
-			else if(!sibling.hasAttribute("epic-cart-element='cartitem'")) {
-				next = true
-			}
-			cycle++
-		}*/
-		//
-		//
-		/*console.log("Items in cart: " + epic.cart.current.items.length);
-		cartitems.forEach((cartitem, i) => {
-			console.log("Item " + i);
-			if(i !== 0 && i >= epic.cart.current.items.length) {
-				console.log(".remove( )");
-				// remove from array
-				cartitem.remove()
-			}
-		});*/
-		//
-		//
-		// let ogcartitem = epic.cart.ref.cartitem[0].el;
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
 			if(i < cartitems.length) {cartitem = cartitems[i]}
 			else {
 				cartitem = ogcartitem.cloneNode(true);
-				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling)
+				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling);
+				epic.js.actions(cartitem);
 			}
+			//
 			if(cartitem.hasAttribute("epic-cart-remove")) {
 				let removers = [], remove = cartitem.getAttribute("epic-cart-remove");
 				if(remove.charAt(0) === "!") {remove = remove.slice(1)}
@@ -140,6 +112,7 @@ epic.cart = {
 					remover.setAttribute("epic-cart-remove", i)
 				})
 			}
+			//
 			for(let j = 0; j < cartitem.attributes.length; j++) {
 				let attr = cartitem.attributes[j];
 				if(attr.specified === false) {continue}
