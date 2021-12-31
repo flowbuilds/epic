@@ -138,10 +138,25 @@ epic.cart = {
 			}
 		});
 		// discounts
-		epic.cart.current.discounts.every(discount => {
-			//
-			//
-			return true
+		let ogdiscitem, discitems;
+		if(epic.cart.ref.hasOwnProperty("discountitem")) {
+			ogdiscitem = epic.cart.ref.discountitem[0].el;
+			discitems = epic.js.getall("this[epic-cart-element='discountitem']", ogdiscitem.parentNode);
+			discitems.forEach((ditem, i) => {
+				if(i !== 0 && i >= epic.cart.current.discounts.length) {ditem.remove()}
+			});
+			discitems = epic.js.getall("this[epic-cart-element='discountitem']", ogdiscitem.parentNode);
+			let dest = "active", dist = "inactive";
+			if(epic.cart.current.discounts.length >= 1) {dest = "inactive"; dist = "active"}
+			epic.js.state(dist, ogdiscitem);
+			if(epic.cart.ref.hasOwnProperty("discountempty")) {
+				epic.js.state(dest, epic.cart.ref.discountempty[0].el)
+			}
+		}
+		epic.cart.current.discounts.forEach(discount => {
+			// get/create discitem
+			let discitem;
+			if(i < discountitem)
 		});
 		// subtotal
 	},
