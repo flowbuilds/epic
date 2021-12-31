@@ -62,9 +62,9 @@ epic.cart = {
 	},
 	"updatecart": (x) => {
 		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
-		// update shipping + store cart
-		// OR retrieve cart from storage
-		// reset & populate cart items
+		//// update shipping + store cart
+		//// OR retrieve cart from storage
+		//// reset & populate cart items
 		// reset & populate discounts
 		// set shipping & calculate subtotal
 		if(x === undefined || x == true) {
@@ -80,8 +80,6 @@ epic.cart = {
 			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
 		}
 		else {epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))}
-		//
-		// populate
 		//
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		let cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
@@ -262,7 +260,8 @@ epic.cart = {
 		epic.cart.toggle("close")
 	},
 	"open": () => {
-		epic.cart.toggle("open")
+		// epic.cart.toggle("open")
+		epic.js.state("active", epic.cart.ref.cart[0].el)
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
@@ -323,6 +322,7 @@ epic.cart = {
 	},
 	"init": () => {
 		epic.js.refBuilder("cart");
+		epic.cart.updatecart(false);
 		epic.cart.setproducts();
 		epic.cart.setoptions()
 	},
