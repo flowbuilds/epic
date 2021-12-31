@@ -307,7 +307,10 @@ epic.js = {
 		if(x !== undefined && typeof x !== "object") {return}
 		let els = [];
 		if(Array.isArray(x)) {els = x}
-		else {els = epic.js.array(x.querySelectorAll("[epic-action]"))}
+		else {
+			if(x === undefined) {x = document}
+			els = epic.js.array(x.querySelectorAll("[epic-action]"))
+		}
 		els.forEach(el => {
 			let acts = el.getAttribute("epic-action").split("&");
 			acts.forEach(act => {
