@@ -289,6 +289,37 @@ epic.js = {
 			epic.ref[refi][sys] = epic[sys].ref[name][sysi]
 		});
 	},
+	"state": (st, el) => {
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		if(!el.hasAttribute("epic-state-active") 
+			&& !el.hasAttribute("epic-state-inactive")) {return}
+		let actv = el.getAttribute("epic-state-active");
+		let inactv = el.getAttribute("epic-state-inactive");
+		let newst, oldst, cur;
+		if(st === undefined) {
+			if(actv !== null) {el.classList.remove(actv)}
+			if(inactv !== null) {el.classList.remove(inactv)}
+			return
+		}
+		if(st === "toggle") {
+			if(el.classList.contains(actv)) {el.classList.remove(actv)}
+			else if(el.classList.contains(inactv)) {el.classList.remove(inactv)}
+			else if(actv !== undefined) {el.classList.add(actv)}
+			else if(inactv !== undefined) {el.classList.add(inactv)}
+			return
+		}
+		if(st === "active") {
+			if(actv !== null) {newst = actv}
+			if(inactv !== null) {oldst = inactv}
+		}
+		else if(st === "inactive") {
+			if(inactv !== null) {newst = inactv}
+			if(actv !== null) {oldst = actv}
+		}
+		if(oldst !== undefined) {el.classList.remove(oldst)}
+		if(newst !== undefined) {el.classList.add(newst)}
+	},
 	"forms": () => {
 		if(!epic.js.ref.hasOwnProperty("form")) {return}
 		epic.js.ref.form.forEach(form => {
@@ -326,22 +357,6 @@ epic.js = {
 				}
 			})
 		})
-		// provide either a parent, an array of elements, or nothing
-		/*epic.js.array(document.querySelectorAll("[epic-action]")).forEach(el => {
-			let acts = el.getAttribute("epic-action").split("&");
-			acts.forEach(act => {
-				let i = act.indexOf("=");
-				act = {
-					"ev": act.slice(0, i),
-					"fn": [act.slice(i + 1), el]
-				}
-				if(act.ev !== undefined) {
-					el.addEventListener(act.ev, () => {
-						epic.js.value.apply(null, act.fn)
-					})
-				}
-			})
-		})*/
 	},
 	"init": () => {
 		epic.js.refBuilder("js")
