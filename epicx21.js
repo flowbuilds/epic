@@ -296,15 +296,17 @@ epic.js = {
 			&& !el.hasAttribute("epic-state-inactive")) {return}
 		let actv = el.getAttribute("epic-state-active");
 		let inactv = el.getAttribute("epic-state-inactive");
-		let newst, oldst, cur;
-		if(st === undefined) {
+		let newst, oldst;
+		if(st === undefined || st === "") {
 			if(actv !== null) {el.classList.remove(actv)}
 			if(inactv !== null) {el.classList.remove(inactv)}
 			return
 		}
 		if(st === "toggle") {
-			if(el.classList.contains(actv)) {el.classList.remove(actv)}
-			else if(el.classList.contains(inactv)) {el.classList.remove(inactv)}
+			if(el.classList.contains(actv) || el.classList.contains(inactv)) {
+				if(el.classList.contains(actv)) {el.classList.remove(actv)}
+				else if(el.classList.contains(inactv)) {el.classList.remove(inactv)}
+			}
 			else if(actv !== undefined) {el.classList.add(actv)}
 			else if(inactv !== undefined) {el.classList.add(inactv)}
 			return
