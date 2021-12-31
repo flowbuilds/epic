@@ -156,7 +156,7 @@ epic.cart = {
 		epic.cart.current.discounts.forEach(discount => {
 			// get/create discitem
 			let discitem;
-			if(i < discountitem)
+			if(i < discountitem) {}
 		});
 		// subtotal
 	},
