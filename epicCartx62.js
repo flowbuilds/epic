@@ -132,10 +132,11 @@ epic.cart = {
 				if(val.charAt(0) === "!") {val = val.slice(1)}
 				let el = epic.js.attribute(val, cartitem);
 				// set value
-				if(typeof el !== "object") {continue}
+				epic.js.output(item[name], el);
+				/*if(typeof el !== "object") {continue}
 				if(el.tagName === "INPUT") {el.value = item[name]}
 				else if(el.tagName === "IMG") {el.src = item[name]}
-				else {el.textContent = item[name]}
+				else {el.textContent = item[name]}*/
 			}
 			return true
 		});
