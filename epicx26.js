@@ -295,11 +295,23 @@ epic.js = {
 		if(els === undefined) {return}
 		if(typeof els !== "object") {return}
 		if(!Array.isArray(els)) {els = [els]}
-		//
-		// formatting
-		//
 		els.every(el => {
-			// input // image // text
+			// format
+			if(el.hasAttribute("epic-format")) {
+				let format = el.getAttribute("epic-format");
+				if(format === "USD") {
+					let num = Number(str), dec = 0;
+					if(el.hasAttribute("epic-decimal")) {
+						if(!isNaN(el.getAttribute("epic-decimal"))) {
+							dec = Number(el.getAttribute("epic-decimal"))
+						}
+					}
+					str = num.toFixed(dec);
+					// ADD SEPARATORS
+					str = "$" + str
+				}
+			}
+			// set
 			if(el.tagName === "INPUT") {el.value = str}
 			else if(el.tagName === "IMG") {el.src = str}
 			else {el.textContent = str}
