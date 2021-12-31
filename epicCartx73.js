@@ -190,7 +190,7 @@ epic.cart = {
 		});
 		// subtotal
 		if(epic.cart.ref.hasOwnProperty("total")) {
-			let total = 0;
+			let num = 0;
 			epic.cart.current.items.forEach(item => {
 				// quantity x price
 				let quantity = 1, price = 0;
@@ -200,10 +200,10 @@ epic.cart = {
 					if(typeof item.price === "string") {price = Number(item.price)}
 					else if(typeof item.price === "number") {price = item.price}
 				}
-				total += (quantity * price)
+				num += (quantity * price)
 			});
 			epic.cart.ref.total.forEach(total => {
-				epic.js.output(total, total.el)
+				epic.js.output(num, total.el)
 			})
 		}
 	},
