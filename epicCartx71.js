@@ -137,7 +137,7 @@ epic.cart = {
 				epic.js.output(item[name], epic.js.attribute(val, cartitem))
 			}
 		});
-		// discounts
+		// discitems
 		let ogdiscitem, discitems;
 		if(epic.cart.ref.hasOwnProperty("discountitem")) {
 			ogdiscitem = epic.cart.ref.discountitem[0].el;
@@ -146,6 +146,7 @@ epic.cart = {
 				if(i !== 0 && i >= epic.cart.current.discounts.length) {ditem.remove()}
 			});
 			discitems = epic.js.getall("this[epic-cart-element='discountitem']", ogdiscitem.parentNode);
+			// empty state
 			let dest = "active", dist = "inactive";
 			if(epic.cart.current.discounts.length >= 1) {dest = "inactive"; dist = "active"}
 			epic.js.state(dist, ogdiscitem);
@@ -153,89 +154,42 @@ epic.cart = {
 				epic.js.state(dest, epic.cart.ref.discountempty[0].el)
 			}
 		}
-		epic.cart.current.discounts.forEach(discount => {
+		// discounts
+		epic.cart.current.discounts.forEach((disc, i) => {
 			// get/create discitem
 			let discitem;
-			if(i < discountitem) {}
-		});
-		// subtotal
-	},
-	/*"updatecart": (x) => {
-		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
-		//// update shipping + store cart
-		//// OR retrieve cart from storage
-		//// reset & populate cart items
-		// reset & populate discounts
-		// set shipping & calculate subtotal
-		if(x === undefined || x == true) {
-			let shp = "false";
-			epic.cart.current.items.every(item => {
-				if(item.hasOwnProperty("shipping") && item.shipping == true) {
-					shp = "true"
-					return false
-				}
-				return true
-			});
-			epic.cart.current.shipping = shp;
-			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
-		}
-		else {epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))}
-		//
-		let ogcartitem = epic.cart.ref.cartitem[0].el;
-		let cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
-		//
-		cartitems.forEach((cartitem, i) => {
-			if(i !== 0 && i >= epic.cart.current.items.length) {
-				cartitem.remove()
-			}
-		});
-		cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
-		//
-		let empty = "active", items = "inactive";
-		if(epic.cart.current.items.length >= 1) {
-			empty = "inactive";
-			items = "active"
-		}
-		epic.js.state(items, ogcartitem);
-		if(epic.cart.ref.hasOwnProperty("cartempty")) {
-			epic.js.state(empty, epic.cart.ref.cartempty[0].el)
-		}
-		//
-		epic.cart.current.items.every((item, i) => {
-			let cartitem;
-			if(i < cartitems.length) {cartitem = cartitems[i]}
+			if(i < discitems.length) {discitem = discitems[i]}
 			else {
-				cartitem = ogcartitem.cloneNode(true);
-				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling);
-				epic.js.actions(cartitem);
+				discitem = ogdiscitem.cloneNode(true);
+				ogdiscitem.parentNode.insertBefore(discitem, ogdiscitem.nextSibling);
+				epic.js.actions(discitem)
 			}
-			//
-			if(cartitem.hasAttribute("epic-cart-remove")) {
-				let removers = [], remove = cartitem.getAttribute("epic-cart-remove");
-				if(remove.charAt(0) === "!") {remove = remove.slice(1)}
-				remove = epic.js.attribute(remove, cartitem);
-				if(Array.isArray(remove)) {removers = remove}
-				else if(typeof remove === "object") {removers.push(remove)}
-				removers.forEach(remover => {
-					remover.setAttribute("epic-cart-remove", i)
+			// removers
+			if(discitem.hasAttribute("epic-cart-remove")) {
+				let remrs = [], attr = discitem.getAttribute("epic-cart-remove");
+				if(attr.charAt(0) === "!") {attr = attr.slice(1)}
+				attr = epic.js.attribute(attr, discitem);
+				if(Array.isArray(attr)) {remrs = attr}
+				else if(typeof attr === "object") {remrs.push(attr)}
+				remrs.forEach(remr => {
+					remr.setAttribute("epic-cart-remove", i)
 				})
 			}
-			//
-			for(let j = 0; j < cartitem.attributes.length; j++) {
-				let attr = cartitem.attributes[j];
+			// values
+			for(let j = 0; j < discitem.attributes.length; j++) {
+				let attr = discitem.attributes[j];
 				if(attr.specified === false) {continue}
 				if(!attr.name.includes("epic-cart-")) {continue}
 				if(attr.name === "epic-cart-element") {continue}
 				let name = attr.name.replace("epic-cart-", "");
-				if(!item.hasOwnProperty(name)) {continue}
+				if(!disc.hasOwnProperty(name)) {continue}
 				let val = attr.value;
 				if(val.charAt(0) === "!") {val = val.slice(1)}
-				let el = epic.js.attribute(val, cartitem);
-				epic.js.output(item[name], el);
+				epic.js.output(disc[name], epic.js.attribute(val, discitem))
 			}
-			return true
 		});
-	},*/
+		// subtotal
+	},
 	"quantity": (x, el) => {
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
