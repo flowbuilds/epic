@@ -241,6 +241,36 @@ epic.cart = {
 		epic.cart.current.items.splice(i, 1);
 		epic.cart.updatecart()
 	},
+	"discount": (x) => {
+		if(x === undefined || x === "") {return}
+		if(typeof x !== "string") {return}
+		x = x.toLowerCase();
+		let match = false;
+		if(epic.cart.ref.hasOwnProperty("discount")) {
+			epic.cart.ref.discount.every(discount => {
+				if(!discount.hasOwnProperty("name")) {return true}
+				if(discount.name.toLowerCase() === x) {
+					let add = true;
+					epic.cart.current.discounts.every(cdisc => {
+						if(cdisc.name.toLowerCase() === discount.name.toLowerCase()) {
+							add = false;
+							return false
+						}
+						return true
+					});
+					if(add === true) {
+						epic.cart.current.discounts.push({discount})
+					}
+					match = true;
+					return false
+				}
+				return true
+			})
+		}
+		if(match === false) {
+			console.log("DISCOUNT does not exist")
+		}
+	},
 	"addtocart": (x, el) => {
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
