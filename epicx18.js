@@ -267,11 +267,8 @@ epic.js = {
 				if(attr.specified === false) {continue}
 				if(!attr.name.includes("epic-" + sys + "-")) {continue}
 				if(attr.name === "epic-" + sys + "-element") {continue}
-				// if(attr.value.charAt(0) === "!") {value = attr.value.slice(1)}
-				// else {value = epic.js.attribute(attr.value, el)}
 				value = epic.js.attribute(attr.value, el);
 				obj[attr.name.replace("epic-" + sys + "-", "")] = value
-				// obj[attr.name.replace("epic-" + sys + "-", "")] = epic.js.attribute(attr.value, el)
 			}
 			// system reference
 			if(!ref.hasOwnProperty(name)) {ref[name] = []}
@@ -306,8 +303,12 @@ epic.js = {
 			}
 		})
 	},
-	"actions": () => {
-		epic.js.array(document.querySelectorAll("[epic-action]")).forEach(el => {
+	"actions": (x) => {
+		if(x !== undefined && typeof x !== "object") {return}
+		let els = [];
+		if(Array.isArray(x)) {els = x}
+		else {els = epic.js.array(x.querySelectorAll("[epic-action]"))}
+		els.forEach(el => {
 			let acts = el.getAttribute("epic-action").split("&");
 			acts.forEach(act => {
 				let i = act.indexOf("=");
@@ -322,6 +323,22 @@ epic.js = {
 				}
 			})
 		})
+		// provide either a parent, an array of elements, or nothing
+		/*epic.js.array(document.querySelectorAll("[epic-action]")).forEach(el => {
+			let acts = el.getAttribute("epic-action").split("&");
+			acts.forEach(act => {
+				let i = act.indexOf("=");
+				act = {
+					"ev": act.slice(0, i),
+					"fn": [act.slice(i + 1), el]
+				}
+				if(act.ev !== undefined) {
+					el.addEventListener(act.ev, () => {
+						epic.js.value.apply(null, act.fn)
+					})
+				}
+			})
+		})*/
 	},
 	"init": () => {
 		epic.js.refBuilder("js")
