@@ -294,7 +294,7 @@ epic.js = {
 		if(typeof str !== "string") {return}
 		if(els === undefined) {return}
 		if(typeof els !== "object") {return}
-		if(!Array.isArray(els)) {els = [el]}
+		if(!Array.isArray(els)) {els = [els]}
 		//
 		els.every(el => {
 			// input // image // text
