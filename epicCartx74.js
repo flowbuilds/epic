@@ -2,7 +2,35 @@
 
 if(typeof epic === "undefined") {var epic = {}}
 epic.cart = {
-	"checkout": (x, y, z) => {
+	"checkout": (x, y) => {
+		if(x === undefined) {return}
+		if(typeof x !== "string") {return}
+		if(x === "ext") {
+			// y = webhook url
+			if(y === undefined) {return}
+			if(typeof y !== "string") {return}
+			// request
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", y, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.responseType = "json";
+			xhr.onload = () => {
+				console.log(xhr.response);
+				if(xhr.status == 200) {
+					if(xhr.response.hasOwnProperty("url")) {
+						window.open(xhr.response.url, "_self")
+					}
+				}
+				else {
+					console.log("ERROR: Something went wrong:");
+					console.log(xhr.status);
+					console.log(xhr.response)
+				}
+			}
+			xhr.send(JSON.stringify(epic.cart.current))
+		}
+	},
+	/*"checkout": (x, y, z) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
 		if(x === "ext") {
@@ -47,8 +75,7 @@ epic.cart = {
 				console.log(xhr.response);
 				if(xhr.status == 200) {
 					if(xhr.response.hasOwnProperty("url")) {
-						/* OPEN IN SAME TAB */
-						window.open(xhr.response.url/*, "_self"*/)
+						window.open(xhr.response.url)
 					}
 				}
 				else {
@@ -59,7 +86,7 @@ epic.cart = {
 			}
 			xhr.send(req)
 		}
-	},
+	},*/
 	"updatecart": (x) => {
 		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
 		// shipping + get/set localstorage
@@ -191,6 +218,7 @@ epic.cart = {
 		// subtotal
 		if(epic.cart.ref.hasOwnProperty("total")) {
 			let num = 0;
+			// items
 			epic.cart.current.items.forEach(item => {
 				// quantity x price
 				let quantity = 1, price = 0;
@@ -202,6 +230,8 @@ epic.cart = {
 				}
 				num += (quantity * price)
 			});
+			// discounts
+			//
 			epic.cart.ref.total.forEach(total => {
 				epic.js.output(num, total.el)
 			})
@@ -231,14 +261,11 @@ epic.cart = {
 		if(x === undefined || x === "") {return}
 		if(typeof x !== "string") {return}
 		x = x.toLowerCase();
-		console.log(x);
 		let match = false;
 		if(epic.cart.ref.hasOwnProperty("discount")) {
 			epic.cart.ref.discount.every(discount => {
 				if(!discount.hasOwnProperty("name")) {return true}
-				console.log("CMS Discount Name: " + discount.name);
 				if(discount.name.toLowerCase() === x) {
-					console.log("MATCH");
 					let add = true;
 					epic.cart.current.discounts.every(cdisc => {
 						if(cdisc.name.toLowerCase() === discount.name.toLowerCase()) {
@@ -259,7 +286,7 @@ epic.cart = {
 					return false
 				}
 				return true
-			})
+			});
 		}
 		if(match === false) {
 			console.log("DISCOUNT does not exist")
