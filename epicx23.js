@@ -289,6 +289,20 @@ epic.js = {
 			epic.ref[refi][sys] = epic[sys].ref[name][sysi]
 		});
 	},
+	"output": (str, els) => {
+		if(str === undefined) {str = ""}
+		if(typeof str !== "string") {return}
+		if(els === undefined) {return}
+		if(typeof els !== "object") {return}
+		if(!Array.isArray(els)) {els = [el]}
+		//
+		els.every(el => {
+			// input // image // text
+			if(el.tagName === "INPUT") {el.value = str}
+			else if(el.tagName === "IMG") {el.src = str}
+			else {el.textContent = str}
+		})
+	},
 	"state": (st, el) => {
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
