@@ -81,7 +81,7 @@ epic.cart = {
 		// cartitems
 		let ogcartitem = epic.cart.ref.cartitem[0].el;
 		let cartitems = epic.js.getall("this[epic-cart-element='cartitem']", ogcartitem.parentNode);
-		cartitems.forEach((citem i) => {
+		cartitems.forEach((citem, i) => {
 			if(i !== 0 && i >= epic.cart.current.items.length) {citem.remove()}
 		});
 		cartitems = epic.js.getall("this[epic-cart-element='cartitem']", ogcartitem.parentNode);
