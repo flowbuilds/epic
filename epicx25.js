@@ -291,10 +291,12 @@ epic.js = {
 	},
 	"output": (str, els) => {
 		if(str === undefined) {str = ""}
-		if(typeof str !== "string") {return}
+		if(typeof str !== "string" && typeof str !== "number") {return}
 		if(els === undefined) {return}
 		if(typeof els !== "object") {return}
 		if(!Array.isArray(els)) {els = [els]}
+		//
+		// formatting
 		//
 		els.every(el => {
 			// input // image // text
