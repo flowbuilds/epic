@@ -189,6 +189,23 @@ epic.cart = {
 			}
 		});
 		// subtotal
+		if(epic.cart.ref.hasOwnProperty("total")) {
+			let total = 0;
+			epic.cart.current.items.forEach(item => {
+				// quantity x price
+				let quantity = 1, price = 0;
+				if(typeof item.quantity === "string") {quantity = Number(item.quantity)}
+				else if(typeof item.quantity === "number") {quantity = item.quantity}
+				if(item.hasOwnProperty("price")) {
+					if(typeof item.price === "string") {price = Number(item.price)}
+					else if(typeof item.price === "number") {price = item.price}
+				}
+				total += (quantity * price)
+			});
+			epic.cart.ref.total.forEach(total => {
+				epic.js.output(total, total.el)
+			})
+		}
 	},
 	"quantity": (x, el) => {
 		if(el === undefined) {return}
@@ -247,6 +264,7 @@ epic.cart = {
 		if(match === false) {
 			console.log("DISCOUNT does not exist")
 		}
+		epic.cart.updatecart()
 	},
 	"addtocart": (x, el) => {
 		if(el === undefined) {return}
