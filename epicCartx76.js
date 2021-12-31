@@ -252,9 +252,9 @@ epic.cart = {
 		if(typeof el !== "object") {return}
 		if(!el.hasAttribute("epic-cart-remove")) {return}
 		let i = Number(el.getAttribute("epic-cart-remove"));
-		if(isNaN(i) || i < 0) {{return}}
+		if(isNaN(i) || i < 0) {return}
 		if(i >= epic.cart.current.discounts.length) {return}
-		epic.cart.current.discounts.splce(i, 1);
+		epic.cart.current.discounts.splice(i, 1);
 		epic.cart.updatecart()
 	},
 	"remove": (x, el) => {
