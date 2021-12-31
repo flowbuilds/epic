@@ -62,6 +62,80 @@ epic.cart = {
 	},
 	"updatecart": (x) => {
 		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
+		// shipping + get/set localstorage
+		if(x === undefined || x == true) {
+			let shp = "false";
+			epic.cart.current.items.every(item => {
+				if(item.hasOwnProperty("shipping") && item.shipping == true) {
+					shp = "true";
+					return false
+				}
+				return true
+			});
+			epic.cart.current.shipping = shp;
+			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
+		}
+		else if(localStorage.hasOwnProperty("epicCart")) {
+			epic.cart.current = JSON.parse(localStorage.getItem("epicCart"))
+		}
+		// cartitems
+		let ogcartitem = epic.cart.ref.cartitem[0].el;
+		let cartitems = epic.js.getall("this[epic-cart-element='cartitem']", ogcartitem.parentNode);
+		cartitems.forEach((citem i) => {
+			if(i !== 0 && i >= epic.cart.current.items.length) {citem.remove()}
+		});
+		cartitems = epic.js.getall("this[epic-cart-element='cartitem']", ogcartitem.parentNode);
+		// empty state
+		let est = "active", ist = "inactive";
+		if(epic.cart.current.length >= 1) {est = "inactive"; ist = "active"}
+		epic.js.state(ist, ogcartitem);
+		if(epic.cart.ref.hasOwnProperty("cartempty")) {
+			epic.js.state(est, epic.cart.ref.cartempty[0].el)
+		}
+		// items
+		epic.cart.current.items.forEach((item, i) => {
+			// get/create cartitem
+			let cartitem;
+			if(i < cartitems.length) {cartitem = cartitems[i]}
+			else {
+				cartitem = ogcartitem.cloneNode(true);
+				ogcartitem.parentNode.insertBefore(cartitem, ogcartitem.nextSibling);
+				epic.js.actions(cartitem)
+			}
+			// removers
+			if(cartitem.hasAttribute("epic-cart-remove")) {
+				let remrs = [], rem = cartitem.getAttribute("epic-cart-remove");
+				if(rem.charAt(0) === "!") {rem = rem.slice(1)}
+				rem = epic.js.attribute(rem, cartitem);
+				if(Array.isArray(rem)) {remrs = rem}
+				else if(typeof rem === "object") {remrs.push(rem)}
+				remrs.forEach(remr => {
+					remr.setAttribute("epic-cart-remove", i)
+				})
+			}
+			// values
+			for(let j = 0; j < cartitem.attributes.length; j++) {
+				let attr = cartitem.attributes[j];
+				if(attr.specified === false) {continue}
+				if(!attr.name.includes("epic-cart-")) {continue}
+				if(attr.name === "epic-cart-element") {continue}
+				let name = attr.name.replace("epic-cart-", "");
+				if(!item.hasOwnProperty(name)) {continue}
+				let val = attr.value;
+				if(val.charAt(0) === "!") {val = val.slice(1)}
+				epic.js.output(item[name], epic.js.attribute(val, cartitem))
+			}
+		});
+		// discounts
+		epic.cart.current.discounts.every(discount => {
+			//
+			//
+			return true
+		});
+		// subtotal
+	},
+	/*"updatecart": (x) => {
+		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
 		//// update shipping + store cart
 		//// OR retrieve cart from storage
 		//// reset & populate cart items
@@ -131,16 +205,11 @@ epic.cart = {
 				let val = attr.value;
 				if(val.charAt(0) === "!") {val = val.slice(1)}
 				let el = epic.js.attribute(val, cartitem);
-				// set value
 				epic.js.output(item[name], el);
-				/*if(typeof el !== "object") {continue}
-				if(el.tagName === "INPUT") {el.value = item[name]}
-				else if(el.tagName === "IMG") {el.src = item[name]}
-				else {el.textContent = item[name]}*/
 			}
 			return true
 		});
-	},
+	},*/
 	"remove": (x, el) => {
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
