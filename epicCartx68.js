@@ -245,11 +245,14 @@ epic.cart = {
 		if(x === undefined || x === "") {return}
 		if(typeof x !== "string") {return}
 		x = x.toLowerCase();
+		console.log(x);
 		let match = false;
 		if(epic.cart.ref.hasOwnProperty("discount")) {
 			epic.cart.ref.discount.every(discount => {
 				if(!discount.hasOwnProperty("name")) {return true}
+				console.log("CMS Discount Name: " + discount.name);
 				if(discount.name.toLowerCase() === x) {
+					console.log("MATCH");
 					let add = true;
 					epic.cart.current.discounts.every(cdisc => {
 						if(cdisc.name.toLowerCase() === discount.name.toLowerCase()) {
@@ -259,7 +262,12 @@ epic.cart = {
 						return true
 					});
 					if(add === true) {
-						epic.cart.current.discounts.push({discount})
+						let obj = {};
+						for(key in discount) {
+							if(key === "el") {continue}
+							obj[key] = discount[key]
+						}
+						epic.cart.current.discounts.push(obj)
 					}
 					match = true;
 					return false
