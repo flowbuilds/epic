@@ -104,13 +104,24 @@ epic.cart = {
 			}
 			// removers
 			if(cartitem.hasAttribute("epic-cart-remove")) {
-				let remrs = [], rem = cartitem.getAttribute("epic-cart-remove");
-				if(rem.charAt(0) === "!") {rem = rem.slice(1)}
-				rem = epic.js.attribute(rem, cartitem);
-				if(Array.isArray(rem)) {remrs = rem}
-				else if(typeof rem === "object") {remrs.push(rem)}
+				let remrs = [], attr = cartitem.getAttribute("epic-cart-remove");
+				if(attr.charAt(0) === "!") {attr = attr.slice(1)}
+				attr = epic.js.attribute(attr, cartitem);
+				if(Array.isArray(attr)) {remrs = attr}
+				else if(typeof attr === "object") {remrs.push(attr)}
 				remrs.forEach(remr => {
 					remr.setAttribute("epic-cart-remove", i)
+				})
+			}
+			// quanity
+			if(cartitem.hasAttribute("epic-cart-quantity")) {
+				let quans = [], attr = cartitem.getAttribute("epic-cart-quantity");
+				if(attr.charAt(0) === "!") {attr = attr.slice(1)}
+				attr = epic.js.attribute(attr, cartitem);
+				if(Array.isArray(attr)) {quans = attr}
+				else if(typeof attr === "object") {quans.push(attr)}
+				quans.forEach(quan => {
+					quan.setAttribute("epic-cart-quantity", i)
 				})
 			}
 			// values
@@ -210,6 +221,16 @@ epic.cart = {
 			return true
 		});
 	},*/
+	"quantity": (x, el) => {
+		if(el === undefined) {return}
+		if(typeof el !== "object") {return}
+		if(!el.hasAttribute("epic-cart-quantity")) {return}
+		let i = Number(el.getAttribute("epic-cart-quantity"));
+		if(isNaN(i) || i < 0) {return}
+		if(i >= epic.cart.current.items.length) {return}
+		epic.cart.current.items[i].quantity = el.value;
+		epic.cart.updatecart()
+	},
 	"remove": (x, el) => {
 		if(el === undefined) {return}
 		if(typeof el !== "object") {return}
