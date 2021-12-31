@@ -91,6 +91,16 @@ epic.cart = {
 		});
 		cartitems = epic.js.array(ogcartitem.parentNode.querySelectorAll("[epic-cart-element='cartitem']"));
 		//
+		let empty = "active", items = "inactive";
+		if(epic.cart.current.items.length >= 1) {
+			empty = "inactive";
+			items = "active"
+		}
+		epic.js.state(items, ogcartitem);
+		if(epic.cart.ref.hasOwnProperty("cartempty")) {
+			epic.js.state(empty, epic.cart.ref.cartempty[0].el)
+		}
+		//
 		epic.cart.current.items.every((item, i) => {
 			let cartitem;
 			if(i < cartitems.length) {cartitem = cartitems[i]}
@@ -205,7 +215,8 @@ epic.cart = {
 			obj.quantity = quantity.toString();
 			epic.cart.current.items.push(obj)
 		}
-		epic.cart.updatecart()
+		epic.cart.updatecart();
+		if(x == true) {epic.cart.open()}
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
