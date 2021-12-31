@@ -87,7 +87,7 @@ epic.cart = {
 		cartitems = epic.js.getall("this[epic-cart-element='cartitem']", ogcartitem.parentNode);
 		// empty state
 		let est = "active", ist = "inactive";
-		if(epic.cart.current.length >= 1) {est = "inactive"; ist = "active"}
+		if(epic.cart.current.items.length >= 1) {est = "inactive"; ist = "active"}
 		epic.js.state(ist, ogcartitem);
 		if(epic.cart.ref.hasOwnProperty("cartempty")) {
 			epic.js.state(est, epic.cart.ref.cartempty[0].el)
