@@ -219,18 +219,43 @@ epic.cart = {
 		if(epic.cart.ref.hasOwnProperty("total")) {
 			let num = 0;
 			// items
-			epic.cart.current.items.forEach(item => {
-				// quantity x price
-				let quantity = 1, price = 0;
-				if(typeof item.quantity === "string") {quantity = Number(item.quantity)}
-				else if(typeof item.quantity === "number") {quantity = item.quantity}
-				if(item.hasOwnProperty("price")) {
-					if(typeof item.price === "string") {price = Number(item.price)}
-					else if(typeof item.price === "number") {price = item.price}
-				}
-				num += (quantity * price)
+			epic.cart.current.items.every(item => {
+				let quan = 1, price = 0;
+				if(!item.hasOwnProperty("price")) {return true}
+				if(typeof item.quantity === "string") {quan = Number(item.quantity)}
+				else if(typeof item.quantity === "number") {quan = item.quantity}
+				if(typeof item.price === "string") {price = Number(item.price)}
+				else if(typeof item.price === "number") {price = item.price}
+				num += (quan * price);
+				return true
 			});
 			// discounts
+			let added = [], pass = false, cycle = 0;
+			while(pass === false && cycle < 50) {
+				let best = {"val": undefined, "i": undefined};
+				epic.cart.current.discounts.every((disc, i) => {
+					if(added.includes(i)) {return true}
+					if(!disc.hasOwnProperty("type")) {return true}
+					if(!disc.hasOwnProperty("value")) {return true}
+					if(typeof disc.value === "string" && isNaN(disc.value)) {return true}
+					//
+					let total = num, val = disc.value;
+					if(typeof val === "string") {val = Number(val)}
+					if(disc.type.toLowerCase() === "amount") {total -= val}
+					else if(disc.type.toLowerCase() === "percentage") {total -= total * (val / 100)}
+					if(best.val === undefined || best.val !== undefined && total < best.val) {
+						best.val = total;
+						best.i = i
+					}
+					return true
+				});
+				if(best.val !== undefined) {
+					num = best.val;
+					added.push(best.i)
+				}
+				else {pass = true}
+				cycle++
+			}
 			//
 			epic.cart.ref.total.forEach(total => {
 				epic.js.output(num, total.el)
