@@ -267,6 +267,11 @@ epic.cart = {
 				epic.js.output(num, total.el)
 			})
 		}
+		// idempotency_key
+		let dt = new Date(), nums = "";
+		dt = dt.toISOString();
+		for(let i = 0; i < 4; i++) {nums += Math.floor(Math.random() * 10).toString()}
+		epic.cart.current.idempotency_key = "dotcom-" + dt + nums
 	},
 	"quantity": (x, el) => {
 		if(el === undefined) {return}
@@ -509,7 +514,8 @@ epic.cart = {
 	"current": {
 		"items": [],
 		"discounts": [],
-		"shipping": "false"
+		"shipping": "false",
+		"idempotency_key": ""
 	}
 }
 if(epic.hasOwnProperty("js")) {epic.cart.init()}
