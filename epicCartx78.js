@@ -212,7 +212,14 @@ epic.cart = {
 				if(!disc.hasOwnProperty(name)) {continue}
 				let val = attr.value;
 				if(val.charAt(0) === "!") {val = val.slice(1)}
-				epic.js.output(disc[name], epic.js.attribute(val, discitem))
+				if(name === "value" && disc.hasOwnProperty("type") && disc.type === "percentage") {
+					let els = epic.js.attribute(val, discitem);
+					if(typeof els === "object") {
+						if(!Array.isArray(els)) {els = [els]}
+						els.forEach(el => {el.textContent = disc[name] + "%"})
+					}
+				}
+				else {epic.js.output(disc[name], epic.js.attribute(val, discitem))}
 			}
 		});
 		// subtotal
@@ -238,7 +245,6 @@ epic.cart = {
 					if(!disc.hasOwnProperty("type")) {return true}
 					if(!disc.hasOwnProperty("value")) {return true}
 					if(typeof disc.value === "string" && isNaN(disc.value)) {return true}
-					//
 					let total = num, val = disc.value;
 					if(typeof val === "string") {val = Number(val)}
 					if(disc.type.toLowerCase() === "amount") {total -= val}
@@ -256,7 +262,7 @@ epic.cart = {
 				else {pass = true}
 				cycle++
 			}
-			//
+			// display
 			epic.cart.ref.total.forEach(total => {
 				epic.js.output(num, total.el)
 			})
