@@ -212,7 +212,7 @@ epic.cart = {
 				if(!disc.hasOwnProperty(name)) {continue}
 				let val = attr.value;
 				if(val.charAt(0) === "!") {val = val.slice(1)}
-				if(name === "value" && disc.hasOwnProperty("type") && disc.type === "percentage") {
+				if(name === "value" && disc.hasOwnProperty("type") && disc.type.toLowerCase() === "percentage") {
 					let els = epic.js.attribute(val, discitem);
 					if(typeof els === "object") {
 						if(!Array.isArray(els)) {els = [els]}
