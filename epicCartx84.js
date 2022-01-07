@@ -30,63 +30,6 @@ epic.cart = {
 			xhr.send(JSON.stringify(epic.cart.current))
 		}
 	},
-	/*"checkout": (x, y, z) => {
-		if(x === undefined) {return}
-		if(typeof x !== "string") {return}
-		if(x === "ext") {
-			// y = webhook url
-			if(y === undefined) {return}
-			if(typeof y !== "string") {return}
-			// webhook request
-			let req = {
-				"items": [],
-				"discounts": [],
-				"shipping": epic.cart.current.shipping
-			}
-			// items
-			epic.cart.current.items.forEach(item => {
-				if(!item.hasOwnProperty("variation")) {return true}
-				let obj = {
-					"quantity": "1"
-				}
-				if(item.hasOwnProperty("quantity")) {
-					obj.quantity = item.quantity.toString()
-				}
-				for(key in item.variation) {
-					if(key === "el") {continue}
-					if(key === "product") {continue}
-					if(key === "quantity") {continue}
-					obj[key] = item.variation[key]
-				}
-				req.items.push(obj);
-				return true
-			});
-			// discounts
-			if(epic.cart.current.discounts.length >= 1) {
-				req.discounts = epic.cart.current.discounts
-			}
-			// request
-			req = JSON.stringify(req);
-			let xhr = new XMLHttpRequest();
-			xhr.open("POST", y, true);
-			xhr.setRequestHeader("Content-Type", "application/json");
-			xhr.responseType = "json";
-			xhr.onload = () => {
-				console.log(xhr.response);
-				if(xhr.status == 200) {
-					if(xhr.response.hasOwnProperty("url")) {
-						window.open(xhr.response.url)
-					}
-				}
-				else {
-					console.log("ERROR: Something went wrong:");
-					console.log(xhr.response);
-					console.log(xhr.status)
-				}
-			}
-			xhr.send(req)
-		}
-	},*/
 	"updatecart": (x) => {
 		if(!epic.cart.ref.hasOwnProperty("cartitem")) {return}
 		// shipping + get/set localstorage
@@ -263,6 +206,7 @@ epic.cart = {
 				cycle++
 			}
 			// display
+			if(num < 0) {num = 0}
 			epic.cart.ref.total.forEach(total => {
 				epic.js.output(num, total.el)
 			})
