@@ -425,15 +425,22 @@ epic.cart = {
 				//	"size": [{"text": "XS"}, {"text": "Small"}],
 				//	"color": [{"text": "Blue"}, {"text": "Grey"}]
 				//}
+				console.log(options);
 				for(x in options) {
+					console.log(x);
+					// x = "size" / options[x] = [{"value": "XS"}, {"value": "Small"}]
 					source.every(ref => {
+						console.log(ref);
 						if(!ref.hasOwnProperty(x)) {return true}
 						for(y in options) {
+							console.log(y);
 							if(y === x) {continue}
 							if(!ref.hasOwnProperty(y)) {continue}
 							// y = "color" / ref[y] = "Blue" / options[y] = [{"value": "Blue"}, {"value": "Grey"}]
 							options[y].forEach(z => {
+								console.log(z);
 								if(z.value === ref[y]) {
+									console.log(ref[y]);
 									if(!options[x].hasOwnProperty(y)) {options[x][y] = []}
 									options[x][y].push(z)
 								}
@@ -443,6 +450,7 @@ epic.cart = {
 						return true
 					})
 				}
+				option.options = options;
 				console.log(options);
 				//
 				if(option.el.tagName === "SELECT") {
