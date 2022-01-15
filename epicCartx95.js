@@ -434,7 +434,7 @@ epic.cart = {
 					if(!opA.ref.hasOwnProperty(name)) {continue}
 					opsall[name].every(opB => {
 						if(opB.value === opA.ref[name]) {
-							op[name] = opB
+							opA[name] = opB
 						}
 					});
 					// op[name] = opsall[name]
