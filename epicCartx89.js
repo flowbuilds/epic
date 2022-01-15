@@ -416,7 +416,7 @@ epic.cart = {
 					return true
 				});
 				option.options = options;
-				alloptions[x] = options;
+				alloptions[option.name] = options;
 				// options = {
 				//	"size": [{"text": "XS"}, {"text": "Small"}],
 				//	"color": [{"text": "Blue"}, {"text": "Grey"}]
