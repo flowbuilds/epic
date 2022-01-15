@@ -414,7 +414,7 @@ epic.cart = {
 					}
 					options.push({"value": ref[option.name]});
 					if(!opsall.hasOwnProperty(option.name)) {opsall[option.name] = []}
-					opsall[option.name].push({"ref": ref, "value": ref[option.name]})
+					opsall[option.name].push({"ref": ref, "option": option, "value": ref[option.name]})
 					return true
 				});
 				option.options = options;
@@ -497,9 +497,14 @@ epic.cart = {
 		});
 		console.log(opsall);
 		// relative options
-		// opsall = 
-		for(x in opsall) {
-			//
+		// opsall = {"size": [{"ref": x, "value": "XS"}]}
+		for(group in opsall) {
+			// group = "size"
+			console.log(group);
+			group.forEach(op => {
+				// op = {"ref": x, "value": "XS"}
+				console.log(op)
+			})
 		}
 	},
 	/*"setoptions": () => {
