@@ -503,7 +503,12 @@ epic.cart = {
 			console.log(group);
 			opsall[group].forEach(op => {
 				// op = {"ref": x, "value": "XS"}
-				console.log(op)
+				for(name in opsall) {
+					if(name === group) {continue}
+					if(!op.ref.hasOwnProperty(name)) {continue}
+					op[name] = opsall[name]
+				}
+				console.log(op);
 			})
 		}
 	},
