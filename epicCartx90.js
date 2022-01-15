@@ -393,7 +393,7 @@ epic.cart = {
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		let alloptions = {};
+		let opsall = {};
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
 			// populate options
@@ -413,14 +413,12 @@ epic.cart = {
 						}
 					}
 					options.push({"value": ref[option.name]});
+					if(!opsall.hasOwnProperty(option.name)) {opsall[option.name] = []}
+					opsall[option.name].push({"ref": ref, "value": ref[option.name]})
 					return true
 				});
 				option.options = options;
-				alloptions[option.name] = options;
-				// options = {
-				//	"size": [{"text": "XS"}, {"text": "Small"}],
-				//	"color": [{"text": "Blue"}, {"text": "Grey"}]
-				//}
+				//opsall[option.name] = options;
 				/*console.log(options);
 				for(x in options) {
 					console.log(x);
@@ -497,7 +495,12 @@ epic.cart = {
 			//
 			return true
 		});
-		console.log(alloptions)
+		console.log(opsall);
+		// relative options
+		// opsall = 
+		for(x in opsall) {
+			//
+		}
 	},
 	/*"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
