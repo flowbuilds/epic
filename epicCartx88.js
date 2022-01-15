@@ -393,9 +393,8 @@ epic.cart = {
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		if(!epic.cart.ref.hasOwnProperty("product")) {return}
+		let alloptions = {};
 		epic.cart.ref.option.every(option => {
-			if(!option.hasOwnProperty("product")) {return true}
 			if(!option.hasOwnProperty("name")) {return true}
 			// populate options
 			if(option.hasOwnProperty("options")) {
@@ -414,20 +413,10 @@ epic.cart = {
 						}
 					}
 					options.push({"value": ref[option.name]});
-					/*if(!options.hasOwnProperty(option.name)) {
-						options[option.name] = []
-					}
-					else {
-						for(let i = 0; i < options[option.name].length; i++) {
-							if(options[option.name][i].value === ref[option.name]) {
-								return true
-							}
-						}
-					}
-					options[option.name].push({"value": ref[option.name]});*/
 					return true
 				});
 				option.options = options;
+				alloptions[x] = options;
 				// options = {
 				//	"size": [{"text": "XS"}, {"text": "Small"}],
 				//	"color": [{"text": "Blue"}, {"text": "Grey"}]
@@ -507,7 +496,8 @@ epic.cart = {
 			}
 			//
 			return true
-		})
+		});
+		console.log(alloptions)
 	},
 	/*"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
