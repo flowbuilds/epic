@@ -404,7 +404,7 @@ epic.cart = {
 			return true
 		});
 		// options = ["size", "color"]
-		epic.cart.ref.variation.every(vari => {
+		epic.cart.ref.variation.forEach(vari => {
 			groups.forEach(group => {
 				if(vari.hasOwnProperty(group)) {
 					if(!options[group].includes(vari[group])) {
