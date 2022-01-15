@@ -432,7 +432,9 @@ epic.cart = {
 				for(name in opsall) {
 					if(name === group) {continue}
 					if(!opA.ref.hasOwnProperty(name)) {continue}
-					opsall[name].every(opB => {
+					console.log(name);
+					opsall[name].forEach(opB => {
+						console.log(opB.value);
 						if(opB.value === opA.ref[name]) {
 							if(!opA.hasOwnProperty(name)) {opA[name] = []}
 							opA[name].push({"rel": opB, "quantity": opA.ref.quantity})
