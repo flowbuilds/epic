@@ -434,10 +434,10 @@ epic.cart = {
 					if(!opA.ref.hasOwnProperty(name)) {continue}
 					opsall[name].every(opB => {
 						if(opB.value === opA.ref[name]) {
-							opA[name] = opB
+							if(!opA.hasOwnProperty(name)) {opA[name] = []}
+							opA[name].push({"rel": opB, "quantity": opA.ref.quantity})
 						}
-					});
-					// op[name] = opsall[name]
+					})
 				}
 				console.log(opA);
 			})
