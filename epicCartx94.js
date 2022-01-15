@@ -396,7 +396,7 @@ epic.cart = {
 		let opsall = {};
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
-			// populate options
+			//
 			if(option.hasOwnProperty("options")) {
 				let options = [], source, x = option.options;
 				if(typeof x === "string") {
@@ -417,82 +417,8 @@ epic.cart = {
 					opsall[option.name].push({"ref": ref, "option": option, "value": ref[option.name]})
 					return true
 				});
-				option.options = options;
-				//opsall[option.name] = options;
-				/*console.log(options);
-				for(x in options) {
-					console.log(x);
-					// x = "size" / options[x] = [{"value": "XS"}, {"value": "Small"}]
-					source.every(ref => {
-						console.log(ref);
-						if(!ref.hasOwnProperty(x)) {return true}
-						for(y in options) {
-							console.log(y);
-							if(y === x) {continue}
-							if(!ref.hasOwnProperty(y)) {continue}
-							// y = "color" / ref[y] = "Blue" / options[y] = [{"value": "Blue"}, {"value": "Grey"}]
-							options[y].forEach(z => {
-								console.log(z);
-								if(z.value === ref[y]) {
-									console.log(ref[y]);
-									if(!options[x].hasOwnProperty(y)) {options[x][y] = []}
-									options[x][y].push(z)
-								}
-							})
-						}
-						//
-						return true
-					})
-				}
-				option.options = options;
-				console.log(options);
-				//
-				if(option.el.tagName === "SELECT") {
-					// options.forEach
-				}*/
-				//
-				//
-				//
-				//
-				/*if(source !== undefined) {
-					// select
-					if(option.el.tagName === "SELECT") {
-						source.every(vari => {
-							if(!options.hasOwnProperty(option.name)) {
-								options[option.name] = []
-							}
-							else {
-								for(let i = 0; i < options[option.name].length; i++) {
-									if(options[option.name][i].el.text === vari[option.name]) {
-										return true
-									}
-								}
-							}
-							x = document.createElement("option");
-							x.text = vari[option.name];
-							options[option.name].push({"el": x});
-							return true
-						});
-						// options = {"name": [{"el": x}]}
-						// options.every
-						// if has .order
-						source.every(vari => {
-							for(key in vari) {
-								// key = "catalogid" / "color" / "el" / "image" / "item"
-								// "name" / "price" / "product" / "quantity" / "shipping" / "size"
-								for(name in options) {
-									// name = "size" / "color"
-									if(key === name) {
-										//
-									}
-								}
-							}
-							return true
-						})
-					}
-				}*/
+				option.options = options
 			}
-			//
 			return true
 		});
 		console.log(opsall);
@@ -501,12 +427,17 @@ epic.cart = {
 		for(group in opsall) {
 			// group = "size"
 			console.log(group);
-			opsall[group].forEach(op => {
+			opsall[group].forEach(opA => {
 				// op = {"ref": x, "value": "XS"}
 				for(name in opsall) {
 					if(name === group) {continue}
-					if(!op.ref.hasOwnProperty(name)) {continue}
-					op[name] = opsall[name]
+					if(!opA.ref.hasOwnProperty(name)) {continue}
+					opsall[name].every(opB => {
+						if(opB.value === opA.ref[name]) {
+							op[name] = opB
+						}
+					});
+					// op[name] = opsall[name]
 				}
 				console.log(op);
 			})
