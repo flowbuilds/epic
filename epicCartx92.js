@@ -501,7 +501,7 @@ epic.cart = {
 		for(group in opsall) {
 			// group = "size"
 			console.log(group);
-			group.forEach(op => {
+			opsall[group].forEach(op => {
 				// op = {"ref": x, "value": "XS"}
 				console.log(op)
 			})
