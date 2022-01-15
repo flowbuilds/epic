@@ -439,7 +439,7 @@ epic.cart = {
 					});
 					// op[name] = opsall[name]
 				}
-				console.log(op);
+				console.log(opA);
 			})
 		}
 	},
