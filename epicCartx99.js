@@ -393,6 +393,31 @@ epic.cart = {
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
+		if(!epic.cart.ref.hasOwnProperty("variation")) {return}
+		let groups = [], options = {};
+		epic.cart.ref.option.every(option => {
+			if(!option.hasOwnProperty("name")) {return true}
+			if(option.name.toLowerCase() === "quantity") {return true}
+			if(groups.includes(option.name)) {return true}
+			groups.push(option.name);
+			options[option.name] = [];
+			return true
+		});
+		// options = ["size", "color"]
+		epic.cart.ref.variation.every(vari => {
+			groups.forEach(group => {
+				if(vari.hasOwnProperty(group)) {
+					if(!options[group].includes(vari[group])) {
+						options[group].push(vari[group])
+					}
+				}
+			})
+		});
+		console.log(groups);
+		console.log(options)
+	},
+	/*"setoptions": () => {
+		if(!epic.cart.ref.hasOwnProperty("option")) {return}
 		let opsall = {};
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
@@ -434,6 +459,7 @@ epic.cart = {
 					if(!opA.ref.hasOwnProperty(name)) {continue}
 					console.log(name);
 					opsall[name].forEach(opB => {
+						//
 						console.log(opB.value);
 						if(opB.value === opA.ref[name]) {
 							if(!opA.hasOwnProperty(name)) {opA[name] = []}
@@ -444,7 +470,7 @@ epic.cart = {
 				console.log(opA);
 			})
 		}
-	},
+	},*/
 	/*"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
 		if(!epic.cart.ref.hasOwnProperty("product")) {return}
