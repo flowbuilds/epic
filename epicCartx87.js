@@ -399,7 +399,7 @@ epic.cart = {
 			if(!option.hasOwnProperty("name")) {return true}
 			// populate options
 			if(option.hasOwnProperty("options")) {
-				let options = {}, source, x = option.options;
+				let options = [], source, x = option.options;
 				if(typeof x === "string") {
 					if(x === "variations") {x = "variation"}
 					if(epic.cart.ref.hasOwnProperty(x)) {
@@ -408,7 +408,13 @@ epic.cart = {
 				}
 				if(source === undefined) {return true}
 				source.every(ref => {
-					if(!options.hasOwnProperty(option.name)) {
+					for(let i = 0; i < options.length; i++) {
+						if(options[i].value === ref[option.name]) {
+							return true
+						}
+					}
+					options.push({"value": ref[option.name]});
+					/*if(!options.hasOwnProperty(option.name)) {
 						options[option.name] = []
 					}
 					else {
@@ -418,14 +424,15 @@ epic.cart = {
 							}
 						}
 					}
-					options[option.name].push({"value": ref[option.name]});
+					options[option.name].push({"value": ref[option.name]});*/
 					return true
 				});
+				option.options = options;
 				// options = {
 				//	"size": [{"text": "XS"}, {"text": "Small"}],
 				//	"color": [{"text": "Blue"}, {"text": "Grey"}]
 				//}
-				console.log(options);
+				/*console.log(options);
 				for(x in options) {
 					console.log(x);
 					// x = "size" / options[x] = [{"value": "XS"}, {"value": "Small"}]
@@ -455,7 +462,7 @@ epic.cart = {
 				//
 				if(option.el.tagName === "SELECT") {
 					// options.forEach
-				}
+				}*/
 				//
 				//
 				//
