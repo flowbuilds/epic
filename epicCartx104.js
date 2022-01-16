@@ -407,16 +407,20 @@ epic.cart = {
 			groups.forEach(group => {
 				if(vari.hasOwnProperty(group)) {
 					if(!options[group].hasOwnProperty(vari[group])) {
-						options[group][vari[group]] = {}
+						options[group][vari[group]] = []
 					}
 					groups.forEach(relgroup => {
+						let obj = {};
 						if(relgroup !== group && vari.hasOwnProperty(relgroup)) {
-							if(!options[group][vari[group]].hasOwnProperty(relgroup)) {
+							// store each variant / {"color": "Heather Blue"}
+							obj[relgroup] = vari[relgroup]
+							//
+							/*if(!options[group][vari[group]].hasOwnProperty(relgroup)) {
 								options[group][vari[group]][relgroup] = []
 							}
-							options[group][vari[group]][relgroup].push(vari[relgroup])
-							//options[group][vari[group]][relgroup] = vari[relgroup]
+							options[group][vari[group]][relgroup].push(vari[relgroup])*/
 						}
+						options[group][vari[group]].push(obj)
 					})
 				}
 			})
