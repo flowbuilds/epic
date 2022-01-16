@@ -351,15 +351,35 @@ epic.cart = {
 		epic.cart.updatecart();
 		if(x == true) {epic.cart.open()}
 	},
+	"updateoptions": () => {
+		if(!epic.cart.ref.hasOwnProperty("option")) {return}
+		// cycle through all options
+		let selected = {};
+		epic.cart.ref.option.every(option => {
+			if(!option.hasOwnProperty("name")) {return true}
+			if(!option.hasOwnProperty("options")) {return true}
+			let val = option.el.value;
+			if(option.hasOwnProperty("value")) {val = option.value}
+			selected[option.name] = val;
+			return true
+		});
+		console.log("updateoptions( )");
+		console.log(selected)
+	},
 	"options": (option) => {
 		if(option === undefined) {return}
 		if(typeof option !== "object") {return}
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
 		if(!option.hasOwnProperty("name")) {return}
 		if(!option.hasOwnProperty("options")) {return}
-		// option.options = {"Heather Blue": [{"size": "2XL", "quantity": 0}]}
 		let val = option.el.value;
 		if(option.hasOwnProperty("value")) {val = option.value}
+		// with 3 options, cycle through all options, if they have .options
+		//
+		//
+		if(val === "") {
+			// if the selected option has no value
+		}
 		if(!option.options.hasOwnProperty(val)) {return}
 		epic.cart.ref.option.every(op => {
 			if(!op.hasOwnProperty("name")) {return true}
@@ -377,8 +397,7 @@ epic.cart = {
 						}
 					}
 				}
-			})
-			//
+			});
 			return true
 		})
 	},
@@ -413,7 +432,7 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
-		epic.cart.options(option)
+		epic.cart.updateoptions()
 	},
 	"close": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
