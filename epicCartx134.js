@@ -459,6 +459,19 @@ epic.cart = {
 		});
 		console.log(disable);
 		for(group in disable) {
+			disable[group].forEach(name => {
+				epic.cart.ref.option.forEach(option => {
+					if(option.name === group) {
+						for(let i = 0; i < option.el.options.length; i++) {
+							if(option.el.options[i].text === name) {
+								option.el.options[i].setAttribute("disabled", "")
+							}
+						}
+					}
+				})
+			})
+		}
+		/*for(group in disable) {
 			console.log("GROUP (IN DISABLE) = " + group);
 			epic.cart.ref.option.forEach(option => {
 				console.log("OPTION.NAME = " + option.name);
@@ -476,7 +489,7 @@ epic.cart = {
 					})
 				}
 			})
-		}
+		}*/
 	},
 	"options": (option) => {
 		if(option === undefined) {return}
