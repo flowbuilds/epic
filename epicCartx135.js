@@ -459,11 +459,17 @@ epic.cart = {
 		});
 		console.log(disable);
 		for(group in disable) {
+			console.log("GROUP (IN DISABLE) = " + group);
 			disable[group].forEach(name => {
+				console.log("DISABLE[GROUP] = NAME = " + name);
 				epic.cart.ref.option.forEach(option => {
+					console.log("OPTION.NAME = " + option.name);
 					if(option.name === group) {
+						console.log("MATCH");
 						for(let i = 0; i < option.el.options.length; i++) {
+							console.log("OPTIONS[I].TEXT = " + option.el.options[i].text);
 							if(option.el.options[i].text === name) {
+								console.log("MATCH");
 								option.el.options[i].setAttribute("disabled", "")
 							}
 						}
