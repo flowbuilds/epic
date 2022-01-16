@@ -379,6 +379,8 @@ epic.cart = {
 				disable[option.name] = []
 			}*/
 			for(group in selected) {
+				console.log(group);
+				console.log(selected[group]);
 				if(!option.options.hasOwnProperty(selected[group])) {continue}
 				/*let op;
 				for(let i = 0; i < option.el.options.length; i++) {
@@ -389,9 +391,14 @@ epic.cart = {
 				// group = "color" / "size"
 				// selected[group] = "Heather Blue"
 				option.options[selected[group]].forEach(vari => {
-					if(vari.quantity == 0) {
+					console.log(vari);
+					if(vari.quantity === 0) {
+						console.log("UNAVAILABLE");
 						for(let i = 0; i < option.el.options.length; i++) {
+							console.log(option.el.options[i].text);
+							console.log(vari[selected[group]]);
 							if(option.el.options[i].text === vari[selected[group]]) {
+								console.log("DISABLE");
 								option.el.options[i].setAttribute("disabled", "")
 							}
 						}
