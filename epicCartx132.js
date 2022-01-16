@@ -457,6 +457,7 @@ epic.cart = {
 			}*/
 			return true
 		});
+		console.log(disable);
 		for(group in disable) {
 			epic.cart.ref.option.forEach(option => {
 				if(option.name === group) {
