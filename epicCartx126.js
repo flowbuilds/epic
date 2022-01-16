@@ -380,7 +380,7 @@ epic.cart = {
 			}
 			for(group in selected) {
 				let op;
-				for(let i = 0: i < option.el.options.length; i++) {
+				for(let i = 0; i < option.el.options.length; i++) {
 					if(option.el.options[i].text === selected[group]) {
 						op = option.el.options[i]
 					}
