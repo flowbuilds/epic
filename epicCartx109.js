@@ -433,7 +433,7 @@ epic.cart = {
 			for(group in options) {
 				if(group === option.name) {
 					option.options = options[group];
-					function popuplate(val) {
+					function populate(val) {
 						if(option.el.tagName === "SELECT") {
 							let op = document.createElement("option");
 							op.text = val;
