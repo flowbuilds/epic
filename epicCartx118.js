@@ -375,10 +375,10 @@ epic.cart = {
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("options")) {return}
-			let matches = [];
 			// option.name = "size"
 			console.log(option.name);
 			for(name in option.options) {
+				let matches = [];
 				// name = "Small" / "Medium" / "Large" / "XL" / "2XL"
 				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
 				option.options[name].forEach(vari => {
@@ -392,10 +392,11 @@ epic.cart = {
 						}
 					}
 					if(match) {matches.push(vari.quantity)}
-				})
+				});
+				console.log("Matches:");
+				console.log(matches);
 			}
-			console.log("Matches:");
-			console.log(matches);
+			//
 			return true
 		});
 		//
