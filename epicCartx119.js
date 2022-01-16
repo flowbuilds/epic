@@ -364,13 +364,6 @@ epic.cart = {
 		});
 		console.log("updateoptions( )");
 		console.log(selected);
-		/*for(group in selected) {
-			if(selected[group] === "") {change = true}
-		}
-		console.log("Change = " + change);
-		if(change === false) {return}*/
-		//
-		//
 		// selected = {"color": "Heather Blue", "size": ""}
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
@@ -395,6 +388,12 @@ epic.cart = {
 				});
 				console.log("Matches:");
 				console.log(matches);
+				let disable = true;
+				matches.forEach(quantity => {
+					if(quantity !== 0) {disable = false}
+				});
+				if(disable) {option.el.setAttribute("disabled", "")}
+				else {option.el.removeAttribute("disabled")}
 			}
 			//
 			return true
