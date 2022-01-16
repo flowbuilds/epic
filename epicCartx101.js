@@ -400,16 +400,20 @@ epic.cart = {
 			if(option.name.toLowerCase() === "quantity") {return true}
 			if(groups.includes(option.name)) {return true}
 			groups.push(option.name);
-			options[option.name] = [];
+			options[option.name] = {};
 			return true
 		});
-		// options = ["size", "color"]
 		epic.cart.ref.variation.forEach(vari => {
 			groups.forEach(group => {
 				if(vari.hasOwnProperty(group)) {
-					if(!options[group].includes(vari[group])) {
-						options[group].push(vari[group])
+					if(!options[group].hasOwnProperty(vari[group])) {
+						options[group][vari[group]] = {}
 					}
+					groups.forEach(relgroup => {
+						if(relgroup !== group && vari.hasOwnProperty(relgroup)) {
+							options[group][vari[group]][relgroup] = vari[relgroup]
+						}
+					})
 				}
 			})
 		});
