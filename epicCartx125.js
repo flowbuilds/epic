@@ -360,17 +360,42 @@ epic.cart = {
 			let val = option.el.value;
 			if(option.hasOwnProperty("value")) {val = option.value}
 			selected[option.name] = val;
+			for(let i = 0; i < option.el.options.length; i++) {
+				option.el.options[i].removeAttribute("disabled")
+			}
 			return true
 		});
 		console.log("updateoptions( )");
 		console.log(selected);
 		// selected = {"color": "Heather Blue", "size": ""}
+		let disable = {};
+		// disable = {"color": ["Heather Blue"], "size": []]
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("options")) {return}
 			// option.name = "size"
 			console.log(option.name);
-			for(name in option.options) {
+			if(!disable.hasOwnProperty(option.name)) {
+				disable[option.name] = []
+			}
+			for(group in selected) {
+				let op;
+				for(let i = 0: i < option.el.options.length; i++) {
+					if(option.el.options[i].text === selected[group]) {
+						op = option.el.options[i]
+					}
+				}
+				// group = "color" / "size"
+				// selected[group] = "Heather Blue"
+				option.options[selected[group]].forEach(vari => {
+					if(vari.quantity == 0) {op.setAttribute("disabled", "")}
+				})
+			}
+			//
+			//
+			//
+			//
+			/*for(name in option.options) {
 				let matches = [];
 				// name = "Small" / "Medium" / "Large" / "XL" / "2XL"
 				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
@@ -410,7 +435,7 @@ epic.cart = {
 				}
 				if(disable) {op.setAttribute("disabled", "")}
 				else {op.removeAttribute("disabled")}
-			}
+			}*/
 			return true
 		})
 	},
