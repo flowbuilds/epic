@@ -388,16 +388,22 @@ epic.cart = {
 				});
 				console.log("Matches:");
 				console.log(matches);
-				let op, disable = true;
+				let op, empty = true, disable = true;
 				for(let i = 0; i < option.el.options.length; i++) {
 					if(option.el.options[i].text === name) {
 						op = option.el.options[i]
 					}
 				}
-				if(matches.length === 0) {disable = false}
-				matches.forEach(quantity => {
-					if(quantity !== 0) {disable = false}
-				});
+				for(group in selected) {
+					if(selected[group] !== "") {empty = false}
+				}
+				if(empty) {disable = false}
+				else if(matches.length === 0) {disable = false}
+				else {
+					matches.forEach(quan => {
+						if(quan !== 0) {disable = false}
+					})
+				}
 				if(disable) {op.setAttribute("disabled", "")}
 				else {op.removeAttribute("disabled")}
 			}
