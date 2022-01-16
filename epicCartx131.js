@@ -375,9 +375,9 @@ epic.cart = {
 			if(!option.hasOwnProperty("options")) {return}
 			// option.name = "size"
 			console.log(option.name);
-			/*if(!disable.hasOwnProperty(option.name)) {
+			if(!disable.hasOwnProperty(option.name)) {
 				disable[option.name] = []
-			}*/
+			}
 			for(group in selected) {
 				console.log(group);
 				console.log(selected[group]);
@@ -398,14 +398,15 @@ epic.cart = {
 					console.log(vari);
 					if(vari.quantity === 0) {
 						console.log("UNAVAILABLE");
-						for(let i = 0; i < option.el.options.length; i++) {
+						disable[option.name].push(vari[other])
+						/*for(let i = 0; i < option.el.options.length; i++) {
 							console.log(option.el.options[i].text);
 							console.log(vari[other]);
 							if(option.el.options[i].text === vari[other]) {
 								console.log("DISABLE");
 								option.el.options[i].setAttribute("disabled", "")
 							}
-						}
+						}*/
 					}
 				})
 			}
@@ -455,7 +456,20 @@ epic.cart = {
 				else {op.removeAttribute("disabled")}
 			}*/
 			return true
-		})
+		});
+		for(group in disable) {
+			epic.cart.ref.option.forEach(option => {
+				if(option.name === group) {
+					disable[group].forEach(name => {
+						for(let i = 0; i < option.el.options.length; i++) {
+							if(option.el.options[i].text === name) {
+								option.el.options[i].setAttribute("disabled", "")
+							}
+						}
+					})
+				}
+			})
+		}
 	},
 	"options": (option) => {
 		if(option === undefined) {return}
