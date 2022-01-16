@@ -424,7 +424,21 @@ epic.cart = {
 			})
 		});
 		console.log(groups);
-		console.log(options)
+		console.log(options);
+		epic.cart.ref.option.every(option => {
+			// option.options = {"Heather Blue": ["size": "2XL", "quantity": 0]}
+			// set order / populate options / disable unavailable?
+			if(!option.hasOwnProperty("name")) {return true}
+			if(option.name.toLowerCase() === "quantity") {return true}
+			for(group in options) {
+				if(group === option.name) {
+					option.options = options[group];
+					//
+				}
+			}
+			//
+			return true
+		})
 	},
 	/*"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
