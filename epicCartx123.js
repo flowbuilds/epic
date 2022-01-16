@@ -376,16 +376,17 @@ epic.cart = {
 				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
 				option.options[name].forEach(vari => {
 					// vari = {"color": "Heather Blue", "quantity": 3}
+					console.log("VARIATION");
+					console.log(vari);
 					let match = true;
 					for(group in selected) {
 						// group = "color" / "size"
 						// selected[group] = "Heather Blue" / ""
-						console.log("Group: " + group);
 						console.log("Selected[" + group + "]: " + selected[group]);
-						console.log("Vari[" + group + "]: " + vari[group]);
 						if(selected[group] !== "" && vari[group] !== selected[group]) {
 							match = false
 						}
+						console.log(match);
 					}
 					if(match) {matches.push(vari.quantity)}
 				});
