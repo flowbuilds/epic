@@ -369,7 +369,38 @@ epic.cart = {
 		}
 		console.log("Change = " + change);
 		if(change === false) {return}*/
+		//
+		//
+		// selected = {"color": "Heather Blue", "size": ""}
 		epic.cart.ref.option.every(option => {
+			if(!option.hasOwnProperty("name")) {return}
+			if(!option.hasOwnProperty("options")) {return}
+			let matches = [];
+			// option.name = "size"
+			console.log(option.name);
+			for(name in option.options) {
+				// name = "Small" / "Medium" / "Large" / "XL" / "2XL"
+				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
+				option.options[name].forEach(vari => {
+					// vari = {"color": "Heather Blue", "quantity": 3}
+					let match = true;
+					for(group in selected) {
+						// group = "color" / "size"
+						// selected[group] = "Heather Blue" / ""
+						if(selected[group] !== "" && vari[group] !== selected[group]) {
+							match = false
+						}
+					}
+					if(match) {matches.push(vari.quantity)}
+				})
+			}
+			console.log("Matches:");
+			console.log(matches);
+			return true
+		});
+		//
+		//
+		/*epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("options")) {return}
 			let val = option.el.value, matches = [];
@@ -391,7 +422,7 @@ epic.cart = {
 			console.log(option.name);
 			console.log("Matches:");
 			console.log(matches)
-		})
+		})*/
 	},
 	"options": (option) => {
 		if(option === undefined) {return}
