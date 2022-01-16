@@ -375,21 +375,29 @@ epic.cart = {
 			if(!option.hasOwnProperty("options")) {return}
 			// option.name = "size"
 			console.log(option.name);
-			if(!disable.hasOwnProperty(option.name)) {
+			/*if(!disable.hasOwnProperty(option.name)) {
 				disable[option.name] = []
-			}
+			}*/
 			for(group in selected) {
 				if(!option.options.hasOwnProperty(selected[group])) {continue}
-				let op;
+				/*let op;
 				for(let i = 0; i < option.el.options.length; i++) {
 					if(option.el.options[i].text === selected[group]) {
 						op = option.el.options[i]
 					}
-				}
+				}*/
 				// group = "color" / "size"
 				// selected[group] = "Heather Blue"
 				option.options[selected[group]].forEach(vari => {
-					if(vari.quantity == 0) {op.setAttribute("disabled", "")}
+					if(vari.quantity == 0) {
+						for(let i = 0; i < option.el.options.length; i++) {
+							if(option.el.options[i].text === vari[selected[group]]) {
+								option.el.options[i].setAttribute("disabled", "")
+							}
+						}
+						//
+						//op.setAttribute("disabled", "")
+					}
 				})
 			}
 			//
