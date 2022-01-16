@@ -380,6 +380,9 @@ epic.cart = {
 					for(group in selected) {
 						// group = "color" / "size"
 						// selected[group] = "Heather Blue" / ""
+						console.log("Group: " + group);
+						console.log("Selected[" + group + "]: " + selected[group]);
+						console.log("Vari[" + group + "]: " + vari[group]);
 						if(selected[group] !== "" && vari[group] !== selected[group]) {
 							match = false
 						}
@@ -407,34 +410,8 @@ epic.cart = {
 				if(disable) {op.setAttribute("disabled", "")}
 				else {op.removeAttribute("disabled")}
 			}
-			//
 			return true
-		});
-		//
-		//
-		/*epic.cart.ref.option.every(option => {
-			if(!option.hasOwnProperty("name")) {return}
-			if(!option.hasOwnProperty("options")) {return}
-			let val = option.el.value, matches = [];
-			if(option.hasOwnProperty("value")) {val = option.value}
-			for(name in option.options) {
-				if(name === selected[option.name]) {
-					option.options[name].forEach(vari => {
-						console.log(vari);
-						let match = false;
-						for(group in selected) {
-							if(group.toLowerCase() === "quantity") {continue}
-							if(selected[group] === "") {match = true}
-							if(selected[group] === vari[group]) {match = true}
-						}
-						if(match) {matches.push(vari)}
-					})
-				}
-			}
-			console.log(option.name);
-			console.log("Matches:");
-			console.log(matches)
-		})*/
+		})
 	},
 	"options": (option) => {
 		if(option === undefined) {return}
