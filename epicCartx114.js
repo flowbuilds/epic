@@ -353,8 +353,7 @@ epic.cart = {
 	},
 	"updateoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		// cycle through all options
-		let selected = {};
+		let selected = {}, change = false;
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
 			if(!option.hasOwnProperty("options")) {return true}
@@ -364,7 +363,23 @@ epic.cart = {
 			return true
 		});
 		console.log("updateoptions( )");
-		console.log(selected)
+		console.log(selected);
+		/*for(group in selected) {
+			if(selected[group] === "") {change = true}
+		}
+		console.log("Change = " + change);
+		if(change === false) {return}*/
+		epic.cart.ref.option.every(option => {
+			if(!option.hasOwnProperty("name")) {return}
+			if(!option.hasOwnProperty("options")) {return}
+			let val = option.el.value, matches = [];
+			if(option.hasOwnProperty("value")) {val = option.value}
+			for(name in option.options) {
+				if(name === selected[option.name]) {
+					console.log(name + ": " + option.options[name])
+				}
+			}
+		})
 	},
 	"options": (option) => {
 		if(option === undefined) {return}
