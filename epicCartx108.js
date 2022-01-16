@@ -433,68 +433,32 @@ epic.cart = {
 			for(group in options) {
 				if(group === option.name) {
 					option.options = options[group];
-					//
+					function popuplate(val) {
+						if(option.el.tagName === "SELECT") {
+							let op = document.createElement("option");
+							op.text = val;
+							option.el.add(op)
+						}
+					}
+					if(option.hasOwnProperty("order")) {
+						let order = option.order.split(",");
+						order.forEach(val => {
+							if(option.options.hasOwnProperty(val)) {
+								populate(option.options.val)
+							}
+						})
+					}
+					else {
+						for(val in option.options) {
+							populate(val)
+						}
+					}
 				}
 			}
 			//
 			return true
 		})
 	},
-	/*"setoptions": () => {
-		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		let opsall = {};
-		epic.cart.ref.option.every(option => {
-			if(!option.hasOwnProperty("name")) {return true}
-			//
-			if(option.hasOwnProperty("options")) {
-				let options = [], source, x = option.options;
-				if(typeof x === "string") {
-					if(x === "variations") {x = "variation"}
-					if(epic.cart.ref.hasOwnProperty(x)) {
-						source = epic.cart.ref[x]
-					}
-				}
-				if(source === undefined) {return true}
-				source.every(ref => {
-					for(let i = 0; i < options.length; i++) {
-						if(options[i].value === ref[option.name]) {
-							return true
-						}
-					}
-					options.push({"value": ref[option.name]});
-					if(!opsall.hasOwnProperty(option.name)) {opsall[option.name] = []}
-					opsall[option.name].push({"ref": ref, "option": option, "value": ref[option.name]})
-					return true
-				});
-				option.options = options
-			}
-			return true
-		});
-		console.log(opsall);
-		// relative options
-		// opsall = {"size": [{"ref": x, "value": "XS"}]}
-		for(group in opsall) {
-			// group = "size"
-			console.log(group);
-			opsall[group].forEach(opA => {
-				// op = {"ref": x, "value": "XS"}
-				for(name in opsall) {
-					if(name === group) {continue}
-					if(!opA.ref.hasOwnProperty(name)) {continue}
-					console.log(name);
-					opsall[name].forEach(opB => {
-						//
-						console.log(opB.value);
-						if(opB.value === opA.ref[name]) {
-							if(!opA.hasOwnProperty(name)) {opA[name] = []}
-							opA[name].push({"rel": opB, "quantity": opA.ref.quantity})
-						}
-					})
-				}
-				console.log(opA);
-			})
-		}
-	},*/
 	/*"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
 		if(!epic.cart.ref.hasOwnProperty("product")) {return}
