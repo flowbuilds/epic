@@ -379,6 +379,7 @@ epic.cart = {
 				disable[option.name] = []
 			}
 			for(group in selected) {
+				if(!option.options.hasOwnProperty(selected[group])) {continue}
 				let op;
 				for(let i = 0; i < option.el.options.length; i++) {
 					if(option.el.options[i].text === selected[group]) {
