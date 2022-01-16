@@ -376,7 +376,7 @@ epic.cart = {
 				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
 				option.options[name].forEach(vari => {
 					// vari = {"color": "Heather Blue", "quantity": 3}
-					console.log("VARIATION");
+					console.log("VARIATION: " + name.toUpperCase());
 					console.log(vari);
 					let match = true;
 					for(group in selected) {
