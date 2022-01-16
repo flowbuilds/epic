@@ -398,7 +398,7 @@ epic.cart = {
 					console.log(vari);
 					if(vari.quantity === 0) {
 						console.log("UNAVAILABLE");
-						disable[option.name].push(vari[other])
+						disable[other].push(vari[other])
 						/*for(let i = 0; i < option.el.options.length; i++) {
 							console.log(option.el.options[i].text);
 							console.log(vari[other]);
