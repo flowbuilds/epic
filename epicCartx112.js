@@ -413,7 +413,7 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
-		options(option)
+		epic.cart.options(option)
 	},
 	"close": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
