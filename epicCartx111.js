@@ -351,6 +351,37 @@ epic.cart = {
 		epic.cart.updatecart();
 		if(x == true) {epic.cart.open()}
 	},
+	"options": (option) => {
+		if(option === undefined) {return}
+		if(typeof option !== "object") {return}
+		if(!epic.cart.ref.hasOwnProperty("option")) {return}
+		if(!option.hasOwnProperty("name")) {return}
+		if(!option.hasOwnProperty("options")) {return}
+		// option.options = {"Heather Blue": [{"size": "2XL", "quantity": 0}]}
+		let val = option.el.value;
+		if(option.hasOwnProperty("value")) {val = option.value}
+		if(!option.options.hasOwnProperty(val)) {return}
+		epic.cart.ref.option.every(op => {
+			if(!op.hasOwnProperty("name")) {return true}
+			if(op.name.toLowerCase() === "quantity") {return true}
+			option.options[val].forEach(vari => {
+				if(vari.hasOwnProperty(op.name)) {
+					for(let i = 0; i < op.el.options.length; i++) {
+						if(op.el.options[i].text === vari[op.name]) {
+							if(vari.quantity === 0) {
+								op.el.options[i].setAttribute("disabled", "")
+							}
+							else {
+								op.el.options[i].removeAttribute("disabled")
+							}
+						}
+					}
+				}
+			})
+			//
+			return true
+		})
+	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
 		if(typeof x !== "string") {return}
@@ -382,6 +413,7 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
+		options(option)
 	},
 	"close": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
