@@ -351,9 +351,10 @@ epic.cart = {
 		epic.cart.updatecart();
 		if(x == true) {epic.cart.open()}
 	},
-	"updateoptions": () => {
+	"options": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		let selected = {}, change = false;
+		let selected = {}, disable = {};
+		// selected
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
 			if(!option.hasOwnProperty("options")) {return true}
@@ -365,28 +366,12 @@ epic.cart = {
 			}
 			return true
 		});
-		console.log("updateoptions( )");
-		console.log(selected);
-		// selected = {"color": "Heather Blue", "size": ""}
-		let disable = {};
-		// disable = {"color": ["Heather Blue"], "size": []]
+		// disable
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("options")) {return}
-			// option.name = "size"
-			console.log(option.name);
 			for(group in selected) {
-				console.log(group);
-				console.log(selected[group]);
 				if(!option.options.hasOwnProperty(selected[group])) {continue}
-				/*let op;
-				for(let i = 0; i < option.el.options.length; i++) {
-					if(option.el.options[i].text === selected[group]) {
-						op = option.el.options[i]
-					}
-				}*/
-				// group = "color" / "size"
-				// selected[group] = "Heather Blue"
 				let other;
 				for(name in selected) {
 					if(name !== group) {other = name}
@@ -395,81 +380,20 @@ epic.cart = {
 					disable[other] = []
 				}
 				option.options[selected[group]].forEach(vari => {
-					console.log(vari);
 					if(vari.quantity === 0) {
-						console.log("UNAVAILABLE");
 						disable[other].push(vari[other])
-						/*for(let i = 0; i < option.el.options.length; i++) {
-							console.log(option.el.options[i].text);
-							console.log(vari[other]);
-							if(option.el.options[i].text === vari[other]) {
-								console.log("DISABLE");
-								option.el.options[i].setAttribute("disabled", "")
-							}
-						}*/
 					}
 				})
 			}
-			//
-			//
-			//
-			//
-			/*for(name in option.options) {
-				let matches = [];
-				// name = "Small" / "Medium" / "Large" / "XL" / "2XL"
-				// option.options[name] = [{"color": "Heather Blue", "quantity": 3}]
-				option.options[name].forEach(vari => {
-					// vari = {"color": "Heather Blue", "quantity": 3}
-					console.log("VARIATION: " + name.toUpperCase());
-					console.log(vari);
-					let match = true;
-					for(group in selected) {
-						// group = "color" / "size"
-						// selected[group] = "Heather Blue" / ""
-						console.log("Selected[" + group + "]: " + selected[group]);
-						if(selected[group] !== "" && vari[group] !== selected[group]) {
-							match = false
-						}
-						console.log(match);
-					}
-					if(match) {matches.push(vari.quantity)}
-				});
-				console.log("Matches:");
-				console.log(matches);
-				let op, empty = true, disable = true;
-				for(let i = 0; i < option.el.options.length; i++) {
-					if(option.el.options[i].text === name) {
-						op = option.el.options[i]
-					}
-				}
-				for(group in selected) {
-					if(selected[group] !== "") {empty = false}
-				}
-				if(empty) {disable = false}
-				else if(matches.length === 0) {disable = false}
-				else {
-					matches.forEach(quan => {
-						if(quan !== 0) {disable = false}
-					})
-				}
-				if(disable) {op.setAttribute("disabled", "")}
-				else {op.removeAttribute("disabled")}
-			}*/
 			return true
 		});
-		console.log(disable);
+		// set
 		for(group in disable) {
-			console.log("GROUP (IN DISABLE) = " + group);
 			disable[group].forEach(name => {
-				console.log("DISABLE[GROUP] = NAME = " + name);
 				epic.cart.ref.option.forEach(option => {
-					console.log("OPTION.NAME = " + option.name);
 					if(option.name === group) {
-						console.log("MATCH");
 						for(let i = 0; i < option.el.options.length; i++) {
-							console.log("OPTIONS[I].TEXT = " + option.el.options[i].text);
 							if(option.el.options[i].text === name) {
-								console.log("MATCH");
 								option.el.options[i].setAttribute("disabled", "")
 							}
 						}
@@ -477,60 +401,6 @@ epic.cart = {
 				})
 			})
 		}
-		/*for(group in disable) {
-			console.log("GROUP (IN DISABLE) = " + group);
-			epic.cart.ref.option.forEach(option => {
-				console.log("OPTION.NAME = " + option.name);
-				if(option.name === group) {
-					console.log("MATCH");
-					disable[group].forEach(name => {
-						console.log("DISABLE[GROUP] = NAME = " + name);
-						for(let i = 0; i < option.el.options.length; i++) {
-							console.log("OPTIONS[I].TEXT = " + option.el.options[i].text);
-							if(option.el.options[i].text === name) {
-								console.log("MATCH");
-								option.el.options[i].setAttribute("disabled", "")
-							}
-						}
-					})
-				}
-			})
-		}*/
-	},
-	"options": (option) => {
-		if(option === undefined) {return}
-		if(typeof option !== "object") {return}
-		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		if(!option.hasOwnProperty("name")) {return}
-		if(!option.hasOwnProperty("options")) {return}
-		let val = option.el.value;
-		if(option.hasOwnProperty("value")) {val = option.value}
-		// with 3 options, cycle through all options, if they have .options
-		//
-		//
-		if(val === "") {
-			// if the selected option has no value
-		}
-		if(!option.options.hasOwnProperty(val)) {return}
-		epic.cart.ref.option.every(op => {
-			if(!op.hasOwnProperty("name")) {return true}
-			if(op.name.toLowerCase() === "quantity") {return true}
-			option.options[val].forEach(vari => {
-				if(vari.hasOwnProperty(op.name)) {
-					for(let i = 0; i < op.el.options.length; i++) {
-						if(op.el.options[i].text === vari[op.name]) {
-							if(vari.quantity === 0) {
-								op.el.options[i].setAttribute("disabled", "")
-							}
-							else {
-								op.el.options[i].removeAttribute("disabled")
-							}
-						}
-					}
-				}
-			});
-			return true
-		})
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
@@ -563,7 +433,7 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
-		epic.cart.updateoptions()
+		epic.cart.options()
 	},
 	"close": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
@@ -605,11 +475,7 @@ epic.cart = {
 				}
 			})
 		});
-		console.log(groups);
-		console.log(options);
 		epic.cart.ref.option.every(option => {
-			// option.options = {"Heather Blue": ["size": "2XL", "quantity": 0]}
-			// set order / populate options / disable unavailable?
 			if(!option.hasOwnProperty("name")) {return true}
 			if(option.name.toLowerCase() === "quantity") {return true}
 			for(group in options) {
@@ -637,50 +503,9 @@ epic.cart = {
 					}
 				}
 			}
-			//
 			return true
 		})
 	},
-	/*"setoptions": () => {
-		if(!epic.cart.ref.hasOwnProperty("option")) {return}
-		if(!epic.cart.ref.hasOwnProperty("product")) {return}
-		epic.cart.ref.option.every(option => {
-			if(!option.hasOwnProperty("product")) {return true}
-			if(!option.hasOwnProperty("name")) {return true}
-			// populate options
-			if(option.hasOwnProperty("options")) {
-				let options, o = option.options;
-				if(typeof o === "string") {
-					if(o === "variations") {o = "variation"}
-					if(epic.cart.ref.hasOwnProperty(o)) {
-						options = epic.cart.ref[o]
-					}
-				}
-				if(options !== undefined) {
-					// select
-					if(option.el.tagName === "SELECT") {
-						options.every(opt => {
-							for(let i = 0; i < option.el.options.length; i++) {
-								if(option.el.options[i].text === opt[option.name]) {
-									return true
-								}
-							}
-							o = document.createElement("option");
-							o.text = opt[option.name];
-							if(opt.hasOwnProperty("quantity")) {
-								if(opt.quantity === 0 || opt.quantity === "") {
-									o.setAttribute("disabled", "")
-								}
-							}
-							option.el.add(o);
-							return true
-						})
-					}
-				}
-			}
-			return true
-		})
-	},*/
 	"setproducts": () => {
 		if(!epic.cart.ref.hasOwnProperty("product")) {return}
 		epic.cart.ref.product.every(product => {
