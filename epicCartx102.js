@@ -411,7 +411,11 @@ epic.cart = {
 					}
 					groups.forEach(relgroup => {
 						if(relgroup !== group && vari.hasOwnProperty(relgroup)) {
-							options[group][vari[group]][relgroup] = vari[relgroup]
+							if(!options[vari[group]].hasOwnProperty(relgroup)) {
+								options[group][vari[group]][relgroup] = []
+							}
+							options[group][vari[group]][relgroup].push(vari[relgroup])
+							//options[group][vari[group]][relgroup] = vari[relgroup]
 						}
 					})
 				}
