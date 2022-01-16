@@ -390,20 +390,22 @@ epic.cart = {
 				}*/
 				// group = "color" / "size"
 				// selected[group] = "Heather Blue"
+				let other;
+				for(name in selected) {
+					if(name !== group) {other = name}
+				}
 				option.options[selected[group]].forEach(vari => {
 					console.log(vari);
 					if(vari.quantity === 0) {
 						console.log("UNAVAILABLE");
 						for(let i = 0; i < option.el.options.length; i++) {
 							console.log(option.el.options[i].text);
-							console.log(vari[selected[group]]);
-							if(option.el.options[i].text === vari[selected[group]]) {
+							console.log(vari[other]);
+							if(option.el.options[i].text === vari[other]) {
 								console.log("DISABLE");
 								option.el.options[i].setAttribute("disabled", "")
 							}
 						}
-						//
-						//op.setAttribute("disabled", "")
 					}
 				})
 			}
