@@ -444,7 +444,7 @@ epic.cart = {
 						let order = option.order.split(",");
 						order.forEach(val => {
 							if(option.options.hasOwnProperty(val)) {
-								populate(option.options.val)
+								populate(val)
 							}
 						})
 					}
