@@ -375,9 +375,6 @@ epic.cart = {
 			if(!option.hasOwnProperty("options")) {return}
 			// option.name = "size"
 			console.log(option.name);
-			if(!disable.hasOwnProperty(option.name)) {
-				disable[option.name] = []
-			}
 			for(group in selected) {
 				console.log(group);
 				console.log(selected[group]);
@@ -393,6 +390,9 @@ epic.cart = {
 				let other;
 				for(name in selected) {
 					if(name !== group) {other = name}
+				}
+				if(!disable.hasOwnProperty(other)) {
+					disable[other] = []
 				}
 				option.options[selected[group]].forEach(vari => {
 					console.log(vari);
