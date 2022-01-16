@@ -378,11 +378,11 @@ epic.cart = {
 				if(name === selected[option.name]) {
 					option.options[name].forEach(vari => {
 						console.log(vari);
-						let match = true;
+						let match = false;
 						for(group in selected) {
 							if(group.toLowerCase() === "quantity") {continue}
-							if(selected[group] === "") {continue}
-							if(selected[group] !== vari[group]) {match = false}
+							if(selected[group] === "") {match = true}
+							if(selected[group] === vari[group]) {match = true}
 						}
 						if(match) {matches.push(vari)}
 					})
