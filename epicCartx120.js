@@ -388,12 +388,18 @@ epic.cart = {
 				});
 				console.log("Matches:");
 				console.log(matches);
-				let disable = true;
+				let op, disable = true;
+				for(let i = 0; i < option.el.options.length; i++) {
+					if(option.el.options[i].text === name) {
+						op = option.el.options[i]
+					}
+				}
+				if(matches.length === 0) {disable = false}
 				matches.forEach(quantity => {
 					if(quantity !== 0) {disable = false}
 				});
-				if(disable) {option.el.setAttribute("disabled", "")}
-				else {option.el.removeAttribute("disabled")}
+				if(disable) {op.setAttribute("disabled", "")}
+				else {op.removeAttribute("disabled")}
 			}
 			//
 			return true
