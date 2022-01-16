@@ -376,9 +376,21 @@ epic.cart = {
 			if(option.hasOwnProperty("value")) {val = option.value}
 			for(name in option.options) {
 				if(name === selected[option.name]) {
-					console.log(name + ": " + option.options[name])
+					option.options[name].forEach(vari => {
+						console.log(vari);
+						let match = true;
+						for(group in selected) {
+							if(group.toLowerCase() === "quantity") {continue}
+							if(selected[group] === "") {continue}
+							if(selected[group] !== vari[group]) {match = false}
+						}
+						if(match) {matches.push(vari)}
+					})
 				}
 			}
+			console.log(option.name);
+			console.log("Matches:");
+			console.log(matches)
 		})
 	},
 	"options": (option) => {
