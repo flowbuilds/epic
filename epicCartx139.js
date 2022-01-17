@@ -179,6 +179,7 @@ epic.cart = {
 				num += (quan * price);
 				return true
 			});
+			let items = num;
 			// discounts
 			let added = [], pass = false, cycle = 0;
 			while(pass === false && cycle < 50) {
@@ -208,7 +209,10 @@ epic.cart = {
 			// display
 			if(num < 0) {num = 0}
 			epic.cart.ref.total.forEach(total => {
-				epic.js.output(num, total.el)
+				if(total.hasOwnProperty("display") && total.display === "items") {
+					epic.js.output(items, total.el)
+				}
+				else {epic.js.output(num, total.el)}
 			})
 		}
 		// idempotency_key
