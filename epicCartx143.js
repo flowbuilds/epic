@@ -355,10 +355,10 @@ epic.cart = {
 		epic.cart.updatecart();
 		if(x == true) {epic.cart.open()}
 	},
-	"options": () => {
+	"updateoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
 		let selected = {}, disable = {};
-		// selected
+		// get selected
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return true}
 			if(!option.hasOwnProperty("options")) {return true}
@@ -370,7 +370,7 @@ epic.cart = {
 			}
 			return true
 		});
-		// disable
+		// get disabled
 		epic.cart.ref.option.every(option => {
 			if(!option.hasOwnProperty("name")) {return}
 			if(!option.hasOwnProperty("options")) {return}
@@ -391,7 +391,7 @@ epic.cart = {
 			}
 			return true
 		});
-		// set
+		// disable
 		for(group in disable) {
 			disable[group].forEach(name => {
 				epic.cart.ref.option.forEach(option => {
@@ -405,6 +405,31 @@ epic.cart = {
 				})
 			})
 		}
+	},
+	// REWORK TO CALC FOR EACH PRODUCT INSTEAD OF EVERY PRICE
+	"updateprices": () => {
+		if(!epic.cart.ref.hasOwnProperty("price")) {return}
+		epic.cart.ref.price.every(price => {
+			if(!price.hasOwnProperty("product")) {return true}
+			if(!price.product.hasOwnProperty("variations")) {return true}
+			let num, all = true;
+			if(price.product.hasOwnProperty("options") 
+				&& price.product.options.hasOwnProperty("variation") 
+				&& price.product.options.variation.hasOwnProperty("price")) {
+				num = price.product.options.variation.price;
+				all = false
+			}
+			if(all) {
+				price.product.variations.forEach(vari => {
+					if(vari.hasOwnProperty("price")) {
+						if(num === undefined) {num = vari.price}
+						else if(vari.price < num) {num = vari.price}
+					}
+				})
+			}
+			if(num !== undefined) {epic.js.output(num, price.el)}
+			return true
+		})
 	},
 	"update": (x, option) => {
 		if(x === undefined) {return}
@@ -437,8 +462,8 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
-		epic.cart.setprices();
-		epic.cart.options()
+		epic.cart.updateprices();
+		epic.cart.updateoptions()
 	},
 	"close": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
@@ -447,50 +472,6 @@ epic.cart = {
 	"open": () => {
 		if(!epic.cart.ref.hasOwnProperty("cart")) {return}
 		epic.js.state("active", epic.cart.ref.cart[0].el)
-	},
-	"setprices": () => {
-		if(!epic.cart.ref.hasOwnProperty("price")) {return}
-		epic.cart.ref.price.every(price => {
-			if(!price.hasOwnProperty("product")) {return true}
-			if(!price.product.hasOwnProperty("variations")) {return true}
-			let num, all = true;
-			if(price.product.hasOwnProperty("options") 
-				&& price.product.options.hasOwnProperty("variation") 
-				&& price.product.options.variation.hasOwnProperty("price")) {
-				num = price.product.options.variation.price;
-				all = false
-			}
-			if(all) {
-				price.product.variations.forEach(vari => {
-					if(vari.hasOwnProperty("price")) {
-						if(num === undefined) {num = vari.price}
-						else if(vari.price < num) {num = vari.price}
-					}
-				})
-			}
-			if(num !== undefined) {epic.js.output(num, price.el)}
-			return true
-		})
-		//
-		//
-		/*if(!epic.cart.ref.hasOwnProperty("price")) {return}
-		if(!epic.cart.ref.hasOwnProperty("variation")) {return}
-		epic.cart.ref.price.every(price => {
-			if(!price.hasOwnProperty("product")) {return true}
-			if(!price.product.hasOwnProperty("variations")) {return true}
-			// price.product.variations = [{"price": 20}]
-			let num;
-			price.product.variations.every(vari => {
-				if(!vari.hasOwnProperty("price")) {return true}
-				if(num === undefined) {num = vari.price}
-				else if(vari.price < num) {num = vari.price}
-				//
-				return true
-			});
-			if(num !== undefined) {epic.js.output(num, price.el)}
-			//
-			return true
-		})*/
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
@@ -577,7 +558,7 @@ epic.cart = {
 		epic.cart.updatecart(false);
 		epic.cart.setproducts();
 		epic.cart.setoptions();
-		epic.cart.setprices()
+		epic.cart.updateprices()
 	},
 	"ref": {},
 	"current": {
