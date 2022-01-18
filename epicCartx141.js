@@ -437,6 +437,7 @@ epic.cart = {
 			if(matches.length === 1) {options.variation = matches[0]}
 			else {delete options.variation}
 		}
+		epic.cart.setprices();
 		epic.cart.options()
 	},
 	"close": () => {
@@ -449,6 +450,30 @@ epic.cart = {
 	},
 	"setprices": () => {
 		if(!epic.cart.ref.hasOwnProperty("price")) {return}
+		epic.cart.ref.price.every(price => {
+			if(!price.hasOwnProperty("product")) {return true}
+			if(!price.product.hasOwnProperty("variations")) {return true}
+			let num, all = true;
+			if(price.product.hasOwnProperty("options") 
+				&& price.product.options.hasOwnProperty("variation") 
+				&& price.product.options.variation.hasOwnProperty("price")) {
+				num = price.product.variation.price;
+				all = false
+			}
+			if(all) {
+				price.product.variations.forEach(vari => {
+					if(vari.hasOwnProperty("price")) {
+						if(num === undefined) {num = vari.price}
+						else if(vari.price < num) {num = vari.price}
+					}
+				})
+			}
+			if(num !== undefined) {epic.js.output(num, price.el)}
+			return true
+		})
+		//
+		//
+		/*if(!epic.cart.ref.hasOwnProperty("price")) {return}
 		if(!epic.cart.ref.hasOwnProperty("variation")) {return}
 		epic.cart.ref.price.every(price => {
 			if(!price.hasOwnProperty("product")) {return true}
@@ -465,7 +490,7 @@ epic.cart = {
 			if(num !== undefined) {epic.js.output(num, price.el)}
 			//
 			return true
-		})
+		})*/
 	},
 	"setoptions": () => {
 		if(!epic.cart.ref.hasOwnProperty("option")) {return}
