@@ -457,7 +457,7 @@ epic.cart = {
 			if(price.product.hasOwnProperty("options") 
 				&& price.product.options.hasOwnProperty("variation") 
 				&& price.product.options.variation.hasOwnProperty("price")) {
-				num = price.product.variation.price;
+				num = price.product.options.variation.price;
 				all = false
 			}
 			if(all) {
