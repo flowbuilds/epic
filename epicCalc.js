@@ -94,6 +94,9 @@ epic.calc = {
 				if(output.format.toLowerCase() === "usd") {
 					sepa = "."; sepb = ","; cur = "$"
 				}
+				else if(output.format.toLowerCase() === "eur") {
+					sepa = ","; sepb = "."; cur = "€"
+				}
 				if(sepa !== undefined && sepb !== undefined) {
 					let i = calc.indexOf(".");
 					if(i !== -1) {
