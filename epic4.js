@@ -19,7 +19,8 @@ epic.js = {
 		els.every(ref => {
 			ref = epic.js.getref(ref);
 			if(typeof ref !== "object") {return true}
-			ref[key] = val
+			ref[key] = val;
+			return true
 		})
 	},
 	"attr": (attr, attrel, el) => {
