@@ -11,18 +11,16 @@ epic.js = {
 		}
 		return y
 	},
-	"change": (ref, key, val) => {
-		if(ref === undefined) {return}
-		if(typeof ref !== "object") {return}
-		if(key === undefined) {return}
+	"change": (els, key, val) => {
+		if(typeof els !== "object") {return}
 		if(typeof key !== "string") {return}
-		if(val === undefined) {return}
 		if(typeof val !== "string") {return}
-		ref = epic.js.getref(ref);
-		if(ref === undefined) {return}
-		if(typeof ref !== "object") {return}
-		if(!ref.hasOwnProperty(key)) {return}
-		ref[key] = val
+		if(!Array.isArray(els)) {els = [els]}
+		els.every(ref => {
+			ref = epic.js.getref(ref);
+			if(typeof ref !== "object") {return true}
+			ref[key] = val
+		})
 	},
 	"attr": (attr, attrel, el) => {
 		if(attr === undefined) {return}
