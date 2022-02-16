@@ -115,7 +115,7 @@ epic.cart = {
 		if(epic.cart.ref.hasOwnProperty("shipping")) {
 			epic.cart.ref.shipping.forEach(shipref => {
 				let state = "inactive";
-				if(epic.cart.current.shipping === "true") {state = "active"}
+				if(epic.cart.current.shipping !== "false") {state = "active"}
 				epic.js.state(state, shipref.el)
 			})
 		}
