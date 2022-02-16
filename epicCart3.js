@@ -42,7 +42,7 @@ epic.cart = {
 				}
 				return true
 			});
-			if(epic.cart.ref.cart[0].hasOwnProperty("shipping")) {
+			if(shp === "true" && epic.cart.ref.cart[0].hasOwnProperty("shipping")) {
 				shp = String(epic.cart.ref.cart[0].shipping)
 			}
 			epic.cart.current.shipping = shp;
