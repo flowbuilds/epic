@@ -42,6 +42,9 @@ epic.cart = {
 				}
 				return true
 			});
+			if(epic.cart.ref.cart[0].hasOwnProperty("shipping")) {
+				shp = String(epic.cart.ref.cart[0].shipping)
+			}
 			epic.cart.current.shipping = shp;
 			localStorage.setItem("epicCart", JSON.stringify(epic.cart.current))
 		}
@@ -83,7 +86,7 @@ epic.cart = {
 					remr.setAttribute("epic-cart-remove", i)
 				})
 			}
-			// quanity
+			// quantity
 			if(cartitem.hasAttribute("epic-cart-quantity")) {
 				let quans = [], attr = cartitem.getAttribute("epic-cart-quantity");
 				if(attr.charAt(0) === "!") {attr = attr.slice(1)}
@@ -107,6 +110,15 @@ epic.cart = {
 				epic.js.output(item[name], epic.js.attribute(val, cartitem))
 			}
 		});
+		// TEMPORARY
+		// shipping
+		if(epic.cart.ref.hasOwnProperty("shipping")) {
+			epic.cart.ref.shipping.forEach(shipref => {
+				let state = "inactive";
+				if(epic.cart.current.shipping === "true") {state = "active"}
+				epic.js.state(state, shipref.el)
+			})
+		}
 		// discitems
 		let ogdiscitem, discitems;
 		if(epic.cart.ref.hasOwnProperty("discountitem")) {
@@ -180,6 +192,15 @@ epic.cart = {
 				return true
 			});
 			let items = num;
+			// TEMPORARY
+			// shipping
+			if(epic.cart.current.shipping !== "false") {
+				if(epic.cart.ref.cart[0].hasOwnProperty("shipping")) {
+					if(!isNaN(epic.cart.ref.cart[0].shipping)) {
+						num += epic.cart.ref.cart[0].shipping
+					}
+				}
+			}
 			// discounts
 			let added = [], pass = false, cycle = 0;
 			while(pass === false && cycle < 50) {
