@@ -51,9 +51,23 @@ epic.calc = {
 							}
 							if(y !== false) {
 								if(input.hasOwnProperty("format")) {
-									if(input.format.toLowerCase() === "usd") {
-										y = Number(y.replace(/[$,]/g, ""))
+									let format = input.format.toLowerCase(), dec = 0;
+									if(input.hasOwnProperty("decimal")) {
+										dec = input.decimal
 									}
+									if(dec < 0) {dec = 0}
+									if(dec >= 1) {
+										let str = "1";
+										for(let i = 0; i < dec; i++) {str += "0"}
+										dec = Number(str)
+									}
+									if(format === "usd" || format === "eur") {
+										y = Number(y.replace(/[]/g, ""));
+										if(dec !== 0) {y = y / dec}
+									}
+									/*if(input.format.toLowerCase() === "usd") {
+										y = Number(y.replace(/[$,]/g, ""))
+									}*/
 									else if(input.format === "%") {
 										y = Number(y) / 100
 									}
