@@ -48,6 +48,7 @@ epic.filters = {
 			}
 			// store
 			if(value === undefined) {return true}
+			if(typeof value === "string") {value = value.toLowerCase()}
 			if(input.hasOwnProperty("type")) {
 				type = input.type
 			}
