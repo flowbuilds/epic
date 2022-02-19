@@ -58,7 +58,7 @@ epic.filters = {
 			return true
 		})
 	},
-	"filter": () => {
+	"update": () => {
 		epic.filters.getInputs();
 		epic.filters.filterItems();
 		epic.filters.updateCounters()
@@ -80,7 +80,7 @@ epic.filters = {
 			}
 			return true
 		});
-		epic.filters.filter()
+		epic.filters.update()
 	},
 	"init": () => {
 		epic.js.refBuilder("filters");
