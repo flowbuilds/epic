@@ -62,7 +62,7 @@ epic.calc = {
 										dec = Number(str)
 									}
 									if(format === "usd" || format === "eur") {
-										y = Number(y.replace(/[]/g, ""));
+										y = Number(y.replace(/[^0-9]/g, ""));
 										if(dec !== 0) {y = y / dec}
 									}
 									/*if(input.format.toLowerCase() === "usd") {
