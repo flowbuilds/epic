@@ -87,7 +87,7 @@ epic.filters = {
 		epic.js.refBuilder("filters");
 		// url queries
 		epic.filters.filter()
-	}
+	},
 	"ref": {},
 	"active": {},
 	"count": 0
