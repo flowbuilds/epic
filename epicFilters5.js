@@ -94,7 +94,7 @@ epic.filters = {
 	"init": () => {
 		epic.js.refBuilder("filters");
 		// url queries
-		epic.filters.filter()
+		epic.filters.update()
 	},
 	"ref": {},
 	"active": {},
