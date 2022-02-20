@@ -3,12 +3,17 @@
 if(typeof epic === "undefined") {var epic = {}}
 epic.filters = {
 	"updateCounters": () => {
+		console.log("epic.filters.updateCounters( )");
+		console.log("epic.filters.count = " + epic.filters.count);
 		if(!epic.filters.ref.hasOwnProperty("counter")) {return}
 		epic.filters.ref.counter.every(counter => {
 			counter.textContent = epic.filters.count
 		})
 	},
 	"filterItems": () => {
+		console.log("epic.filters.filterItems( )");
+		console.log("epic.filters.active:");
+		console.log(epic.filters.active);
 		epic.filters.count = 0;
 		if(!epic.filters.ref.hasOwnProperty("item")) {return}
 		epic.filters.ref.item.every(item => {
@@ -20,9 +25,11 @@ epic.filters = {
 			//
 			epic.js.state(state, item.el);
 			if(state === "active") {epic.filters.count++}
+			return true
 		})
 	},
 	"getInputs": () => {
+		console.log("epic.filters.getInputs( )");
 		if(!epic.filters.ref.hasOwnProperty("input")) {return}
 		epic.filters.active = {};
 		epic.filters.ref.input.every(input => {
@@ -60,6 +67,7 @@ epic.filters = {
 		})
 	},
 	"update": () => {
+		console.log("epic.filters.update( )");
 		epic.filters.getInputs();
 		epic.filters.filterItems();
 		epic.filters.updateCounters()
