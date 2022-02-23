@@ -49,6 +49,7 @@ epic.maps = {
 			options = popup.options
 		}
 		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el.cloneNode(true));
+		marker.el.setPopup(popup.container);
 		marker.popup = popup
 	},
 	"marker": (marker, bound) => {
