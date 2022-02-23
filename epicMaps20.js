@@ -67,6 +67,9 @@ epic.maps = {
 				.setLngLat(marker.geo)
 				.addTo(container.map);
 				newmarker.el = newmarker.marker._element;
+				if(marker.hasOwnProperty("inactive") && typeof marker.inactive === "string") {
+					newmarker.el.setAttribute("epic-state-inactive", marker.inactive)
+				}
 				marker.mapmarker.push(newmarker);
 				// bounding
 				if(container.hasOwnProperty("bounds")) {
