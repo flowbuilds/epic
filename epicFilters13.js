@@ -99,7 +99,7 @@ epic.filters = {
 			if(item.hasOwnProperty("group")) {
 				let group;
 				if(typeof item.group === "string") {
-					group = epic.js.value(item.group)
+					group = epic.js.value(item.group, item.el)
 				}
 				if(!Array.isArray(item.group)) {group = [group]}
 				group.every(ref => {
