@@ -14,6 +14,7 @@ epic.maps = {
 		}
 	},
 	"options": (ref) => {
+		// TEMPORARY: ADD TO EPIC.JS?
 		if(typeof ref !== "object") {return {}}
 		if(!ref.hasOwnProperty("options")) {return {}}
 		if(typeof ref.options === "object" && !Array.isArray(ref.options)) {return ref.options}
@@ -34,7 +35,7 @@ epic.maps = {
 		if(!marker.hasOwnProperty("popup")) {return}
 		//
 	},
-	"marker": (marker) => {
+	"marker": (marker, bound) => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
 		if(typeof marker !== "object") {return}
 		function addToMap() {
@@ -56,7 +57,16 @@ epic.maps = {
 					// ADD TO ITEM FILTER GROUP
 				}
 				// bounding
-				//
+				if(container.hasOwnProperty("bounds")) {
+					container.bounds.extend(marker.geo);
+					if(bound === true) {
+						let padding = 0;
+						if(container.hasOwnProperty("padding")) {
+							padding = container.padding
+						}
+						container.map.fitBounds(container.bounds, {"padding": padding})
+					}
+				}
 				// popup
 				//
 				return true
@@ -101,18 +111,17 @@ epic.maps = {
 	"initMarkers": () => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
 		if(!epic.maps.ref.hasOwnProperty("marker")) {return}
-		epic.maps.ref.marker.forEach(marker => {epic.maps.marker(marker)})
+		epic.maps.ref.marker.forEach((marker, i) => {
+			let bound = false;
+			if(i === epic.maps.ref.marker.length - 1) {bound = true}
+			epic.maps.marker(marker, bound)
+		})
 	},
 	"initMap": () => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
 		epic.maps.ref.container.every((container, i) => {
 			// map
-			if(!container.hasOwnProperty("options")) {
-				container.options = {}
-				//epic.maps.ref.container[i].options = {}
-			}
-			//epic.maps.ref.container[i].options = epic.maps.options(epic.maps.ref.container[i]);
-			//container = epic.maps.ref.container[i];
+			if(!container.hasOwnProperty("options")) {container.options = {}}
 			container.options = epic.maps.options(container)
 			container.options.container = container.el.id;
 			container.map = new mapboxgl.Map(container.options);
