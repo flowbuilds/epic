@@ -97,6 +97,7 @@ epic.filters = {
 			epic.js.state(state, item.el);
 			// filter group
 			if(item.hasOwnProperty("group")) {
+				console.log(item.group);
 				let group;
 				if(typeof item.group === "string") {
 					group = epic.js.value(item.group, item.el)
