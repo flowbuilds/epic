@@ -102,9 +102,13 @@ epic.maps = {
 	},
 	"initMap": () => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
-		epic.maps.ref.container.every(container => {
+		epic.maps.ref.container.every((container, i) => {
 			// map
-			if(!container.hasOwnProperty("options")) {container.options = {}}
+			if(!container.hasOwnProperty("options")) {
+				epic.maps.ref.container[i].options = {}
+			}
+			epic.maps.ref.container[i].options = epic.maps.options(epic.maps.ref.container[i]);
+			container = epic.maps.ref.container[i];
 			container.options = epic.maps.options(container)
 			container.options.container = container.el.id;
 			container.map = new mapboxgl.Map(container.options);
