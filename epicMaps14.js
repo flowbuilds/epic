@@ -65,7 +65,7 @@ epic.maps = {
 				if(marker.hasOwnProperty("class") && typeof marker.class === "string") {
 					newmarker.el.classList.add(marker.class)
 				}
-				newmarker = new mapboxgl.Marker(newmarker.el)
+				newmarker.el = new mapboxgl.Marker(newmarker.el)
 				.setLngLat(marker.geo)
 				.addTo(container.map);
 				marker.mapmarker.push(newmarker);
