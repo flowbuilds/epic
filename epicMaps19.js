@@ -38,32 +38,18 @@ epic.maps = {
 		});
 		return options
 	},
-	"popup": (ref, marker) => {
-		if(typeof ref !== "object" || typeof marker !== "object") {return}
-		if(!ref.hasOwnProperty("popup") || !marker.hasOwnProperty("el")) {return}
+	"popup": (ref, mapmarker) => {
+		if(typeof ref !== "object" || typeof mapmarker !== "object") {return}
+		if(!ref.hasOwnProperty("popup") || !mapmarker.hasOwnProperty("marker")) {return}
 		let popup = epic.js.getref(ref.popup), options = {};
 		if(popup === undefined) {return}
 		if(popup.hasOwnProperty("options")) {
 			options = popup.options = epic.maps.options(popup.options)
 		}
 		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el.cloneNode(true));
-		marker.el.setPopup(popup.container);
-		marker.popup = popup
+		mapmarker.marker.setPopup(popup.container);
+		mapmarker.popup = popup
 	},
-	/*"popup": (ref, marker) => {
-		if(typeof ref !== "object" || typeof marker !== "object") {return}
-		if(!ref.hasOwnProperty("popup") || !marker.hasOwnProperty("el")) {return}
-		let popup = epic.js.getref(marker.popup);
-		if(typeof popup !== "object") {return}
-		let options = {};
-		if(popup.hasOwnProperty("options")) {
-			popup.options = epic.maps.options(popup.options);
-			options = popup.options
-		}
-		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el.cloneNode(true));
-		marker.el.setPopup(popup.container);
-		marker.popup = popup
-	},*/
 	"marker": (marker, bound) => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
 		if(typeof marker !== "object") {return}
@@ -73,18 +59,15 @@ epic.maps = {
 				if(!marker.hasOwnProperty("mapmarker")) {
 					marker.mapmarker = []
 				}
-				let newmarker = {"el": document.createElement("div")};
+				let newmarker = {"marker": document.createElement("div")};
 				if(marker.hasOwnProperty("class") && typeof marker.class === "string") {
-					newmarker.el.classList.add(marker.class)
+					newmarker.marker.classList.add(marker.class)
 				}
-				newmarker.el = new mapboxgl.Marker(newmarker.el)
+				newmarker.marker = new mapboxgl.Marker(newmarker.marker)
 				.setLngLat(marker.geo)
 				.addTo(container.map);
+				newmarker.el = newmarker.marker._element;
 				marker.mapmarker.push(newmarker);
-				// filter
-				if(marker.hasOwnProperty("filter") && marker.filter === true) {
-					// ADD TO ITEM FILTER GROUP
-				}
 				// bounding
 				if(container.hasOwnProperty("bounds")) {
 					container.bounds.extend(marker.geo);
