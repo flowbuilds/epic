@@ -106,7 +106,9 @@ epic.filters = {
 				if(!Array.isArray(group)) {group = [group]}
 				console.log(group);
 				group.every(ref => {
-					if(!ref.hasOwnProperty("el")) {ref = epic.js.getref(ref)}
+					if(typeof ref === "object" && !ref.hasOwnProperty("el")) {
+						ref = epic.js.getref(ref)
+					}
 					if(ref === undefined) {return true}
 					epic.js.state(state, ref.el)
 					return true
