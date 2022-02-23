@@ -103,6 +103,7 @@ epic.filters = {
 				}
 				else {group = item.group}
 				if(!Array.isArray(group)) {group = [group]}
+				console.log(group);
 				group.every(ref => {
 					if(!ref.hasOwnProperty("el")) {ref = epic.js.getref(ref)}
 					if(ref === undefined) {return true}
