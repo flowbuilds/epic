@@ -108,10 +108,11 @@ epic.maps = {
 		epic.maps.ref.container.every((container, i) => {
 			// map
 			if(!container.hasOwnProperty("options")) {
-				epic.maps.ref.container[i].options = {}
+				container.options = {}
+				//epic.maps.ref.container[i].options = {}
 			}
-			epic.maps.ref.container[i].options = epic.maps.options(epic.maps.ref.container[i]);
-			container = epic.maps.ref.container[i];
+			//epic.maps.ref.container[i].options = epic.maps.options(epic.maps.ref.container[i]);
+			//container = epic.maps.ref.container[i];
 			container.options = epic.maps.options(container)
 			container.options.container = container.el.id;
 			container.map = new mapboxgl.Map(container.options);
@@ -121,7 +122,7 @@ epic.maps = {
 			}
 			// bounding
 			if(container.hasOwnProperty("bounding") && container.bounding === true) {
-				container.map.options.bounds = new mapboxgl.LngLatBounds()
+				container.bounds = new mapboxgl.LngLatBounds()
 			}
 			return true
 		})
