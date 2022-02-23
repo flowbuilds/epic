@@ -41,7 +41,7 @@ epic.maps = {
 	"popup": (ref, marker) => {
 		if(typeof ref !== "object" || typeof marker !== "object") {return}
 		if(!ref.hasOwnProperty("popup") || !marker.hasOwnProperty("el")) {return}
-		let popup = epic.js.getref(marker.popup);
+		let popup = epic.js.getref(ref.popup);
 		console.log(popup)
 	},
 	/*"popup": (ref, marker) => {
