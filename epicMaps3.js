@@ -119,6 +119,7 @@ epic.maps = {
 		})
 	},
 	"init": () => {
+		epic.js.refBuilder("maps");
 		epic.maps.initMap();
 		epic.maps.initMarkers()
 	},
