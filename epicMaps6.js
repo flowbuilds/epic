@@ -14,11 +14,14 @@ epic.maps = {
 		}
 	},
 	"options": (ref) => {
-		let options = {};
-		if(typeof ref !== "object") {return options}
-		if(!ref.hasOwnProperty("options")) {return options}
-		if(typeof ref.options !== "string") {return options}
-		let names = ref.options.split("&");
+		if(typeof ref !== "object") {return {}}
+		if(!ref.hasOwnProperty("options")) {return {}}
+		if(typeof ref.options === "object" && !Array.isArray(ref.options)) {return ref.options}
+		if(typeof ref.options !== "string" && !Array.isArray(ref.options)) {return {}}
+		let options = {}, names;
+		if(ref.options === "string") {
+			names = ref.options.split("&")
+		}
 		names.forEach(name => {
 			if(ref.hasOwnProperty(name)) {
 				options[name] = ref[name]
