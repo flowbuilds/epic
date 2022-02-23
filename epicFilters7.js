@@ -15,8 +15,10 @@ epic.filters = {
 			let state = "active";
 			let active = epic.filters.active, res = {}, pass = true;
 			for(name in active) {
+				console.log("active[name]: " + name);
 				if(!item.hasOwnProperty(name)) {continue}
 				if(!res.hasOwnProperty(name)) {res[name] = []}
+				console.log("Passed preflight!");
 				// compare
 				active[name].every(filter => {
 					console.log("Value: " + filter.value);
