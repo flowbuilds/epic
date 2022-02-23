@@ -20,7 +20,15 @@ epic.maps = {
 		if(typeof ref.options === "object" && !Array.isArray(ref.options)) {return ref.options}
 		if(typeof ref.options !== "string" && !Array.isArray(ref.options)) {return {}}
 		let options = {}, names = ref.options;
-		if(ref.options === "string") {
+		if(names === "string") {
+			if(names === "*") {
+				for(name in ref) {
+					if(name === "el") {continue}
+					if(name === "options") {continue}
+					options.push(ref[name])
+				}
+				return options
+			}
 			names = ref.options.split("&")
 		}
 		names.forEach(name => {
@@ -33,7 +41,10 @@ epic.maps = {
 	"popup": (marker) => {
 		if(typeof marker !== "object") {return}
 		if(!marker.hasOwnProperty("popup")) {return}
-		//
+		let popup = marker.popup;
+		if(typeof popup !== "object") {return}
+		if(Array.isArray(popup)) {popup = popup[0]}
+
 	},
 	"marker": (marker, bound) => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
@@ -68,7 +79,9 @@ epic.maps = {
 					}
 				}
 				// popup
-				//
+				if(marker.hasOwnProperty("popup")) {
+					epic.maps.popup(marker)
+				}
 				return true
 			})
 		}
