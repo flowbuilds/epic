@@ -65,7 +65,8 @@ epic.maps = {
 		else if(marker.geo.length !== 2) {geo = false}
 		if(!geo) {
 			if(!marker.hasOwnProperty("address") && !marker.hasOwnProperty("lnglat")) {return}
-			if(marker.hasOwnProperty("lnglat") && Array.isArray(marker.lnglat) && marker.lnglat.length === 2) {
+			if(marker.hasOwnProperty("lnglat") && Array.isArray(marker.lnglat) && marker.lnglat.length === 2 
+				&& typeof marker.lnglat[0] === "number" && typeof marker.lnglat[1] === "number") {
 				marker.geo = marker.lnglat;
 				addToMap()
 			}
