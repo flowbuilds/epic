@@ -41,8 +41,14 @@ epic.maps = {
 	"popup": (ref, marker) => {
 		if(typeof ref !== "object" || typeof marker !== "object") {return}
 		if(!ref.hasOwnProperty("popup") || !marker.hasOwnProperty("el")) {return}
-		let popup = epic.js.getref(ref.popup);
-		console.log(popup)
+		let popup = epic.js.getref(ref.popup), options = {};
+		if(popup === undefined) {return}
+		if(popup.hasOwnProperty("options")) {
+			options = popup.options = epic.maps.options(popup.options)
+		}
+		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el.cloneNode(true));
+		marker.el.setPopup(popup.container);
+		marker.popup = popup
 	},
 	/*"popup": (ref, marker) => {
 		if(typeof ref !== "object" || typeof marker !== "object") {return}
