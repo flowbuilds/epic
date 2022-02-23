@@ -15,14 +15,10 @@ epic.filters = {
 			let state = "active";
 			let active = epic.filters.active, res = {}, pass = true;
 			for(name in active) {
-				console.log("active[name]: " + name);
 				if(!item.hasOwnProperty(name)) {continue}
 				if(!res.hasOwnProperty(name)) {res[name] = []}
-				console.log("Passed preflight!");
 				// compare
 				active[name].every(filter => {
-					console.log("Value: " + filter.value);
-					console.log("Type: " + filter.type);
 					if(filter.type === "includes") {
 						let value;
 						if(typeof item[name] === "number") {value = String(item[name])}
@@ -86,7 +82,6 @@ epic.filters = {
 					return true
 				})
 			}
-			console.log(res);
 			for(name in res) {
 				res[name].every((value, i) => {
 					if(value === true) {return false}
