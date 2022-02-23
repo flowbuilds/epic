@@ -18,7 +18,7 @@ epic.maps = {
 		if(!ref.hasOwnProperty("options")) {return {}}
 		if(typeof ref.options === "object" && !Array.isArray(ref.options)) {return ref.options}
 		if(typeof ref.options !== "string" && !Array.isArray(ref.options)) {return {}}
-		let options = {}, names;
+		let options = {}, names = ref.options;
 		if(ref.options === "string") {
 			names = ref.options.split("&")
 		}
