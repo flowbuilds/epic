@@ -86,7 +86,7 @@ epic.maps = {
 				}
 				// popup
 				if(marker.hasOwnProperty("popup")) {
-					epic.maps.popup(marker, newmarker)
+					epic.maps.popup(marker, marker.mapmarker[marker.mapmarker.length - 1])
 				}
 				return true
 			})
