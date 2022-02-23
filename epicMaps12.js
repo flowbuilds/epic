@@ -38,16 +38,17 @@ epic.maps = {
 		});
 		return options
 	},
-	"popup": (marker) => {
-		if(typeof marker !== "object") {return}
-		if(!marker.hasOwnProperty("popup")) {return}
+	"popup": (ref, marker) => {
+		if(typeof ref !== "object" || typeof marker !== "object") {return}
+		if(!ref.hasOwnProperty("popup") || !marker.hasOwnProperty("el")) {return}
 		let popup = epic.js.getref(marker.popup);
 		if(typeof popup !== "object") {return}
 		let options = {};
 		if(popup.hasOwnProperty("options")) {
-			options = epic.maps.options(popup.options)
+			popup.options = epic.maps.options(popup.options);
+			options = popup.options
 		}
-		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el);
+		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el.cloneNode(true));
 		marker.popup = popup
 	},
 	"marker": (marker, bound) => {
@@ -59,11 +60,11 @@ epic.maps = {
 				if(!marker.hasOwnProperty("mapmarker")) {
 					marker.mapmarker = []
 				}
-				let newmarker = document.createElement("div");
+				let newmarker = {"el": document.createElement("div")};
 				if(marker.hasOwnProperty("class") && typeof marker.class === "string") {
-					newmarker.classList.add(marker.class)
+					newmarker.el.classList.add(marker.class)
 				}
-				newmarker = new mapboxgl.Marker(newmarker)
+				newmarker = new mapboxgl.Marker(newmarker.el)
 				.setLngLat(marker.geo)
 				.addTo(container.map);
 				marker.mapmarker.push(newmarker);
@@ -84,7 +85,7 @@ epic.maps = {
 				}
 				// popup
 				if(marker.hasOwnProperty("popup")) {
-					epic.maps.popup(marker)
+					epic.maps.popup(marker, newmarker)
 				}
 				return true
 			})
