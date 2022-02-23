@@ -95,6 +95,18 @@ epic.filters = {
 			if(pass === false) {state = "inactive"}
 			else {epic.filters.count++}
 			epic.js.state(state, item.el);
+			// filter group
+			if(item.hasOwnProperty("group")) {
+				if(typeof item.group === "object") {
+					if(!Array.isArray(item.group)) {item.group = [item.group]}
+					item.group.every(el => {
+						let ref = epic.js.getref(el);
+						if(ref === undefined) {return true}
+						epic.js.state(state, ref.el)
+						return true
+					})
+				}
+			}
 			return true
 		})
 	},
