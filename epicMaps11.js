@@ -41,10 +41,14 @@ epic.maps = {
 	"popup": (marker) => {
 		if(typeof marker !== "object") {return}
 		if(!marker.hasOwnProperty("popup")) {return}
-		let popup = marker.popup;
+		let popup = epic.js.getref(marker.popup);
 		if(typeof popup !== "object") {return}
-		if(Array.isArray(popup)) {popup = popup[0]}
-
+		let options = {};
+		if(popup.hasOwnProperty("options")) {
+			options = epic.maps.options(popup.options)
+		}
+		popup.container = new mapboxgl.Popup(options).setDOMContent(popup.el);
+		marker.popup = popup
 	},
 	"marker": (marker, bound) => {
 		if(!epic.maps.ref.hasOwnProperty("container")) {return}
