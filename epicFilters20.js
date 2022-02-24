@@ -60,15 +60,16 @@ epic.filters = {
 						}
 					}
 					else if(filter.type === "geo") {
+						let geo;
 						if(typeof item[name] === "string") {
-							item[name] = epic.js.value(item[name])
+							geo = epic.js.value(item[name])
 						}
-						if(!Array.isArray(item[name])) {return true}
-						if(item[name].length !== 2) {return true}
-						if(item[name][0] > filter.value.left 
-							&& item[name][0] < filter.value.right 
-							&& item[name][1] < filter.value.top 
-							&& item[name][1] > filter.value.bottom) {
+						if(!Array.isArray(geo)) {return true}
+						if(geo.length !== 2) {return true}
+						if(geo[0] > filter.value.left 
+							&& geo[0] < filter.value.right 
+							&& geo[1] < filter.value.top 
+							&& geo[1] > filter.value.bottom) {
 							res[name].push(true)
 						}
 						else {res[name].push(false)}
