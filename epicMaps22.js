@@ -3,9 +3,10 @@
 if(typeof epic === "undefined") {var epic = {}}
 epic.maps = {
 	"bounds": (container) => {
-		if(container === undefined) {return}
-		if(!container.hasOwnProperty("map")) {return}
-		let x = container.map.getBounds();
+		if(typeof container !== "object") {return}
+		let ref = epic.js.getref(container);
+		if(typeof ref !== "object" || !ref.hasOwnProperty("map")) {return}
+		let x = ref.map.getBounds();
 		return {
 			"left": x._sw.lng,
 			"top": x._ne.lat,
