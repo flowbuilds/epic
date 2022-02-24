@@ -61,7 +61,7 @@ epic.filters = {
 					}
 					else if(filter.type === "geo") {
 						let geo;
-						console.log(input[name]);
+						console.log(item[name]);
 						if(typeof item[name] === "string") {
 							geo = epic.js.value(item[name])
 						}
