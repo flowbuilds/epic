@@ -61,11 +61,9 @@ epic.filters = {
 					}
 					else if(filter.type === "geo") {
 						let geo = item[name];
-						console.log(item[name]);
 						if(typeof geo === "string") {
 							geo = epic.js.value(geo, item.el)
 						}
-						console.log(geo);
 						if(!Array.isArray(geo)) {return true}
 						if(geo.length !== 2) {return true}
 						if(geo[0] > filter.value.left 
