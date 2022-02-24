@@ -63,7 +63,7 @@ epic.filters = {
 						let geo;
 						console.log(item[name]);
 						if(typeof item[name] === "string") {
-							geo = epic.js.value(item[name])
+							geo = epic.js.value(item[name], item.el)
 						}
 						console.log(geo);
 						if(!Array.isArray(geo)) {return true}
