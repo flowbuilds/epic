@@ -143,13 +143,6 @@ epic.maps = {
 			container.options = epic.maps.options(container)
 			container.options.container = container.el.id;
 			container.map = new mapboxgl.Map(container.options);
-			// update
-			if(container.hasOwnProperty("update")) {
-				if(container.update == true || container.update === "auto") {
-					container.map.on("zoomed", () => {epic.maps.update()});
-					container.map.on("dragend", () => {epic.maps.update()})
-				}
-			}
 			// nav
 			if(container.hasOwnProperty("nav") && container.nav === true) {
 				container.map.addControl(new mapboxgl.NavigationControl())
