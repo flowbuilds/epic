@@ -60,10 +60,10 @@ epic.filters = {
 						}
 					}
 					else if(filter.type === "geo") {
-						if(!Array.isArray(item[name])) {
-							// get coordinates from marker data
+						if(typeof item[name] === "string") {
+							item[name] = epic.js.value(item[name])
 						}
-						// does the data need re-getting?
+						if(!Array.isArray(item[name])) {return true}
 						if(item[name].length !== 2) {return true}
 						if(item[name][0] > filter.value.left 
 							&& item[name][0] < filter.value.right 
