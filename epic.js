@@ -259,7 +259,6 @@ epic.js = {
 			return true
 		});
 		if(x === true) {val = obj}
-		console.log(val);
 		return val
 	},
 	"refBuilder": (sys) => {
@@ -342,15 +341,6 @@ epic.js = {
 			if(inactv !== null) {el.classList.remove(inactv)}
 			return
 		}
-		/*if(st === "toggle") {
-			if(el.classList.contains(actv) || el.classList.contains(inactv)) {
-				if(el.classList.contains(actv)) {el.classList.remove(actv)}
-				else if(el.classList.contains(inactv)) {el.classList.remove(inactv)}
-			}
-			else if(actv !== undefined) {el.classList.add(actv)}
-			else if(inactv !== undefined) {el.classList.add(inactv)}
-			return
-		}*/
 		if(st === "active") {
 			if(actv !== null) {newst = actv}
 			if(inactv !== null) {oldst = inactv}
